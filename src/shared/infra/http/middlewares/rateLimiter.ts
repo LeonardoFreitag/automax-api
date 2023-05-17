@@ -27,6 +27,6 @@ export default async function rateLimiter(
     await limiter.consume(request.ip);
     return next();
   } catch (err) {
-    throw new AppError('To manu requests', 429);
+    throw new AppError('To many requests', 429);
   }
 }
