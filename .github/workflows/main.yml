@@ -1,0 +1,50 @@
+name: CI
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup Nodejs environment
+        uses: actions/setup-node@v2.4.1
+        with:
+          node-version: 18.x
+          
+      # Instalar as dependências Yarn (no github)
+      - name: Install Dependencies on GitHub
+        run: yarn
+        
+      # Executar a build (no github)
+      - name: Build App on GitHub
+        run: yarn build
+        
+      # Copiar a pasta dist para dentro da AWS
+      - name: Copy dist to AWS
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          port: ${{ secrets.SSH_PORT }}
+          key: ${{ secrets.SSH_KEY }}
+          source: ".,!node_modules"
+          target: "~/app/automax-api"
+
+      # Instalar as dependências no servidor da AWS
+      - name: Install dependencias on AWS
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          port: ${{ secrets.SSH_PORT }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            cd ~/app/automax-api
+            yarn
+            ./node_modules/.bin/typeorm migration:run
+            pm2 restart automax-api
