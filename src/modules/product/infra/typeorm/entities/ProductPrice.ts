@@ -1,11 +1,9 @@
-import { String } from 'aws-sdk/clients/batch';
 import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
-  OneToMany,
   ManyToOne,
   JoinColumn,
 } from 'typeorm';
