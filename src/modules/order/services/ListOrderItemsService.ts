@@ -1,6 +1,6 @@
 import { injectable, inject } from 'tsyringe';
-import OrderItems from '@modules/order/infra/typeorm/entities/OrderItems';
 import IOrderItemsRepository from '@modules/order/repositories/IOrderItemsRepository';
+import { OrderItems } from '@prisma/client';
 
 @injectable()
 class ListOrderItemsService {

@@ -1,6 +1,6 @@
 import { injectable, inject } from 'tsyringe';
-import OrderItemPhases from '@modules/order/infra/typeorm/entities/OrderItemPhases';
 import IOrderItemPhasesRepository from '@modules/order/repositories/IOrderItemPhasesRepository';
+import { OrderItemsPhases } from '@prisma/client';
 
 @injectable()
 class ListOrderItemPhasesService {
@@ -10,10 +10,10 @@ class ListOrderItemPhasesService {
   ) {}
 
   public async execute(
-    orderItemId: string,
-  ): Promise<OrderItemPhases[] | undefined> {
+    orderItemsId: string,
+  ): Promise<OrderItemsPhases[] | undefined> {
     const allOrderItemPhasesByidCustomer =
-      await this.orderItemPhasesRepository.list(orderItemId);
+      await this.orderItemPhasesRepository.list(orderItemsId);
 
     return allOrderItemPhasesByidCustomer;
   }

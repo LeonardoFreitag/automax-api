@@ -26,13 +26,42 @@ clientRouter.post(
       city: Joi.string().required(),
       stateCode: Joi.string().required(),
       state: Joi.string().required(),
-      contacts: Joi.array().required(),
       financialPendency: Joi.bool().required(),
-      paymentForm: Joi.array().required(),
       isNew: Joi.bool().required(),
     },
   }),
   clientController.create,
+);
+
+clientRouter.post(
+  '/contact',
+  ensureAuthenticated,
+  celebrate({
+    [Segments.BODY]: {
+      clientId: Joi.string().required(),
+      name: Joi.string().required(),
+      fone: Joi.string().required(),
+      foneType: Joi.string().required(),
+      isWhatsApp: Joi.bool().required(),
+      email: Joi.string().required(),
+      job: Joi.string().required(),
+    },
+  }),
+  clientController.createContact,
+);
+
+clientRouter.post(
+  '/paymentForm',
+  ensureAuthenticated,
+  celebrate({
+    [Segments.BODY]: {
+      clientId: Joi.string().required(),
+      paymentFormId: Joi.string().required(),
+      description: Joi.string().required(),
+      installmentsLimit: Joi.number().required(),
+    },
+  }),
+  clientController.createPaymentForm,
 );
 
 clientRouter.patch(
@@ -55,13 +84,44 @@ clientRouter.patch(
       city: Joi.string().required(),
       stateCode: Joi.string().required(),
       state: Joi.string().required(),
-      contacts: Joi.array().required(),
       financialPendency: Joi.boolean().required(),
-      paymentForm: Joi.array().required(),
       isNew: Joi.bool().required(),
     },
   }),
   clientController.update,
+);
+
+clientRouter.patch(
+  '/contact',
+  ensureAuthenticated,
+  celebrate({
+    [Segments.BODY]: {
+      id: Joi.string().required(),
+      clientId: Joi.string().required(),
+      name: Joi.string().required(),
+      fone: Joi.string().required(),
+      foneType: Joi.string().required(),
+      isWhatsApp: Joi.bool().required(),
+      email: Joi.string().required(),
+      job: Joi.string().required(),
+    },
+  }),
+  clientController.updateContact,
+);
+
+clientRouter.patch(
+  '/paymentForm',
+  ensureAuthenticated,
+  celebrate({
+    [Segments.BODY]: {
+      id: Joi.string().required(),
+      clientId: Joi.string().required(),
+      paymentFormId: Joi.string().required(),
+      description: Joi.string().required(),
+      installmentsLimit: Joi.number().required(),
+    },
+  }),
+  clientController.updatePaymentForm,
 );
 
 clientRouter.get(
@@ -84,6 +144,28 @@ clientRouter.delete(
     },
   }),
   clientController.delete,
+);
+
+clientRouter.delete(
+  '/contact',
+  ensureAuthenticated,
+  celebrate({
+    [Segments.QUERY]: {
+      id: Joi.string().uuid().required(),
+    },
+  }),
+  clientController.deleteContact,
+);
+
+clientRouter.delete(
+  '/paymentForm',
+  ensureAuthenticated,
+  celebrate({
+    [Segments.QUERY]: {
+      id: Joi.string().uuid().required(),
+    },
+  }),
+  clientController.deletePaymentForm,
 );
 
 export default clientRouter;

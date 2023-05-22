@@ -1,9 +1,8 @@
-import OrderItems from '@modules/order/infra/typeorm/entities/OrderItems';
-import { ICreateOrderItemsDTO } from '../dtos/ICreateOrderItemsDTO';
+import { OrderItems, Prisma } from '@prisma/client';
 
 export default interface IOrderItemsItemsRepository {
   findById(id: string): Promise<OrderItems | undefined>;
-  create(data: ICreateOrderItemsDTO): Promise<OrderItems>;
+  create(data: Prisma.OrderItemsUncheckedCreateInput): Promise<OrderItems>;
   save(orderItems: OrderItems): Promise<OrderItems>;
   list(orderId: string): Promise<OrderItems[]>;
   delete(id: string): Promise<void>;

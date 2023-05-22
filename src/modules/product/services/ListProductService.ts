@@ -1,6 +1,6 @@
 import { injectable, inject } from 'tsyringe';
-import Product from '@modules/product/infra/typeorm/entities/Product';
 import IProductRepository from '@modules/product/repositories/IProductRepository';
+import { Product } from '@prisma/client';
 
 @injectable()
 class ListProductService {

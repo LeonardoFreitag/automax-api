@@ -11,7 +11,8 @@ import AppError from '@shared/errors/AppError';
 import uploadConfig from '@config/upload';
 import routes from './routes';
 
-import '@shared/infra/typeorm';
+// import '@shared/infra/typeorm';
+import '@shared/infra/prisma/prisma';
 import '@shared/container';
 
 const app = express();

@@ -1,8 +1,7 @@
 import AppError from '@shared/errors/AppError';
 import IOrderItemsRepository from '@modules/order/repositories/IOrderItemsRepository';
 import { injectable, inject } from 'tsyringe';
-
-import OrderItems from '@modules/order/infra/typeorm/entities/OrderItems';
+import { OrderItems } from '@prisma/client';
 
 @injectable()
 class UpdateOrderItemsService {

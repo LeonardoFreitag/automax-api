@@ -1,7 +1,6 @@
 import { injectable, inject } from 'tsyringe';
 import IOrderRepository from '@modules/order/repositories/IOrderRepository';
-import Order from '@modules/order/infra/typeorm/entities/Order';
-import { ICreateOrderDTO } from '@modules/order/dtos/ICreateOrderDTO';
+import { Order, Prisma } from '@prisma/client';
 
 @injectable()
 class CreateOrderService {
@@ -17,10 +16,10 @@ class CreateOrderService {
     orderDate,
     description,
     notes,
-    items,
     finished,
     canceled,
-  }: ICreateOrderDTO): Promise<Order> {
+    OrderItems,
+  }: Prisma.OrderUncheckedCreateInput): Promise<Order> {
     const checkOrderExists = await this.orderRepository.findByOrderNumber(
       orderNumber,
     );
@@ -36,9 +35,9 @@ class CreateOrderService {
       orderDate,
       description,
       notes,
-      items,
       finished,
       canceled,
+      OrderItems,
     });
 
     return order;

@@ -1,7 +1,6 @@
 import { injectable, inject } from 'tsyringe';
 import IOrderItemPhasesRepository from '@modules/order/repositories/IOrderItemPhasesRepository';
-import OrderItemPhases from '@modules/order/infra/typeorm/entities/OrderItemPhases';
-import { ICreateOrderItemPhasesDTO } from '@modules/order/dtos/ICreateOrderItemPhasesDTO';
+import { OrderItemsPhases, Prisma } from '@prisma/client';
 
 @injectable()
 class CreateOrderItemPhasesService {
@@ -11,22 +10,14 @@ class CreateOrderItemPhasesService {
   ) {}
 
   public async execute({
-    orderItemId,
+    orderItemsId,
     employeeId,
     phaseDate,
     phaseId,
     notes,
-  }: ICreateOrderItemPhasesDTO): Promise<OrderItemPhases> {
-    // const checkOrderItemPhasesExists = await this.orderItemPhasesRepository.findById(
-    //   orderItemPhasesNumber,
-    // );
-
-    // if (checkOrderItemPhasesExists) {
-    //   this.orderItemPhasesRepository.delete(checkOrderItemPhasesExists.id);
-    // }
-
+  }: Prisma.OrderItemsPhasesUncheckedCreateInput): Promise<OrderItemsPhases> {
     const orderItemPhases = await this.orderItemPhasesRepository.create({
-      orderItemId,
+      orderItemsId,
       employeeId,
       phaseDate,
       phaseId,

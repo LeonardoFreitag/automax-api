@@ -1,8 +1,6 @@
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
-import { classToClass } from 'class-transformer';
 import CreateOrderService from '@modules/order/services/CreateOrderService';
-import CreateOrderItemsService from '@modules/order/services/CreateOrderItemsService';
 import UpdateOrderService from '@modules/order/services/UdpateOrderService';
 import ListOrderService from '@modules/order/services/ListOrderService';
 import DeleteOrderService from '@modules/order/services/DeleteOrderService';
@@ -16,9 +14,9 @@ export default class OrderControllers {
       orderDate,
       description,
       notes,
-      items,
       finished,
       canceled,
+      OrderItems,
     } = request.body;
 
     const createOrder = container.resolve(CreateOrderService);
@@ -30,50 +28,12 @@ export default class OrderControllers {
       orderDate,
       description,
       notes,
-      items,
       finished,
       canceled,
+      OrderItems,
     });
 
-    return response.json(classToClass(order));
-  }
-
-  public async createItem(
-    request: Request,
-    response: Response,
-  ): Promise<Response> {
-    const { orderId, productId, saleId, description, phases } = request.body;
-
-    const createOrderItem = container.resolve(CreateOrderItemsService);
-
-    const orderItem = await createOrderItem.execute({
-      orderId,
-      productId,
-      saleId,
-      description,
-      phases,
-    });
-
-    return response.json(classToClass(orderItem));
-  }
-
-  public async createItemPhases(
-    request: Request,
-    response: Response,
-  ): Promise<Response> {
-    const { orderId, productId, saleId, description, phases } = request.body;
-
-    const createOrderItem = container.resolve(CreateOrderItemsService);
-
-    const orderItem = await createOrderItem.execute({
-      orderId,
-      productId,
-      saleId,
-      description,
-      phases,
-    });
-
-    return response.json(classToClass(orderItem));
+    return response.json(order);
   }
 
   public async update(request: Request, response: Response): Promise<Response> {
@@ -83,7 +43,7 @@ export default class OrderControllers {
 
     const Order = await updateOrder.execute(data);
 
-    return response.json(classToClass(Order));
+    return response.json(Order);
   }
 
   public async list(request: Request, response: Response): Promise<Response> {
@@ -93,7 +53,7 @@ export default class OrderControllers {
 
     const Order = await listOrders.execute(String(customerId));
 
-    return response.json(classToClass(Order));
+    return response.json(Order);
   }
 
   public async delete(request: Request, response: Response): Promise<Response> {

@@ -1,7 +1,6 @@
 import { injectable, inject } from 'tsyringe';
 import IClientRepository from '@modules/client/repositories/IClientRepository';
-import Client from '@modules/client/infra/typeorm/entities/Client';
-import { ICreateClientDTO } from '@modules/client/dtos/ICreateClientDTO';
+import { Client, Prisma } from '@prisma/client';
 
 @injectable()
 class CreateClientService {
@@ -25,11 +24,9 @@ class CreateClientService {
     city,
     stateCode,
     state,
-    contacts,
     financialPendency,
-    paymentForm,
     isNew,
-  }: ICreateClientDTO): Promise<Client> {
+  }: Prisma.ClientUncheckedCreateInput): Promise<Client> {
     const checkClientExists = await this.clientRepository.findByCnpj(cnpj);
 
     if (checkClientExists) {
@@ -51,9 +48,7 @@ class CreateClientService {
       city,
       stateCode,
       state,
-      contacts,
       financialPendency,
-      paymentForm,
       isNew,
     });
 

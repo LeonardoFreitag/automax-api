@@ -12,7 +12,7 @@ orderItemPhaseRouter.post(
   ensureAuthenticated,
   celebrate({
     [Segments.BODY]: {
-      orderItemId: Joi.string().required(),
+      orderItemsId: Joi.string().required(),
       employeeId: Joi.string().required(),
       phaseDate: Joi.date().required(),
       phaseId: Joi.string().required(),
@@ -28,7 +28,7 @@ orderItemPhaseRouter.patch(
   celebrate({
     [Segments.BODY]: {
       id: Joi.string().required(),
-      orderItemId: Joi.string().required(),
+      orderItemsId: Joi.string().required(),
       employeeId: Joi.string().required(),
       phaseDate: Joi.date().required(),
       phaseId: Joi.string().required(),
@@ -43,7 +43,7 @@ orderItemPhaseRouter.get(
   ensureAuthenticated,
   celebrate({
     [Segments.QUERY]: {
-      orderItemId: Joi.string().uuid().required(),
+      orderItemsId: Joi.string().uuid().required(),
     },
   }),
   orderItemPhaseController.list,

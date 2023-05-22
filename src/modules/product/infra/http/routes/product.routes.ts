@@ -23,11 +23,48 @@ productRouter.post(
       unity: Joi.string().required(),
       groupId: Joi.string().required(),
       group: Joi.string().required(),
-      price: Joi.array().required(),
-      tissue: Joi.array().required(),
+      ProductPrice: Joi.array().required(),
+      ProductTissue: Joi.array().required(),
     },
   }),
   productController.create,
+);
+
+productRouter.post(
+  '/price',
+  ensureAuthenticated,
+  celebrate({
+    [Segments.BODY]: {
+      productId: Joi.string().required(),
+      tableName: Joi.string().required(),
+      price: Joi.number().required(),
+      height: Joi.number().required(),
+      heightUnity: Joi.string().required(),
+      width: Joi.number().required(),
+      widthUnity: Joi.string().required(),
+      depth: Joi.number().required(),
+      depthUnity: Joi.string().required(),
+      depthOpen: Joi.number().required(),
+      depthOpenUnity: Joi.string().required(),
+      addtitionalPercentage: Joi.number().required(),
+    },
+  }),
+  productController.createProductPrice,
+);
+
+productRouter.post(
+  '/tissue',
+  ensureAuthenticated,
+  celebrate({
+    [Segments.BODY]: {
+      productId: Joi.string().required(),
+      description: Joi.string().required(),
+      type: Joi.string().required(),
+      underConsultation: Joi.bool().required(),
+      inRestocked: Joi.bool().required(),
+    },
+  }),
+  productController.createProductTissue,
 );
 
 productRouter.patch(
@@ -43,11 +80,48 @@ productRouter.patch(
       unity: Joi.string().required(),
       groupId: Joi.string().required(),
       group: Joi.string().required(),
-      price: Joi.array().required(),
-      tissue: Joi.array().required(),
     },
   }),
   productController.update,
+);
+
+productRouter.patch(
+  '/price',
+  ensureAuthenticated,
+  celebrate({
+    [Segments.BODY]: {
+      id: Joi.string().required(),
+      productId: Joi.string().required(),
+      tableName: Joi.string().required(),
+      price: Joi.number().required(),
+      height: Joi.number().required(),
+      heightUnity: Joi.string().required(),
+      width: Joi.number().required(),
+      widthUnity: Joi.string().required(),
+      depth: Joi.number().required(),
+      depthUnity: Joi.string().required(),
+      depthOpen: Joi.number().required(),
+      depthOpenUnity: Joi.string().required(),
+      addtitionalPercentage: Joi.number().required(),
+    },
+  }),
+  productController.updateProductPrice,
+);
+
+productRouter.patch(
+  '/tissue',
+  ensureAuthenticated,
+  celebrate({
+    [Segments.BODY]: {
+      id: Joi.string().required(),
+      productId: Joi.string().required(),
+      description: Joi.string().required(),
+      type: Joi.string().required(),
+      underConsultation: Joi.bool().required(),
+      inRestocked: Joi.bool().required(),
+    },
+  }),
+  productController.updateProductTissue,
 );
 
 productRouter.get(
@@ -70,6 +144,28 @@ productRouter.delete(
     },
   }),
   productController.delete,
+);
+
+productRouter.delete(
+  '/price',
+  ensureAuthenticated,
+  celebrate({
+    [Segments.QUERY]: {
+      id: Joi.string().uuid().required(),
+    },
+  }),
+  productController.deleteProductPrice,
+);
+
+productRouter.delete(
+  '/tissue',
+  ensureAuthenticated,
+  celebrate({
+    [Segments.QUERY]: {
+      id: Joi.string().uuid().required(),
+    },
+  }),
+  productController.deleteProductTissue,
 );
 
 productRouter.post(

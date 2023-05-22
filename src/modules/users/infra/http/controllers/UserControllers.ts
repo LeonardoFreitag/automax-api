@@ -1,9 +1,11 @@
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 import CreateUserService from '@modules/users/services/CreateUserService';
+import CreateUserRuleService from '@modules/users/services/CreateUserRuleService';
 import UpdateProfileService from '@modules/users/services/UdpateProfileService';
 import ListUserService from '@modules/users/services/ListUsersService';
 import DeleteUserService from '@modules/users/services/DeleteUserService';
+import DeleteUserRuleService from '@modules/users/services/DeleteUserRuleService';
 import { classToClass } from 'class-transformer';
 
 export default class UserController {
@@ -15,9 +17,9 @@ export default class UserController {
       email,
       cellphone,
       password,
-      comissionPercentage,
-      isCommissioned,
-      rules,
+      isComissioned,
+      perCommission,
+      UserRules,
     } = request.body;
 
     const createUser = container.resolve(CreateUserService);
@@ -29,12 +31,28 @@ export default class UserController {
       email,
       cellphone,
       password,
-      comissionPercentage,
-      isCommissioned,
-      rules,
+      isComissioned,
+      perCommission,
+      UserRules,
     });
 
-    return response.json(classToClass(user));
+    return response.json(user);
+  }
+
+  public async createRule(
+    request: Request,
+    response: Response,
+  ): Promise<Response> {
+    const { userId, rule } = request.body;
+
+    const createUserRule = container.resolve(CreateUserRuleService);
+
+    const user = await createUserRule.execute({
+      userId,
+      rule,
+    });
+
+    return response.json(user);
   }
 
   public async update(request: Request, response: Response): Promise<Response> {
@@ -54,7 +72,7 @@ export default class UserController {
 
     const user = await listUsers.execute(String(customerId));
 
-    return response.json(classToClass(user));
+    return response.json(user);
   }
 
   public async delete(request: Request, response: Response): Promise<Response> {
@@ -63,6 +81,19 @@ export default class UserController {
     const deleteUserService = container.resolve(DeleteUserService);
 
     await deleteUserService.execute(String(id));
+
+    return response.status(204).json();
+  }
+
+  public async deleteRule(
+    request: Request,
+    response: Response,
+  ): Promise<Response> {
+    const { id } = request.query;
+
+    const deleteUserRuleService = container.resolve(DeleteUserRuleService);
+
+    await deleteUserRuleService.execute(String(id));
 
     return response.status(204).json();
   }

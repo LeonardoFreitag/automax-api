@@ -17,12 +17,24 @@ usersRouter.post(
       email: Joi.string().email().required(),
       cellphone: Joi.string().empty(''),
       password: Joi.string().required(),
-      isCommissioned: Joi.boolean().required(),
-      comissionPercentage: Joi.number().required(),
-      rules: Joi.array().required(),
+      isComissioned: Joi.boolean().required(),
+      perCommission: Joi.number().required(),
+      UserRules: Joi.array().required(),
     },
   }),
   usersController.create,
+);
+
+usersRouter.post(
+  '/rule',
+  ensureAuthenticated,
+  celebrate({
+    [Segments.BODY]: {
+      userId: Joi.string().required(),
+      rule: Joi.string().required(),
+    },
+  }),
+  usersController.createRule,
 );
 
 usersRouter.patch(
@@ -37,9 +49,8 @@ usersRouter.patch(
       email: Joi.string().email().required(),
       cellphone: Joi.string().empty(''),
       password: Joi.string().required(),
-      isCommissioned: Joi.boolean().required(),
-      comissionPercentage: Joi.number().required(),
-      rules: Joi.array().required(),
+      isComissioned: Joi.boolean().required(),
+      perCommission: Joi.number().required(),
     },
   }),
   usersController.update,
@@ -63,6 +74,16 @@ usersRouter.delete(
     },
   }),
   usersController.delete,
+);
+
+usersRouter.delete(
+  '/rule',
+  celebrate({
+    [Segments.QUERY]: {
+      id: Joi.string().uuid().required(),
+    },
+  }),
+  usersController.deleteRule,
 );
 
 export default usersRouter;

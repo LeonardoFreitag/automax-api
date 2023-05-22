@@ -1,7 +1,7 @@
 import IStorageProvider from '@shared/container/providers/StorageProvider/models/IStorageProvider';
 import AppError from '@shared/errors/AppError';
 import { injectable, inject } from 'tsyringe';
-import Sale from '../infra/typeorm/entities/Sale';
+import { Sale } from '@prisma/client';
 import ISaleRepository from '../repositories/ISaleRepository';
 
 interface IRequest {

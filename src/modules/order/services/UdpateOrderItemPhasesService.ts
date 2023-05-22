@@ -1,8 +1,7 @@
 import AppError from '@shared/errors/AppError';
 import IOrderItemPhasesRepository from '@modules/order/repositories/IOrderItemPhasesRepository';
 import { injectable, inject } from 'tsyringe';
-
-import OrderItemPhases from '@modules/order/infra/typeorm/entities/OrderItemPhases';
+import { OrderItemsPhases } from '@prisma/client';
 
 @injectable()
 class UpdateOrderItemPhasesService {
@@ -11,7 +10,7 @@ class UpdateOrderItemPhasesService {
     private orderItemPhasesRepository: IOrderItemPhasesRepository,
   ) {}
 
-  public async execute(data: OrderItemPhases): Promise<OrderItemPhases> {
+  public async execute(data: OrderItemsPhases): Promise<OrderItemsPhases> {
     const { id } = data;
     const orderItemPhase = await this.orderItemPhasesRepository.findById(id);
 

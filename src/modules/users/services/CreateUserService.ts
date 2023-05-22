@@ -1,11 +1,9 @@
 import { injectable, inject } from 'tsyringe';
 
-import AppError from '@shared/errors/AppError';
 import IUserRepository from '@modules/users/repositories/IUserRepository';
 import IHashProvider from '@modules/users/providers/HashProvider/models/IHashProvider';
 
-import User from '@modules/users/infra/typeorm/entities/User';
-import ICreateUserDTO from '../dtos/ICreateUserDTO';
+import { Prisma, User } from '@prisma/client';
 
 @injectable()
 class CreateUserService {
@@ -24,10 +22,10 @@ class CreateUserService {
     email,
     cellphone,
     password,
-    comissionPercentage,
-    isCommissioned,
-    rules,
-  }: ICreateUserDTO): Promise<User> {
+    isComissioned,
+    perCommission,
+    UserRules,
+  }: Prisma.UserUncheckedCreateInput): Promise<User> {
     const checkUserExists = await this.userRepository.findByEmail(email);
 
     if (checkUserExists) {
@@ -40,19 +38,19 @@ class CreateUserService {
 
     const hashedPassword = await this.hashProvider.generateHash(password);
 
-    const user = await this.userRepository.create({
+    const newUser = await this.userRepository.create({
       customerId,
       isAdmin,
       name,
       email,
       cellphone,
       password: hashedPassword,
-      comissionPercentage,
-      isCommissioned,
-      rules,
+      isComissioned,
+      perCommission,
+      UserRules,
     });
 
-    return user;
+    return newUser;
   }
 }
 

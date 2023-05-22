@@ -1,6 +1,5 @@
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
-import { classToClass } from 'class-transformer';
 import CreateOrderItemsService from '@modules/order/services/CreateOrderItemsService';
 import UpdateOrderItemsService from '@modules/order/services/UdpateOrderItemsService';
 import ListOrderItemsService from '@modules/order/services/ListOrderItemsService';
@@ -8,7 +7,8 @@ import DeleteOrderItemsService from '@modules/order/services/DeleteOrderItemServ
 
 export default class OrderItemsControllers {
   public async create(request: Request, response: Response): Promise<Response> {
-    const { orderId, productId, saleId, description, phases } = request.body;
+    const { orderId, productId, saleId, description, OrderItemsPhases } =
+      request.body;
 
     const createOrderItemService = container.resolve(CreateOrderItemsService);
 
@@ -17,10 +17,10 @@ export default class OrderItemsControllers {
       productId,
       saleId,
       description,
-      phases,
+      OrderItemsPhases,
     });
 
-    return response.json(classToClass(orderItem));
+    return response.json(orderItem);
   }
 
   public async update(request: Request, response: Response): Promise<Response> {
@@ -30,7 +30,7 @@ export default class OrderItemsControllers {
 
     const orderItemUpdated = await updateOrderItemService.execute(data);
 
-    return response.json(classToClass(orderItemUpdated));
+    return response.json(orderItemUpdated);
   }
 
   public async list(request: Request, response: Response): Promise<Response> {
@@ -40,7 +40,7 @@ export default class OrderItemsControllers {
 
     const orderItems = await listOrderItemsService.execute(String(orderId));
 
-    return response.json(classToClass(orderItems));
+    return response.json(orderItems);
   }
 
   public async delete(request: Request, response: Response): Promise<Response> {

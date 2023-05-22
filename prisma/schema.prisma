@@ -1,0 +1,298 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                String              @id @default(uuid())
+  customerId        String
+  isAdmin           Boolean
+  name              String
+  cellphone         String
+  email             String
+  password          String
+  isComissioned     Boolean
+  perCommission     Decimal             @db.Decimal(15, 2)
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  UserRules         UserRules[]
+  UserTokens        UserTokens[]
+  UserRefreshTokens UserRefreshTokens[]
+
+  @@map("user")
+}
+
+model UserRules {
+  id        String   @id @default(uuid())
+  rule      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId String
+
+  @@map("userRules")
+}
+
+model UserTokens {
+  id        String   @id @default(uuid())
+  token     String   @unique() @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
+
+  @@map("userTokens")
+}
+
+model UserRefreshTokens {
+  id           String   @id @default(uuid())
+  refreshToken String   @unique()
+  expiresDate  DateTime
+  createdAt    DateTime @default(now())
+
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
+
+  @@map("userRefreshTokens")
+}
+
+model Client {
+  id                String              @id @default(uuid())
+  customerId        String
+  code              String
+  companyName       String
+  comercialName     String
+  streetName        String
+  streetNumber      String
+  neighborhood      String
+  complement        String
+  cnpj              String
+  ie                String
+  cityCode          String
+  city              String
+  stateCode         String
+  state             String
+  financialPendency Boolean
+  isNew             Boolean
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  ClientContact     ClientContact[]
+  ClientPaymentForm ClientPaymentForm[]
+
+  @@map("client")
+}
+
+model ClientContact {
+  id         String   @id @default(uuid())
+  name       String
+  fone       String
+  foneType   String
+  isWhatsApp Boolean
+  email      String
+  job        String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  client   Client @relation(fields: [clientId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  clientId String
+
+  @@map("clientContact")
+}
+
+model ClientPaymentForm {
+  id                String   @id @default(uuid())
+  paymentFormId     String
+  description       String
+  installmentsLimit Decimal
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  client   Client @relation(fields: [clientId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  clientId String
+
+  @@map("clientPaymentForm")
+}
+
+model Product {
+  id            String  @id @default(uuid())
+  customerId    String
+  code          String
+  reference     String
+  description   String
+  unity         String
+  groupId       String
+  group         String
+  photoFileName String?
+  photoUrl      String?
+  photoSize     String?
+
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  ProductPrice  ProductPrice[]
+  ProductTissue ProductTissue[]
+
+  @@map("product")
+}
+
+model ProductPrice {
+  id                    String   @id @default(uuid())
+  tableName             String
+  price                 Decimal
+  height                Decimal
+  heightUnity           String
+  width                 Decimal
+  widthUnity            String
+  depth                 Decimal
+  depthUnity            String
+  depthOpen             Decimal
+  depthOpenUnity        String
+  addtitionalPercentage Decimal
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  productId String
+
+  @@map("productPrice")
+}
+
+model ProductTissue {
+  id                String   @id @default(uuid())
+  description       String
+  type              String
+  underConsultation Boolean
+  inRestocked       Boolean
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  productId String
+
+  @@map("productTissue")
+}
+
+model Sale {
+  id                String            @id @default(uuid())
+  customerId        String
+  selerId           String
+  saleNumber        String
+  saleDate          DateTime
+  clientId          String
+  amount            Decimal
+  discount          Decimal
+  total             Decimal
+  notes             String
+  finished          Boolean
+  sent              Boolean
+  refused           Boolean
+  refusedNotes      String
+  returned          Boolean
+  returnedNotes     String
+  signatureFileName String?
+  signatureUrl      String?
+  signatureBase64   String?
+  accepted          Boolean
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+  SaleItems         SaleItems[]
+  SalePaymentForm   SalePaymentForm[]
+
+  @@map("sale")
+}
+
+model SaleItems {
+  id          String  @id @default(uuid())
+  productId   String
+  code        String
+  reference   String
+  description String
+  unity       String
+  tableId     String
+  price       Decimal
+  quantity    Decimal
+  amount      Decimal
+  notes       String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  sale   Sale   @relation(fields: [saleId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  saleId String
+
+  @@map("saleItems")
+}
+
+model SalePaymentForm {
+  id            String  @id @default(uuid())
+  paymentFormId String
+  descripriont  String
+  amount        Decimal
+  installments  Decimal
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  sale   Sale   @relation(fields: [saleId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  saleId String
+
+  @@map("salePaymentForm")
+}
+
+model Order {
+  id          String   @id @default(uuid())
+  customerId  String
+  orderNumber String
+  userId      String
+  orderDate   DateTime
+  description String
+  notes       String
+  finished    Boolean
+  canceled    Boolean
+
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+  OrderItems OrderItems[]
+
+  @@map("order")
+}
+
+model OrderItems {
+  id          String @id @default(uuid())
+  productId   String
+  saleId      String
+  description String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  order            Order              @relation(fields: [orderId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  orderId          String
+  OrderItemsPhases OrderItemsPhases[]
+
+  @@map("orderItems")
+}
+
+model OrderItemsPhases {
+  id         String   @id @default(uuid())
+  employeeId String
+  phaseDate  DateTime
+  phaseId    String
+  notes      String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  orderItems   OrderItems @relation(fields: [orderItemsId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  orderItemsId String
+
+  @@map("orderItemsPhases")
+}

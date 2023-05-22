@@ -1,10 +1,11 @@
-import OrderItemPhases from '@modules/order/infra/typeorm/entities/OrderItemPhases';
-import { ICreateOrderItemPhasesDTO } from '../dtos/ICreateOrderItemPhasesDTO';
+import { OrderItemsPhases, Prisma } from '@prisma/client';
 
 export default interface IOrderItemPhasesRepository {
-  findById(id: string): Promise<OrderItemPhases | undefined>;
-  create(data: ICreateOrderItemPhasesDTO): Promise<OrderItemPhases>;
-  save(orderItemPhases: OrderItemPhases): Promise<OrderItemPhases>;
-  list(orderItemId: string): Promise<OrderItemPhases[]>;
+  findById(id: string): Promise<OrderItemsPhases | undefined>;
+  create(
+    data: Prisma.OrderItemsPhasesUncheckedCreateInput,
+  ): Promise<OrderItemsPhases>;
+  save(orderItemsPhases: OrderItemsPhases): Promise<OrderItemsPhases>;
+  list(orderItemsId: string): Promise<OrderItemsPhases[]>;
   delete(id: string): Promise<void>;
 }

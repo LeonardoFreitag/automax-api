@@ -1,6 +1,6 @@
 import { injectable, inject } from 'tsyringe';
-import Client from '@modules/client/infra/typeorm/entities/Client';
 import IClientRepository from '@modules/client/repositories/IClientRepository';
+import { Client } from '@prisma/client';
 
 @injectable()
 class ListClientService {

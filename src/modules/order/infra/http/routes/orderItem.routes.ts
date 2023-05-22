@@ -16,7 +16,7 @@ orderItemRouter.post(
       productId: Joi.string().required(),
       saleId: Joi.string().required(),
       description: Joi.string().required(),
-      phases: Joi.array().required(),
+      OrderItemsPhases: Joi.array().required(),
     },
   }),
   orderItemController.create,

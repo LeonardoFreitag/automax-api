@@ -1,7 +1,6 @@
 import { injectable, inject } from 'tsyringe';
 import IProductRepository from '@modules/product/repositories/IProductRepository';
-import Product from '@modules/product/infra/typeorm/entities/Product';
-import { ICreateProductDTO } from '@modules/product/dtos/ICreateProductDTO';
+import { Prisma, Product } from '@prisma/client';
 
 @injectable()
 class CreateProductService {
@@ -18,9 +17,9 @@ class CreateProductService {
     unity,
     groupId,
     group,
-    price,
-    tissue,
-  }: ICreateProductDTO): Promise<Product> {
+    ProductPrice,
+    ProductTissue,
+  }: Prisma.ProductUncheckedCreateInput): Promise<Product> {
     const checkProductExists = await this.productRepository.findByReference(
       reference,
     );
@@ -37,8 +36,8 @@ class CreateProductService {
       unity,
       groupId,
       group,
-      price,
-      tissue,
+      ProductPrice,
+      ProductTissue,
     });
 
     return product;

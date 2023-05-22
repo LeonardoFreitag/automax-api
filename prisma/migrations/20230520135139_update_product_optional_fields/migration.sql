@@ -1,0 +1,4 @@
+-- AlterTable
+ALTER TABLE "product" ALTER COLUMN "photoFileName" DROP NOT NULL,
+ALTER COLUMN "photoUrl" DROP NOT NULL,
+ALTER COLUMN "photoSize" DROP NOT NULL;

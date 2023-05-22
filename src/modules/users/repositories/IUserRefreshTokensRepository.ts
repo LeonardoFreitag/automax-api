@@ -1,4 +1,4 @@
-import UserRefreshToken from '@modules/users/infra/typeorm/entities/UserRefreshTokens';
+import { UserRefreshTokens } from '@prisma/client';
 import { ICreateUserRefreshToken } from '../dtos/ICreateUserRefreshTokenDTO';
 
 export default interface IUserRefreshTokensRepository {
@@ -6,10 +6,10 @@ export default interface IUserRefreshTokensRepository {
     expiresDate,
     userId,
     refreshToken,
-  }: ICreateUserRefreshToken): Promise<UserRefreshToken>;
+  }: ICreateUserRefreshToken): Promise<UserRefreshTokens>;
   findByUserIdAndRefreshToken(
     userId: string,
     refreshToken: string,
-  ): Promise<UserRefreshToken | undefined>;
+  ): Promise<UserRefreshTokens | undefined>;
   deleteById(id: string): Promise<void>;
 }

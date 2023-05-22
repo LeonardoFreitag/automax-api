@@ -4,31 +4,31 @@ import '@modules/users/providers';
 import '@shared/container/providers';
 
 import IUserRepository from '@modules/users/repositories/IUserRepository';
-import UserRepository from '@modules/users/infra/typeorm/repositories/UserRepository';
+import UserRepository from '@modules/users/infra/prisma/repositories/UserRepository';
 
 import IUserTokensRepository from '@modules/users/repositories/IUserTokensRepository';
-import UserTokensRepository from '@modules/users/infra/typeorm/repositories/UserTokensRepository';
+import UserTokensRepository from '@modules/users/infra/prisma/repositories/UserTokensRepository';
 
 import IUserRefreshTokensRepository from '@modules/users/repositories/IUserRefreshTokensRepository';
-import UserRefreshTokensRepository from '@modules/users/infra/typeorm/repositories/UserRefreshTokensRepository';
+import UserRefreshTokensRepository from '@modules/users/infra/prisma/repositories/UserRefreshTokensRepository';
 
 import IClientRepository from '@modules/client/repositories/IClientRepository';
-import ClientRepository from '@modules/client/infra/typeorm/repositories/ClientRepository';
+import ClientRepository from '@modules/client/infra/prisma/repositories/ClientRepository';
 
 import IProductRepository from '@modules/product/repositories/IProductRepository';
-import ProductRepository from '@modules/product/infra/typeorm/repositories/ProductRepository';
+import ProductRepository from '@modules/product/infra/prisma/repositories/ProductRepository';
 
 import ISaleRepository from '@modules/sale/repositories/ISaleRepository';
-import SaleRepository from '@modules/sale/infra/typeorm/repositories/SaleRepository';
+import SaleRepository from '@modules/sale/infra/prisma/repositories/SaleRepository';
 
 import IOrderRepository from '@modules/order/repositories/IOrderRepository';
-import OrderRepository from '@modules/order/infra/typeorm/repositories/OrderRepository';
+import OrderRepository from '@modules/order/infra/prisma/repositories/OrderRepository';
 
 import IOrderItemsRepository from '@modules/order/repositories/IOrderItemsRepository';
-import OrderItemsRepository from '@modules/order/infra/typeorm/repositories/OrderItemsRepository';
+import OrderItemsRepository from '@modules/order/infra/prisma/repositories/OrderItemsRepository';
 
 import IOrderItemPhasesRepository from '@modules/order/repositories/IOrderItemPhasesRepository';
-import OrderItemPhasesRepository from '@modules/order/infra/typeorm/repositories/OrderItemPhasesRepository';
+import OrderItemPhasesRepository from '@modules/order/infra/prisma/repositories/OrderItemPhasesRepository';
 
 container.registerSingleton<IUserRepository>('UserRepository', UserRepository);
 

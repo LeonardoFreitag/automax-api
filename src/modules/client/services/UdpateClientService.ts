@@ -1,8 +1,7 @@
 import AppError from '@shared/errors/AppError';
 import IClientRepository from '@modules/client/repositories/IClientRepository';
 import { injectable, inject } from 'tsyringe';
-
-import Client from '@modules/client/infra/typeorm/entities/Client';
+import { Client } from '@prisma/client';
 
 @injectable()
 class UpdateClientService {
@@ -19,9 +18,6 @@ class UpdateClientService {
       throw new AppError('Client not found');
     }
 
-    this.clientRepository.deleteContacts(data.id);
-    this.clientRepository.deletePaymentForms(data.id);
-
     client.code = data.code;
     client.companyName = data.companyName;
     client.comercialName = data.comercialName;
@@ -35,9 +31,7 @@ class UpdateClientService {
     client.city = data.city;
     client.stateCode = data.stateCode;
     client.state = data.state;
-    client.contacts = data.contacts;
     client.financialPendency = data.financialPendency;
-    client.paymentForm = data.paymentForm;
     client.isNew = data.isNew;
 
     return this.clientRepository.save(client);

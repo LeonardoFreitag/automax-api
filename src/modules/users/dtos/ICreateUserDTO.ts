@@ -1,5 +1,3 @@
-import { ICreateUserRulesDTO } from './ICreateUserRulesDTO';
-
 export default interface ICreateUserDTO {
   customerId: string;
   isAdmin: boolean;
@@ -7,7 +5,5 @@ export default interface ICreateUserDTO {
   cellphone: string;
   email: string;
   password: string;
-  isCommissioned: boolean;
-  comissionPercentage: number;
-  rules: ICreateUserRulesDTO[];
+  isComissioned: boolean;
 }

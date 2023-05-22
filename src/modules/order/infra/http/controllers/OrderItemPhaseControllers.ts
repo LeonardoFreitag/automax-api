@@ -1,6 +1,5 @@
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
-import { classToClass } from 'class-transformer';
 import CreateOrderItemPhasesService from '@modules/order/services/CreateOrderItemPhasesService';
 import UpdateOrderItemPhasesService from '@modules/order/services/UdpateOrderItemPhasesService';
 import ListOrderItemPhasesService from '@modules/order/services/ListOrderItemPhasesService';
@@ -8,21 +7,22 @@ import DeleteOrderItemPhasesService from '@modules/order/services/DeleteOrderIte
 
 export default class OrderItemPhaseControllers {
   public async create(request: Request, response: Response): Promise<Response> {
-    const { orderItemId, employeeId, phaseDate, phaseId, notes } = request.body;
+    const { orderItemsId, employeeId, phaseDate, phaseId, notes } =
+      request.body;
 
     const createOrderItemPhaseService = container.resolve(
       CreateOrderItemPhasesService,
     );
 
     const orderItemPhase = await createOrderItemPhaseService.execute({
-      orderItemId,
+      orderItemsId,
       employeeId,
       phaseDate,
       phaseId,
       notes,
     });
 
-    return response.json(classToClass(orderItemPhase));
+    return response.json(orderItemPhase);
   }
 
   public async update(request: Request, response: Response): Promise<Response> {
@@ -36,21 +36,21 @@ export default class OrderItemPhaseControllers {
       data,
     );
 
-    return response.json(classToClass(orderItemPhaseUpdated));
+    return response.json(orderItemPhaseUpdated);
   }
 
   public async list(request: Request, response: Response): Promise<Response> {
-    const { orderItemId } = request.query;
+    const { orderItemsId } = request.query;
 
     const listOrderItemsPhaseService = container.resolve(
       ListOrderItemPhasesService,
     );
 
     const orderItemsPhase = await listOrderItemsPhaseService.execute(
-      String(orderItemId),
+      String(orderItemsId),
     );
 
-    return response.json(classToClass(orderItemsPhase));
+    return response.json(orderItemsPhase);
   }
 
   public async delete(request: Request, response: Response): Promise<Response> {

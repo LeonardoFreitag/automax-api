@@ -1,10 +1,15 @@
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
-import { classToClass } from 'class-transformer';
 import CreateProductService from '@modules/product/services/CreateProductService';
+import CreateProductPriceService from '@modules/product/services/CreateProductPriceService';
+import CreateProductTissueService from '@modules/product/services/CreateProductTissueService';
 import UpdateProductService from '@modules/product/services/UdpateProductService';
+import UpdateProductPriceService from '@modules/product/services/UdpateProductPriceService';
+import UpdateProductTissueService from '@modules/product/services/UdpateProductTissueService';
 import ListProductService from '@modules/product/services/ListProductService';
 import DeleteProductService from '@modules/product/services/DeleteProductService';
+import DeleteProductPriceService from '@modules/product/services/DeleteProductPriceService';
+import DeleteProductTissueService from '@modules/product/services/DeleteProductTissueService';
 import UploadPhotoService from '@modules/product/services/UploadPhotoService';
 
 export default class ProductController {
@@ -17,8 +22,8 @@ export default class ProductController {
       unity,
       groupId,
       group,
-      price,
-      tissue,
+      ProductPrice,
+      ProductTissue,
     } = request.body;
 
     const createProduct = container.resolve(CreateProductService);
@@ -31,11 +36,70 @@ export default class ProductController {
       unity,
       groupId,
       group,
-      price,
-      tissue,
+      ProductPrice,
+      ProductTissue,
     });
 
-    return response.json(classToClass(Product));
+    return response.json(Product);
+  }
+
+  public async createProductPrice(
+    request: Request,
+    response: Response,
+  ): Promise<Response> {
+    const {
+      productId,
+      tableName,
+      price,
+      height,
+      heightUnity,
+      width,
+      widthUnity,
+      depth,
+      depthUnity,
+      depthOpen,
+      depthOpenUnity,
+      addtitionalPercentage,
+    } = request.body;
+
+    const createProductPrice = container.resolve(CreateProductPriceService);
+
+    const productPrice = await createProductPrice.execute({
+      productId,
+      tableName,
+      price,
+      height,
+      heightUnity,
+      width,
+      widthUnity,
+      depth,
+      depthUnity,
+      depthOpen,
+      depthOpenUnity,
+      addtitionalPercentage,
+    });
+
+    return response.json(productPrice);
+  }
+
+  public async createProductTissue(
+    request: Request,
+    response: Response,
+  ): Promise<Response> {
+    const { productId, description, type, underConsultation, inRestocked } =
+      request.body;
+
+    const createProductTissue = container.resolve(CreateProductTissueService);
+
+    const productTissue = await createProductTissue.execute({
+      productId,
+      description,
+      type,
+      underConsultation,
+      inRestocked,
+    });
+
+    return response.json(productTissue);
   }
 
   public async update(request: Request, response: Response): Promise<Response> {
@@ -43,9 +107,35 @@ export default class ProductController {
 
     const updateProduct = container.resolve(UpdateProductService);
 
-    const Product = await updateProduct.execute(data);
+    const product = await updateProduct.execute(data);
 
-    return response.json(classToClass(Product));
+    return response.json(product);
+  }
+
+  public async updateProductPrice(
+    request: Request,
+    response: Response,
+  ): Promise<Response> {
+    const data = request.body;
+
+    const updateProductPrice = container.resolve(UpdateProductPriceService);
+
+    const productPrice = await updateProductPrice.execute(data);
+
+    return response.json(productPrice);
+  }
+
+  public async updateProductTissue(
+    request: Request,
+    response: Response,
+  ): Promise<Response> {
+    const data = request.body;
+
+    const updateProductTissue = container.resolve(UpdateProductTissueService);
+
+    const productTissue = await updateProductTissue.execute(data);
+
+    return response.json(productTissue);
   }
 
   public async list(request: Request, response: Response): Promise<Response> {
@@ -55,7 +145,7 @@ export default class ProductController {
 
     const Product = await listProducts.execute(String(customerId));
 
-    return response.json(classToClass(Product));
+    return response.json(Product);
   }
 
   public async delete(request: Request, response: Response): Promise<Response> {
@@ -64,6 +154,36 @@ export default class ProductController {
     const deleteProductService = container.resolve(DeleteProductService);
 
     await deleteProductService.execute(String(id));
+
+    return response.status(204).json();
+  }
+
+  public async deleteProductPrice(
+    request: Request,
+    response: Response,
+  ): Promise<Response> {
+    const { id } = request.query;
+
+    const deleteProductPriceService = container.resolve(
+      DeleteProductPriceService,
+    );
+
+    await deleteProductPriceService.execute(String(id));
+
+    return response.status(204).json();
+  }
+
+  public async deleteProductTissue(
+    request: Request,
+    response: Response,
+  ): Promise<Response> {
+    const { id } = request.query;
+
+    const deleteProductTissueService = container.resolve(
+      DeleteProductTissueService,
+    );
+
+    await deleteProductTissueService.execute(String(id));
 
     return response.status(204).json();
   }
@@ -82,6 +202,6 @@ export default class ProductController {
       photoFileName: request.file.filename,
     });
 
-    return response.json(classToClass(entrieAttach));
+    return response.json(entrieAttach);
   }
 }

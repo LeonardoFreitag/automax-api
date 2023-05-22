@@ -1,6 +1,10 @@
 import { injectable, inject } from 'tsyringe';
-import User from '@modules/users/infra/typeorm/entities/User';
 import IUserRepository from '@modules/users/repositories/IUserRepository';
+import { User } from '@prisma/client';
+
+interface ListUserResponse {
+  users: User[];
+}
 
 @injectable()
 class ListUserService {
@@ -9,10 +13,10 @@ class ListUserService {
     private userRepository: IUserRepository,
   ) {}
 
-  public async execute(customerId: string): Promise<User[] | undefined> {
-    const allUserByidCustomer = await this.userRepository.list(customerId);
+  public async execute(customerId: string): Promise<User[]> {
+    const users = await this.userRepository.list(customerId);
 
-    return allUserByidCustomer;
+    return users;
   }
 }
 
