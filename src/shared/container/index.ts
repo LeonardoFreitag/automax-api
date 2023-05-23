@@ -30,6 +30,9 @@ import OrderItemsRepository from '@modules/order/infra/prisma/repositories/Order
 import IOrderItemPhasesRepository from '@modules/order/repositories/IOrderItemPhasesRepository';
 import OrderItemPhasesRepository from '@modules/order/infra/prisma/repositories/OrderItemPhasesRepository';
 
+import ICustomerRepository from '@modules/customer/repositories/ICustomerRepository';
+import CustomerRepository from '@modules/customer/infra/prisma/repositories/CustomerRepository';
+
 container.registerSingleton<IUserRepository>('UserRepository', UserRepository);
 
 container.registerSingleton<IUserTokensRepository>(
@@ -67,4 +70,9 @@ container.registerSingleton<IOrderItemsRepository>(
 container.registerSingleton<IOrderItemPhasesRepository>(
   'OrderItemPhasesRepository',
   OrderItemPhasesRepository,
+);
+
+container.registerSingleton<ICustomerRepository>(
+  'CustomerRepository',
+  CustomerRepository,
 );

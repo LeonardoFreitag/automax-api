@@ -296,3 +296,14 @@ model OrderItemsPhases {
 
   @@map("orderItemsPhases")
 }
+
+model Customer {
+  id          String @id @default(uuid())
+  cnpj        String @unique
+  companyName String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("customer")
+}

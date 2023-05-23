@@ -1,5 +1,6 @@
 import { Router } from 'express';
 
+import customerRouter from '@modules/customer/infra/http/routes/customer.routes';
 import usersRouter from '@modules/users/infra/http/routes/user.routes';
 import sessionsRouter from '@modules/users/infra/http/routes/sessions.routes';
 import passwordRouter from '@modules/users/infra/http/routes/password.routes';
@@ -12,6 +13,9 @@ import orderItemRouter from '@modules/order/infra/http/routes/orderItem.routes';
 import orderItemPhaseRouter from '@modules/order/infra/http/routes/orderItemPhase.routes';
 
 const routes = Router();
+
+// customer
+routes.use('/customer', customerRouter);
 
 // users
 routes.use('/user', usersRouter);
