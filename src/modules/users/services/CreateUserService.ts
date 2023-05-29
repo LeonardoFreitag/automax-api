@@ -4,6 +4,7 @@ import IUserRepository from '@modules/users/repositories/IUserRepository';
 import IHashProvider from '@modules/users/providers/HashProvider/models/IHashProvider';
 
 import { Prisma, User } from '@prisma/client';
+import AppError from '@shared/errors/AppError';
 
 @injectable()
 class CreateUserService {
@@ -22,18 +23,16 @@ class CreateUserService {
     email,
     cellphone,
     password,
-    isComissioned,
-    perCommission,
     UserRules,
   }: Prisma.UserUncheckedCreateInput): Promise<User> {
     const checkUserExists = await this.userRepository.findByEmail(email);
 
     if (checkUserExists) {
-      this.userRepository.delete(checkUserExists.id);
-      // throw new AppError(
-      //   'Já existe um usuário regitrado com este e-mail.',
-      //   409,
-      // );
+      // this.userRepository.delete(checkUserExists.id);
+      throw new AppError(
+        'Já existe um usuário regitrado com este e-mail.',
+        409,
+      );
     }
 
     const hashedPassword = await this.hashProvider.generateHash(password);
@@ -45,8 +44,6 @@ class CreateUserService {
       email,
       cellphone,
       password: hashedPassword,
-      isComissioned,
-      perCommission,
       UserRules,
     });
 

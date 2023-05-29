@@ -12,19 +12,19 @@ datasource db {
 
 model User {
   id                String              @id @default(uuid())
-  customerId        String
   isAdmin           Boolean
   name              String
   cellphone         String
   email             String
   password          String
-  isComissioned     Boolean
-  perCommission     Decimal             @db.Decimal(15, 2)
   createdAt         DateTime            @default(now())
   updatedAt         DateTime            @updatedAt
   UserRules         UserRules[]
   UserTokens        UserTokens[]
   UserRefreshTokens UserRefreshTokens[]
+
+  customer   Customer @relation(fields: [customerId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  customerId String
 
   @@map("user")
 }
@@ -47,7 +47,7 @@ model UserTokens {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  user   User   @relation(fields: [userId], references: [id])
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   userId String
 
   @@map("userTokens")
@@ -59,7 +59,7 @@ model UserRefreshTokens {
   expiresDate  DateTime
   createdAt    DateTime @default(now())
 
-  user   User   @relation(fields: [userId], references: [id])
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   userId String
 
   @@map("userRefreshTokens")
@@ -71,6 +71,7 @@ model Client {
   code              String
   companyName       String
   comercialName     String
+  zipCode           String
   streetName        String
   streetNumber      String
   neighborhood      String
@@ -83,6 +84,7 @@ model Client {
   state             String
   financialPendency Boolean
   isNew             Boolean
+  sellerId          String
   createdAt         DateTime            @default(now())
   updatedAt         DateTime            @updatedAt
   ClientContact     ClientContact[]
@@ -122,6 +124,17 @@ model ClientPaymentForm {
   @@map("clientPaymentForm")
 }
 
+model Group {
+  id         String    @id @default(uuid())
+  customerId String
+  group      String
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  Product    Product[]
+
+  @@map("group")
+}
+
 model Product {
   id            String  @id @default(uuid())
   customerId    String
@@ -129,8 +142,6 @@ model Product {
   reference     String
   description   String
   unity         String
-  groupId       String
-  group         String
   photoFileName String?
   photoUrl      String?
   photoSize     String?
@@ -140,24 +151,29 @@ model Product {
   ProductPrice  ProductPrice[]
   ProductTissue ProductTissue[]
 
+  group   Group  @relation(fields: [groupId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  groupId String
+
   @@map("product")
 }
 
 model ProductPrice {
-  id                    String   @id @default(uuid())
-  tableName             String
-  price                 Decimal
-  height                Decimal
-  heightUnity           String
-  width                 Decimal
-  widthUnity            String
-  depth                 Decimal
-  depthUnity            String
-  depthOpen             Decimal
-  depthOpenUnity        String
-  addtitionalPercentage Decimal
-  createdAt             DateTime @default(now())
-  updatedAt             DateTime @updatedAt
+  id                   String   @id @default(uuid())
+  tableName            String
+  price                Decimal
+  height               Decimal
+  heightUnity          String
+  minWidth             Decimal
+  width                Decimal
+  maxWidth             Decimal
+  widthUnity           String
+  depth                Decimal
+  depthUnity           String
+  depthOpen            Decimal
+  depthOpenUnity       String
+  additionalPercentage Decimal
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
 
   product   Product @relation(fields: [productId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   productId String
@@ -304,6 +320,7 @@ model Customer {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  User      User[]
 
   @@map("customer")
 }

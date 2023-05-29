@@ -2,10 +2,6 @@ import { injectable, inject } from 'tsyringe';
 import IUserRepository from '@modules/users/repositories/IUserRepository';
 import { User } from '@prisma/client';
 
-interface ListUserResponse {
-  users: User[];
-}
-
 @injectable()
 class ListUserService {
   constructor(

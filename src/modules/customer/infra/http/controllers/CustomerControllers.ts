@@ -7,13 +7,16 @@ import DeleteCustomerService from '@modules/customer/services/DeleteCustomerServ
 
 export default class CustomerControllers {
   public async create(request: Request, response: Response): Promise<Response> {
-    const { cnpj, companyName } = request.body;
+    const { cnpj, companyName, cellphone, email, password } = request.body;
 
     const createCustomer = container.resolve(CreateCustomerService);
 
     const customer = await createCustomer.execute({
       cnpj,
       companyName,
+      cellphone,
+      email,
+      password,
     });
 
     return response.json(customer);

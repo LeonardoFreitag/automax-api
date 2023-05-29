@@ -3,6 +3,20 @@ import { Prisma, User, UserRules } from '@prisma/client';
 import { prisma } from '@shared/infra/prisma/prisma';
 
 class UserRepository implements IUserRepository {
+  public async createManyRules(
+    rules: Prisma.UserRulesUncheckedCreateInput[],
+  ): Promise<void> {
+    await prisma.userRules.createMany({
+      data: rules,
+    });
+  }
+
+  public async deleteRules(userId: string): Promise<void> {
+    await prisma.userRules.deleteMany({
+      where: { userId },
+    });
+  }
+
   public async createRule(userId: string, rule: string): Promise<UserRules> {
     const newRule = await prisma.userRules.create({
       data: {
@@ -57,7 +71,7 @@ class UserRepository implements IUserRepository {
   }
 
   public async create(
-    userData: Prisma.UserCreateInput,
+    userData: Prisma.UserUncheckedCreateInput,
   ): Promise<User | undefined> {
     const newUser = await prisma.user.create({
       data: {
@@ -67,8 +81,6 @@ class UserRepository implements IUserRepository {
         cellphone: userData.cellphone,
         email: userData.email,
         password: userData.password,
-        isComissioned: userData.isComissioned,
-        perCommission: new Prisma.Decimal(userData.perCommission.toString()),
         UserRules: {
           createMany: {
             data: userData.UserRules as Prisma.UserRulesUncheckedCreateInput,

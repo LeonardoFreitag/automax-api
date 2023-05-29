@@ -8,6 +8,55 @@ import {
 import { prisma } from '@shared/infra/prisma/prisma';
 
 class ClientRepository implements IClientRepository {
+  public async listBySellerId(
+    customerId: string,
+    sellerId: string,
+  ): Promise<Client[]> {
+    const listClient = await prisma.client.findMany({
+      where: {
+        customerId,
+        sellerId,
+      },
+      include: {
+        ClientContact: true,
+        ClientPaymentForm: true,
+      },
+    });
+    return listClient;
+  }
+
+  public async createManyContact(
+    data: Prisma.ClientContactUncheckedCreateInput[],
+  ): Promise<void> {
+    await prisma.clientContact.createMany({
+      data,
+    });
+  }
+
+  public async createManyPaymentForm(
+    data: Prisma.ClientPaymentFormUncheckedCreateInput[],
+  ): Promise<void> {
+    await prisma.clientPaymentForm.createMany({
+      data,
+    });
+  }
+
+  public async deleteContacts(clientId: string): Promise<void> {
+    await prisma.clientContact.deleteMany({
+      where: {
+        clientId,
+      },
+    });
+  }
+
+  public async deletePaymentForms(clientId: string): Promise<void> {
+    await prisma.clientPaymentForm.deleteMany({
+      where: {
+        clientId,
+      },
+    });
+  }
+
   public async findContactById(id: string): Promise<ClientContact> {
     const contact = await prisma.clientContact.findUnique({
       where: {
@@ -120,7 +169,19 @@ class ClientRepository implements IClientRepository {
 
   public async create(clientData: Prisma.ClientCreateInput): Promise<Client> {
     const client = await prisma.client.create({
-      data: clientData,
+      data: {
+        ...clientData,
+        ClientContact: {
+          createMany: {
+            data: clientData.ClientContact as Prisma.ClientContactUncheckedCreateInput,
+          },
+        },
+        ClientPaymentForm: {
+          createMany: {
+            data: clientData.ClientPaymentForm as Prisma.ClientPaymentFormUncheckedCreateInput,
+          },
+        },
+      },
     });
 
     return client;

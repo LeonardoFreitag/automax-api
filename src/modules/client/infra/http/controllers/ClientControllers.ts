@@ -7,9 +7,27 @@ import UpdateClientService from '@modules/client/services/UdpateClientService';
 import UpdateClientContactService from '@modules/client/services/UdpateClientContactService';
 import UpdateClientPaymentFormService from '@modules/client/services/UdpateClientPaymentFormService';
 import ListClientService from '@modules/client/services/ListClientService';
+import ListClientBySellerIdService from '@modules/client/services/ListClientBySellerIdService';
 import DeleteClientService from '@modules/client/services/DeleteClientService';
 import DeleteClientContactService from '@modules/client/services/DeleteClientContactService';
 import DeleteClientPaymentFormService from '@modules/client/services/DeleteClientPaymentFormService';
+
+interface PaymentFormUpdateModel {
+  paymentFormId: string;
+  description: string;
+  installmentsLimit: number;
+  clientId: string;
+}
+
+interface ContactUpdateModel {
+  name: string;
+  fone: string;
+  foneType: string;
+  isWhatsApp: boolean;
+  email: string;
+  job: string;
+  clientId: string;
+}
 
 export default class ClientController {
   public async create(request: Request, response: Response): Promise<Response> {
@@ -18,6 +36,7 @@ export default class ClientController {
       code,
       companyName,
       comercialName,
+      zipCode,
       streetName,
       streetNumber,
       neighborhood,
@@ -30,6 +49,9 @@ export default class ClientController {
       state,
       financialPendency,
       isNew,
+      sellerId,
+      ClientContact,
+      ClientPaymentForm,
     } = request.body;
 
     const createClient = container.resolve(CreateClientService);
@@ -39,6 +61,7 @@ export default class ClientController {
       code,
       companyName,
       comercialName,
+      zipCode,
       streetName,
       streetNumber,
       neighborhood,
@@ -51,6 +74,9 @@ export default class ClientController {
       state,
       financialPendency,
       isNew,
+      sellerId,
+      ClientContact,
+      ClientPaymentForm,
     });
 
     return response.json(client);
@@ -102,11 +128,48 @@ export default class ClientController {
   public async update(request: Request, response: Response): Promise<Response> {
     const data = request.body;
 
+    const { contacts, paymentForms } = request.body;
+
+    // console.log(data);
+    // console.log(contacts);
+    // console.log(paymentForms);
+
+    // return response.json([]);
+
+    const contactList: ContactUpdateModel[] = contacts.map(
+      (item: ContactUpdateModel) => {
+        return {
+          name: item.name,
+          fone: item.fone,
+          foneType: item.foneType,
+          isWhatsApp: item.isWhatsApp,
+          email: item.email,
+          job: item.job,
+          clientId: item.clientId,
+        };
+      },
+    );
+
+    const paymentFormList: PaymentFormUpdateModel[] = paymentForms.map(
+      (item: PaymentFormUpdateModel) => {
+        return {
+          paymentFormId: item.paymentFormId,
+          description: item.description,
+          installmentsLimit: item.installmentsLimit,
+          clientId: item.clientId,
+        };
+      },
+    );
+
     const updateClient = container.resolve(UpdateClientService);
 
-    const Client = await updateClient.execute(data);
+    const updatedClient = await updateClient.execute(
+      data,
+      contactList,
+      paymentFormList,
+    );
 
-    return response.json(Client);
+    return response.json(updatedClient);
   }
 
   public async updateContact(
@@ -143,6 +206,22 @@ export default class ClientController {
     const listClients = container.resolve(ListClientService);
 
     const Client = await listClients.execute(String(customerId));
+
+    return response.json(Client);
+  }
+
+  public async listBySellerId(
+    request: Request,
+    response: Response,
+  ): Promise<Response> {
+    const { customerId, sellerId } = request.query;
+
+    const listClients = container.resolve(ListClientBySellerIdService);
+
+    const Client = await listClients.execute(
+      String(customerId),
+      String(sellerId),
+    );
 
     return response.json(Client);
   }

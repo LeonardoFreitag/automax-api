@@ -17,8 +17,6 @@ usersRouter.post(
       email: Joi.string().email().required(),
       cellphone: Joi.string().empty(''),
       password: Joi.string().required(),
-      isComissioned: Joi.boolean().required(),
-      perCommission: Joi.number().required(),
       UserRules: Joi.array().required(),
     },
   }),
@@ -39,7 +37,6 @@ usersRouter.post(
 
 usersRouter.patch(
   '/',
-  ensureAuthenticated,
   celebrate({
     [Segments.BODY]: {
       id: Joi.string().required(),
@@ -49,8 +46,7 @@ usersRouter.patch(
       email: Joi.string().email().required(),
       cellphone: Joi.string().empty(''),
       password: Joi.string().required(),
-      isComissioned: Joi.boolean().required(),
-      perCommission: Joi.number().required(),
+      rules: Joi.array().required(),
     },
   }),
   usersController.update,

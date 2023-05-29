@@ -16,7 +16,6 @@ class CreateProductService {
     description,
     unity,
     groupId,
-    group,
     ProductPrice,
     ProductTissue,
   }: Prisma.ProductUncheckedCreateInput): Promise<Product> {
@@ -35,7 +34,6 @@ class CreateProductService {
       description,
       unity,
       groupId,
-      group,
       ProductPrice,
       ProductTissue,
     });

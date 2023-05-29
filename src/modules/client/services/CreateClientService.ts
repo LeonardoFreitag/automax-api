@@ -14,6 +14,7 @@ class CreateClientService {
     code,
     companyName,
     comercialName,
+    zipCode,
     streetName,
     streetNumber,
     neighborhood,
@@ -26,6 +27,9 @@ class CreateClientService {
     state,
     financialPendency,
     isNew,
+    sellerId,
+    ClientContact,
+    ClientPaymentForm,
   }: Prisma.ClientUncheckedCreateInput): Promise<Client> {
     const checkClientExists = await this.clientRepository.findByCnpj(cnpj);
 
@@ -38,6 +42,7 @@ class CreateClientService {
       code,
       companyName,
       comercialName,
+      zipCode,
       streetName,
       streetNumber,
       neighborhood,
@@ -50,6 +55,9 @@ class CreateClientService {
       state,
       financialPendency,
       isNew,
+      sellerId,
+      ClientContact,
+      ClientPaymentForm,
     });
 
     return client;

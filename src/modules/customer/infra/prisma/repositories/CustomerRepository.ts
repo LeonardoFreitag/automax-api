@@ -7,6 +7,11 @@ class CustomerRepository implements ICustomerRepository {
   public async findById(id: string): Promise<Customer | undefined> {
     const customer = await prisma.customer.findUnique({
       where: { id },
+      include: {
+        User: {
+          include: { UserRules: true },
+        },
+      },
     });
 
     return customer;
@@ -15,6 +20,11 @@ class CustomerRepository implements ICustomerRepository {
   public async findByCnpj(cnpj: string): Promise<Customer | undefined> {
     const customer = await prisma.customer.findFirst({
       where: { cnpj },
+      include: {
+        User: {
+          include: { UserRules: true },
+        },
+      },
     });
 
     return customer;
@@ -24,6 +34,11 @@ class CustomerRepository implements ICustomerRepository {
     const customers = await prisma.customer.findMany({
       where: {
         cnpj,
+      },
+      include: {
+        User: {
+          include: { UserRules: true },
+        },
       },
     });
 

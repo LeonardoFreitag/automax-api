@@ -21,7 +21,6 @@ export default class ProductController {
       description,
       unity,
       groupId,
-      group,
       ProductPrice,
       ProductTissue,
     } = request.body;
@@ -35,7 +34,6 @@ export default class ProductController {
       description,
       unity,
       groupId,
-      group,
       ProductPrice,
       ProductTissue,
     });
@@ -53,13 +51,15 @@ export default class ProductController {
       price,
       height,
       heightUnity,
+      minWidth,
       width,
+      maxWidth,
       widthUnity,
       depth,
       depthUnity,
       depthOpen,
       depthOpenUnity,
-      addtitionalPercentage,
+      additionalPercentage,
     } = request.body;
 
     const createProductPrice = container.resolve(CreateProductPriceService);
@@ -70,13 +70,15 @@ export default class ProductController {
       price,
       height,
       heightUnity,
+      minWidth,
       width,
+      maxWidth,
       widthUnity,
       depth,
       depthUnity,
       depthOpen,
       depthOpenUnity,
-      addtitionalPercentage,
+      additionalPercentage,
     });
 
     return response.json(productPrice);
@@ -104,10 +106,15 @@ export default class ProductController {
 
   public async update(request: Request, response: Response): Promise<Response> {
     const data = request.body;
+    const { productPrice, productTissue } = request.body;
 
     const updateProduct = container.resolve(UpdateProductService);
 
-    const product = await updateProduct.execute(data);
+    const product = await updateProduct.execute(
+      data,
+      productPrice,
+      productTissue,
+    );
 
     return response.json(product);
   }

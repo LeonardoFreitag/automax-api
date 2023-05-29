@@ -5,8 +5,8 @@ import IUserRepository from '@modules/users/repositories/IUserRepository';
 import IHashProvider from '@modules/users/providers/HashProvider/models/IHashProvider';
 import { injectable, inject } from 'tsyringe';
 
-import User from '@modules/users/infra/typeorm/entities/User';
 import { addDays } from 'date-fns';
+import { User } from '@prisma/client';
 import IUserRefreshTokensRepository from '../repositories/IUserRefreshTokensRepository';
 
 interface IRequest {

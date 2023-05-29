@@ -12,6 +12,9 @@ customerRouter.post(
     [Segments.BODY]: {
       cnpj: Joi.string().required(),
       companyName: Joi.string().required(),
+      cellphone: Joi.string().required(),
+      email: Joi.string().required(),
+      password: Joi.string().required(),
     },
   }),
   customerController.create,

@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 import CreateUserService from '@modules/users/services/CreateUserService';
 import CreateUserRuleService from '@modules/users/services/CreateUserRuleService';
-import UpdateProfileService from '@modules/users/services/UdpateProfileService';
+import UpdateUserService from '@modules/users/services/UdpateUserService';
 import ListUserService from '@modules/users/services/ListUsersService';
 import DeleteUserService from '@modules/users/services/DeleteUserService';
 import DeleteUserRuleService from '@modules/users/services/DeleteUserRuleService';
@@ -10,17 +10,8 @@ import { classToClass } from 'class-transformer';
 
 export default class UserController {
   public async create(request: Request, response: Response): Promise<Response> {
-    const {
-      customerId,
-      isAdmin,
-      name,
-      email,
-      cellphone,
-      password,
-      isComissioned,
-      perCommission,
-      UserRules,
-    } = request.body;
+    const { customerId, isAdmin, name, email, cellphone, password, UserRules } =
+      request.body;
 
     const createUser = container.resolve(CreateUserService);
 
@@ -31,8 +22,6 @@ export default class UserController {
       email,
       cellphone,
       password,
-      isComissioned,
-      perCommission,
       UserRules,
     });
 
@@ -57,10 +46,11 @@ export default class UserController {
 
   public async update(request: Request, response: Response): Promise<Response> {
     const data = request.body;
+    const { rules } = request.body;
 
-    const updateUser = container.resolve(UpdateProfileService);
+    const updateUser = container.resolve(UpdateUserService);
 
-    const user = await updateUser.execute(data);
+    const user = await updateUser.execute(data, rules);
 
     return response.json(classToClass(user));
   }

@@ -3,6 +3,22 @@ import { Prisma, Product, ProductPrice, ProductTissue } from '@prisma/client';
 import { prisma } from '@shared/infra/prisma/prisma';
 
 class ProductRepository implements IProductRepository {
+  public async createManyPrice(
+    productPrice: Prisma.ProductPriceUncheckedCreateInput[],
+  ): Promise<void> {
+    await prisma.productPrice.createMany({
+      data: productPrice,
+    });
+  }
+
+  public async createManyTissue(
+    productTissue: Prisma.ProductTissueUncheckedCreateInput[],
+  ): Promise<void> {
+    await prisma.productTissue.createMany({
+      data: productTissue,
+    });
+  }
+
   public async findPriceById(id: string): Promise<ProductPrice> {
     const foundProductPrice = await prisma.productPrice.findUnique({
       where: {
@@ -153,7 +169,6 @@ class ProductRepository implements IProductRepository {
         description: product.description,
         unity: product.unity,
         groupId: product.groupId,
-        group: product.group,
       },
     });
     return updatedProduct;

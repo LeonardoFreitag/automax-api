@@ -22,13 +22,15 @@ class UpdateProductPriceService {
     productPrice.price = data.price;
     productPrice.height = data.height;
     productPrice.heightUnity = data.heightUnity;
+    productPrice.minWidth = data.minWidth;
     productPrice.width = data.width;
+    productPrice.maxWidth = data.maxWidth;
     productPrice.widthUnity = data.widthUnity;
     productPrice.depth = data.depth;
     productPrice.depthUnity = data.depthUnity;
     productPrice.depthOpen = data.depthOpen;
     productPrice.depthOpenUnity = data.depthOpenUnity;
-    productPrice.addtitionalPercentage = data.addtitionalPercentage;
+    productPrice.additionalPercentage = data.additionalPercentage;
 
     return this.productRepository.savePrice(productPrice);
   }

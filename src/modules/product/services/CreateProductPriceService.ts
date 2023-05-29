@@ -15,13 +15,15 @@ class CreateProductPriceService {
     price,
     height,
     heightUnity,
+    minWidth,
     width,
+    maxWidth,
     widthUnity,
     depth,
     depthUnity,
     depthOpen,
     depthOpenUnity,
-    addtitionalPercentage,
+    additionalPercentage,
   }: Prisma.ProductPriceUncheckedCreateInput): Promise<ProductPrice> {
     const productPrice = await this.productRepository.createPrice({
       productId,
@@ -29,13 +31,15 @@ class CreateProductPriceService {
       price,
       height,
       heightUnity,
+      minWidth,
       width,
+      maxWidth,
       widthUnity,
       depth,
       depthUnity,
       depthOpen,
       depthOpenUnity,
-      addtitionalPercentage,
+      additionalPercentage,
     });
 
     return productPrice;
