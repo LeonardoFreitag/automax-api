@@ -60,6 +60,7 @@ export default class ProductController {
       depthOpen,
       depthOpenUnity,
       additionalPercentage,
+      regionId,
     } = request.body;
 
     const createProductPrice = container.resolve(CreateProductPriceService);
@@ -79,6 +80,7 @@ export default class ProductController {
       depthOpen,
       depthOpenUnity,
       additionalPercentage,
+      regionId,
     });
 
     return response.json(productPrice);

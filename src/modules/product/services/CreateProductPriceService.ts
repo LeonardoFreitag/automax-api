@@ -24,6 +24,7 @@ class CreateProductPriceService {
     depthOpen,
     depthOpenUnity,
     additionalPercentage,
+    regionId,
   }: Prisma.ProductPriceUncheckedCreateInput): Promise<ProductPrice> {
     const productPrice = await this.productRepository.createPrice({
       productId,
@@ -40,6 +41,7 @@ class CreateProductPriceService {
       depthOpen,
       depthOpenUnity,
       additionalPercentage,
+      regionId,
     });
 
     return productPrice;

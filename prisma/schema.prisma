@@ -173,6 +173,7 @@ model ProductPrice {
   depthOpen            Decimal
   depthOpenUnity       String
   additionalPercentage Decimal
+  regionId             String?
   createdAt            DateTime @default(now())
   updatedAt            DateTime @updatedAt
 

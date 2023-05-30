@@ -31,6 +31,7 @@ class UpdateProductPriceService {
     productPrice.depthOpen = data.depthOpen;
     productPrice.depthOpenUnity = data.depthOpenUnity;
     productPrice.additionalPercentage = data.additionalPercentage;
+    productPrice.regionId = data.regionId;
 
     return this.productRepository.savePrice(productPrice);
   }
