@@ -21,6 +21,11 @@ class CreateSaleItemService {
     quantity,
     amount,
     notes,
+    originalPrice,
+    groupId,
+    tissueId,
+    underMeasure,
+    widthSale,
   }: Prisma.SaleItemsUncheckedCreateInput): Promise<SaleItems> {
     const saleItem = await this.saleRepository.createItems({
       saleId,
@@ -34,6 +39,11 @@ class CreateSaleItemService {
       quantity,
       amount,
       notes,
+      originalPrice,
+      groupId,
+      tissueId,
+      underMeasure,
+      widthSale,
     });
 
     return saleItem;

@@ -47,6 +47,11 @@ class SaleRepository implements ISaleRepository {
         quantity: sale.quantity,
         amount: sale.amount,
         notes: sale.notes,
+        originalPrice: sale.originalPrice,
+        groupId: sale.groupId,
+        tissueId: sale.tissueId,
+        underMeasure: sale.underMeasure,
+        widthSale: sale.widthSale,
       },
     });
     return updatedSaleItem;

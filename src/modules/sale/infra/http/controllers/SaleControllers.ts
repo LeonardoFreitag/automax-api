@@ -77,6 +77,11 @@ export default class SaleControllers {
       quantity,
       amount,
       notes,
+      originalPrice,
+      groupId,
+      tissueId,
+      underMeasure,
+      widthSale,
     } = request.body;
 
     const createSaleItem = container.resolve(CreateSaleItemService);
@@ -93,6 +98,11 @@ export default class SaleControllers {
       quantity,
       amount,
       notes,
+      originalPrice,
+      groupId,
+      tissueId,
+      underMeasure,
+      widthSale,
     });
 
     return response.json(saleItem);

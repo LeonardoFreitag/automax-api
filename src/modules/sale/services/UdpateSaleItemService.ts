@@ -28,6 +28,11 @@ class UpdateSaleService {
     saleItem.quantity = data.quantity;
     saleItem.amount = data.amount;
     saleItem.notes = data.notes;
+    saleItem.originalPrice = data.originalPrice;
+    saleItem.groupId = data.groupId;
+    saleItem.tissueId = data.tissueId;
+    saleItem.underMeasure = data.underMeasure;
+    saleItem.widthSale = data.widthSale;
 
     return this.saleRepository.saveItem(saleItem);
   }
