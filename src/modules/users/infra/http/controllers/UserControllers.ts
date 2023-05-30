@@ -10,8 +10,16 @@ import { classToClass } from 'class-transformer';
 
 export default class UserController {
   public async create(request: Request, response: Response): Promise<Response> {
-    const { customerId, isAdmin, name, email, cellphone, password, UserRules } =
-      request.body;
+    const {
+      customerId,
+      isAdmin,
+      name,
+      email,
+      cellphone,
+      password,
+      regionId,
+      UserRules,
+    } = request.body;
 
     const createUser = container.resolve(CreateUserService);
 
@@ -22,6 +30,7 @@ export default class UserController {
       email,
       cellphone,
       password,
+      regionId,
       UserRules,
     });
 

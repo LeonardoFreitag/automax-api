@@ -50,6 +50,7 @@ class UpdateProfileService {
     foundUser.cellphone = user.cellphone;
     foundUser.email = user.email;
     foundUser.password = hashedPassword;
+    foundUser.regionId = user.regionId;
 
     return this.userRepository.save(foundUser);
   }

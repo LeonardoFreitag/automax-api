@@ -17,6 +17,7 @@ model User {
   cellphone         String
   email             String
   password          String
+  regionId          String?
   createdAt         DateTime            @default(now())
   updatedAt         DateTime            @updatedAt
   UserRules         UserRules[]

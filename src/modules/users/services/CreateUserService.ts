@@ -23,6 +23,7 @@ class CreateUserService {
     email,
     cellphone,
     password,
+    regionId,
     UserRules,
   }: Prisma.UserUncheckedCreateInput): Promise<User> {
     const checkUserExists = await this.userRepository.findByEmail(email);
@@ -44,6 +45,7 @@ class CreateUserService {
       email,
       cellphone,
       password: hashedPassword,
+      regionId,
       UserRules,
     });
 
