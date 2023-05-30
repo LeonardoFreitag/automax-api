@@ -123,9 +123,9 @@ class SaleRepository implements ISaleRepository {
     return sale;
   }
 
-  public async findBySalerId(selerId: string): Promise<Sale | undefined> {
+  public async findBySalerId(sellerId: string): Promise<Sale | undefined> {
     const sale = await prisma.sale.findFirst({
-      where: { selerId },
+      where: { sellerId },
       include: {
         SaleItems: true,
         SalePaymentForm: true,
@@ -182,16 +182,12 @@ class SaleRepository implements ISaleRepository {
         discount: sale.discount,
         total: sale.total,
         notes: sale.notes,
-        finished: sale.finished,
-        sent: sale.sent,
-        refused: sale.refused,
+        saleStatus: sale.saleStatus,
         refusedNotes: sale.refusedNotes,
-        returned: sale.returned,
         returnedNotes: sale.returnedNotes,
         signatureFileName: sale.signatureFileName,
         signatureUrl: sale.signatureUrl,
         signatureBase64: sale.signatureBase64,
-        accepted: sale.accepted,
       },
     });
     return updatedSale;

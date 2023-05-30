@@ -16,7 +16,7 @@ export default class SaleControllers {
   public async create(request: Request, response: Response): Promise<Response> {
     const {
       customerId,
-      selerId,
+      sellerId,
       saleNumber,
       saleDate,
       clientId,
@@ -24,13 +24,9 @@ export default class SaleControllers {
       discount,
       total,
       notes,
-      finished,
-      sent,
-      refused,
+      saleStatus,
       refusedNotes,
-      returned,
       returnedNotes,
-      accepted,
       SaleItems,
       SalePaymentForm,
     } = request.body;
@@ -39,7 +35,7 @@ export default class SaleControllers {
 
     const sale = await createSale.execute({
       customerId,
-      selerId,
+      sellerId,
       saleNumber,
       saleDate,
       clientId,
@@ -47,13 +43,9 @@ export default class SaleControllers {
       discount,
       total,
       notes,
-      finished,
-      sent,
-      refused,
+      saleStatus,
       refusedNotes,
-      returned,
       returnedNotes,
-      accepted,
       SaleItems,
       SalePaymentForm,
     });
@@ -169,11 +161,14 @@ export default class SaleControllers {
   }
 
   public async list(request: Request, response: Response): Promise<Response> {
-    const { customerId } = request.query;
+    const { customerId, saleStatus } = request.query;
 
     const listSales = container.resolve(ListSaleService);
 
-    const sale = await listSales.execute(String(customerId));
+    const sale = await listSales.execute(
+      String(customerId),
+      String(saleStatus),
+    );
 
     return response.json(sale);
   }

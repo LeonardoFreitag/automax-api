@@ -201,7 +201,7 @@ model ProductTissue {
 model Sale {
   id                String            @id @default(uuid())
   customerId        String
-  selerId           String
+  sellerId          String
   saleNumber        String
   saleDate          DateTime
   clientId          String
@@ -209,16 +209,12 @@ model Sale {
   discount          Decimal
   total             Decimal
   notes             String
-  finished          Boolean
-  sent              Boolean
-  refused           Boolean
+  saleStatus        String // "open", "closed", "canceled"
   refusedNotes      String
-  returned          Boolean
   returnedNotes     String
   signatureFileName String?
   signatureUrl      String?
   signatureBase64   String?
-  accepted          Boolean
   createdAt         DateTime          @default(now())
   updatedAt         DateTime          @updatedAt
   SaleItems         SaleItems[]

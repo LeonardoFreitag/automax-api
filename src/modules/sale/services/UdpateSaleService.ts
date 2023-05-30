@@ -23,16 +23,12 @@ class UpdateSaleService {
     sale.discount = data.discount;
     sale.total = data.total;
     sale.notes = data.notes;
-    sale.finished = data.finished;
-    sale.sent = data.sent;
-    sale.refused = data.refused;
+    sale.saleStatus = data.saleStatus;
     sale.refusedNotes = data.refusedNotes;
-    sale.returned = data.returned;
     sale.returnedNotes = data.returnedNotes;
     sale.signatureFileName = data.signatureFileName;
     sale.signatureUrl = data.signatureUrl;
     sale.signatureBase64 = data.signatureBase64;
-    sale.accepted = data.accepted;
 
     return this.saleRepository.save(sale);
   }

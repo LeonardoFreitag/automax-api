@@ -6,7 +6,7 @@ export default interface ISaleRepository {
   findBySaleNumber(saleNumber: string): Promise<Sale | undefined>;
   create(dataProduct: Prisma.SaleUncheckedCreateInput): Promise<Sale>;
   save(sale: Sale): Promise<Sale>;
-  list(customerId: string): Promise<Sale[]>;
+  list(customerId: string, status: string): Promise<Sale[]>;
   delete(id: string): Promise<void>;
 
   createItems(

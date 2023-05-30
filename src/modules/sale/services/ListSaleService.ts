@@ -9,8 +9,14 @@ class ListSaleService {
     private saleRepository: ISaleRepository,
   ) {}
 
-  public async execute(customerId: string): Promise<Sale[] | undefined> {
-    const allSaleByidCustomer = await this.saleRepository.list(customerId);
+  public async execute(
+    customerId: string,
+    saleStatus: string,
+  ): Promise<Sale[] | undefined> {
+    const allSaleByidCustomer = await this.saleRepository.list(
+      customerId,
+      saleStatus,
+    );
 
     return allSaleByidCustomer;
   }
