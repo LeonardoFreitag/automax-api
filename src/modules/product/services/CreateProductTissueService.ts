@@ -11,6 +11,7 @@ class CreateProductTissueService {
 
   public async execute({
     productId,
+    code,
     description,
     type,
     underConsultation,
@@ -18,6 +19,7 @@ class CreateProductTissueService {
   }: Prisma.ProductTissueUncheckedCreateInput): Promise<ProductTissue> {
     const productPrice = await this.productRepository.createTissue({
       productId,
+      code,
       description,
       type,
       underConsultation,

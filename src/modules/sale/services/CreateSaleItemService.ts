@@ -24,6 +24,7 @@ class CreateSaleItemService {
     originalPrice,
     groupId,
     tissueId,
+    tissueCode,
     underMeasure,
     widthSale,
   }: Prisma.SaleItemsUncheckedCreateInput): Promise<SaleItems> {
@@ -42,6 +43,7 @@ class CreateSaleItemService {
       originalPrice,
       groupId,
       tissueId,
+      tissueCode,
       underMeasure,
       widthSale,
     });

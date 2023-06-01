@@ -31,6 +31,7 @@ class UpdateSaleService {
     saleItem.originalPrice = data.originalPrice;
     saleItem.groupId = data.groupId;
     saleItem.tissueId = data.tissueId;
+    saleItem.tissueCode = data.tissueCode;
     saleItem.underMeasure = data.underMeasure;
     saleItem.widthSale = data.widthSale;
 

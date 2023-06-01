@@ -18,6 +18,7 @@ class UpdateProductTissueService {
       throw new AppError('Product Price not found');
     }
 
+    productTissue.code = data.code;
     productTissue.description = data.description;
     productTissue.type = data.type;
     productTissue.underConsultation = data.underConsultation;

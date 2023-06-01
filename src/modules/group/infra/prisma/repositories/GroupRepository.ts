@@ -6,14 +6,6 @@ class GroupRepository implements IGroupRepository {
   public async findByGroup(group: string): Promise<Group> {
     const foundGroup = await prisma.group.findFirst({
       where: { group },
-      include: {
-        Product: {
-          include: {
-            ProductPrice: true,
-            ProductTissue: true,
-          },
-        },
-      },
     });
     return foundGroup;
   }
@@ -21,14 +13,6 @@ class GroupRepository implements IGroupRepository {
   public async findById(id: string): Promise<Group | undefined> {
     const group = await prisma.group.findUnique({
       where: { id },
-      include: {
-        Product: {
-          include: {
-            ProductPrice: true,
-            ProductTissue: true,
-          },
-        },
-      },
     });
     return group;
   }
@@ -37,14 +21,6 @@ class GroupRepository implements IGroupRepository {
     const Groups = await prisma.group.findMany({
       where: {
         customerId,
-      },
-      include: {
-        Product: {
-          include: {
-            ProductPrice: true,
-            ProductTissue: true,
-          },
-        },
       },
     });
     return Groups;

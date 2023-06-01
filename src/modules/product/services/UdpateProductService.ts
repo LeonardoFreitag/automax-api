@@ -21,6 +21,7 @@ interface ProductPriceModel {
 }
 
 interface ProductTissueModel {
+  code: string;
   description: string;
   type: string;
   underConsultation: boolean;

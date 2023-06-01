@@ -23,6 +23,7 @@ saleRouter.post(
       clientId: Joi.string().required(),
       amount: Joi.number().required(),
       discount: Joi.number().required(),
+      increment: Joi.number().required(),
       total: Joi.number().required(),
       notes: Joi.string().required(),
       saleStatus: Joi.string().required(),
@@ -68,6 +69,7 @@ saleRouter.post(
   celebrate({
     [Segments.BODY]: {
       saleId: Joi.string().required(),
+      tissueCode: Joi.string().required(),
       paymentFormId: Joi.string().required(),
       descripriont: Joi.string().required(),
       amount: Joi.number().required(),
@@ -90,6 +92,7 @@ saleRouter.patch(
       clientId: Joi.string().required(),
       amount: Joi.number().required(),
       discount: Joi.number().required(),
+      increment: Joi.number().required(),
       total: Joi.number().required(),
       notes: Joi.string().required(),
       saleStatus: Joi.string().required(),
@@ -99,6 +102,19 @@ saleRouter.patch(
     },
   }),
   saleController.update,
+);
+
+saleRouter.patch(
+  '/status',
+  ensureAuthenticated,
+  celebrate({
+    [Segments.BODY]: {
+      id: Joi.string().required(),
+      saleNumber: Joi.string().required(),
+      saleStatus: Joi.string().required(),
+    },
+  }),
+  saleController.updateStatus,
 );
 
 saleRouter.patch(
@@ -135,6 +151,7 @@ saleRouter.patch(
     [Segments.BODY]: {
       id: Joi.string().required(),
       saleId: Joi.string().required(),
+      tissueCode: Joi.string().required(),
       paymentFormId: Joi.string().required(),
       descripriont: Joi.string().required(),
       amount: Joi.number().required(),

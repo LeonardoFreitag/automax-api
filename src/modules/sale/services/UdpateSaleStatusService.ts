@@ -3,14 +3,20 @@ import ISaleRepository from '@modules/sale/repositories/ISaleRepository';
 import { injectable, inject } from 'tsyringe';
 import { Sale } from '@prisma/client';
 
+interface SaleStatus {
+  id: string;
+  saleNumber: string;
+  saleStatus: string;
+}
+
 @injectable()
-class UpdateSaleService {
+class UpdateSaleStatusService {
   constructor(
     @inject('SaleRepository')
     private saleRepository: ISaleRepository,
   ) {}
 
-  public async execute(data: Sale): Promise<Sale> {
+  public async execute(data: SaleStatus): Promise<Sale> {
     const { id } = data;
     const sale = await this.saleRepository.findById(id);
 
@@ -19,20 +25,10 @@ class UpdateSaleService {
     }
 
     sale.saleNumber = data.saleNumber;
-    sale.clientId = data.clientId;
-    sale.amount = data.amount;
-    sale.discount = data.discount;
-    sale.total = data.total;
-    sale.notes = data.notes;
     sale.saleStatus = data.saleStatus;
-    sale.refusedNotes = data.refusedNotes;
-    sale.returnedNotes = data.returnedNotes;
-    sale.signatureFileName = data.signatureFileName;
-    sale.signatureUrl = data.signatureUrl;
-    sale.signatureBase64 = data.signatureBase64;
 
     return this.saleRepository.save(sale);
   }
 }
 
-export default UpdateSaleService;
+export default UpdateSaleStatusService;

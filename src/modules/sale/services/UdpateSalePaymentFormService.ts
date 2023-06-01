@@ -19,7 +19,7 @@ class UpdateSaleService {
     }
 
     salePaymentForm.paymentFormId = data.paymentFormId;
-    salePaymentForm.descripriont = data.descripriont;
+    salePaymentForm.description = data.description;
     salePaymentForm.amount = data.amount;
     salePaymentForm.installments = data.installments;
 

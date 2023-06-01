@@ -185,6 +185,7 @@ model ProductPrice {
 
 model ProductTissue {
   id                String   @id @default(uuid())
+  code              String
   description       String
   type              String
   underConsultation Boolean
@@ -207,6 +208,7 @@ model Sale {
   clientId          String
   amount            Decimal
   discount          Decimal
+  increment         Decimal
   total             Decimal
   notes             String
   saleStatus        String // "open", "closed", "canceled"
@@ -239,6 +241,7 @@ model SaleItems {
   originalPrice Decimal
   groupId       String
   tissueId      String
+  tissueCode    String
   underMeasure  Boolean
   widthSale     Decimal
 
@@ -254,7 +257,7 @@ model SaleItems {
 model SalePaymentForm {
   id            String  @id @default(uuid())
   paymentFormId String
-  descripriont  String
+  description   String
   amount        Decimal
   installments  Decimal
 

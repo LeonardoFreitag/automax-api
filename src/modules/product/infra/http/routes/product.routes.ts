@@ -60,6 +60,7 @@ productRouter.post(
   celebrate({
     [Segments.BODY]: {
       productId: Joi.string().required(),
+      code: Joi.string().required(),
       description: Joi.string().required(),
       type: Joi.string().required(),
       underConsultation: Joi.bool().required(),
@@ -121,6 +122,7 @@ productRouter.patch(
     [Segments.BODY]: {
       id: Joi.string().required(),
       productId: Joi.string().required(),
+      code: Joi.string().required(),
       description: Joi.string().required(),
       type: Joi.string().required(),
       underConsultation: Joi.bool().required(),

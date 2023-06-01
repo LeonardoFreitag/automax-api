@@ -4,6 +4,7 @@ import CreateSaleService from '@modules/sale/services/CreateSaleService';
 import CreateSaleItemService from '@modules/sale/services/CreateSaleItemService';
 import CreateSalePaymentFormService from '@modules/sale/services/CreateSalePaymentFormService';
 import UpdateSaleService from '@modules/sale/services/UdpateSaleService';
+import UpdateSaleStatusService from '@modules/sale/services/UdpateSaleStatusService';
 import UpdateSaleItemService from '@modules/sale/services/UdpateSaleItemService';
 import UpdateSalePaymentFormService from '@modules/sale/services/UdpateSalePaymentFormService';
 import ListSaleService from '@modules/sale/services/ListSaleService';
@@ -22,6 +23,7 @@ export default class SaleControllers {
       clientId,
       amount,
       discount,
+      increment,
       total,
       notes,
       saleStatus,
@@ -41,6 +43,7 @@ export default class SaleControllers {
       clientId,
       amount,
       discount,
+      increment,
       total,
       notes,
       saleStatus,
@@ -72,6 +75,7 @@ export default class SaleControllers {
       originalPrice,
       groupId,
       tissueId,
+      tissueCode,
       underMeasure,
       widthSale,
     } = request.body;
@@ -93,6 +97,7 @@ export default class SaleControllers {
       originalPrice,
       groupId,
       tissueId,
+      tissueCode,
       underMeasure,
       widthSale,
     });
@@ -104,7 +109,7 @@ export default class SaleControllers {
     request: Request,
     response: Response,
   ): Promise<Response> {
-    const { saleId, paymentFormId, descripriont, amount, installments } =
+    const { saleId, paymentFormId, description, amount, installments } =
       request.body;
 
     const createSalePamentForm = container.resolve(
@@ -114,7 +119,7 @@ export default class SaleControllers {
     const salePaymentForm = await createSalePamentForm.execute({
       saleId,
       paymentFormId,
-      descripriont,
+      description,
       amount,
       installments,
     });
@@ -125,9 +130,22 @@ export default class SaleControllers {
   public async update(request: Request, response: Response): Promise<Response> {
     const data = request.body;
 
-    const updateSale = container.resolve(UpdateSaleService);
+    const updateSaleStatus = container.resolve(UpdateSaleStatusService);
 
-    const sale = await updateSale.execute(data);
+    const sale = await updateSaleStatus.execute(data);
+
+    return response.json(sale);
+  }
+
+  public async updateStatus(
+    request: Request,
+    response: Response,
+  ): Promise<Response> {
+    const data = request.body;
+
+    const updateSaleStatus = container.resolve(UpdateSaleService);
+
+    const sale = await updateSaleStatus.execute(data);
 
     return response.json(sale);
   }

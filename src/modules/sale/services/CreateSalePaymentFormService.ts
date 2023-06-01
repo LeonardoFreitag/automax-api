@@ -12,14 +12,14 @@ class CreateSalePaymentFormervice {
   public async execute({
     saleId,
     paymentFormId,
-    descripriont,
+    description,
     amount,
     installments,
   }: Prisma.SalePaymentFormUncheckedCreateInput): Promise<SalePaymentForm> {
     const salePaymentForm = await this.saleRepository.createPaymentForm({
       saleId,
       paymentFormId,
-      descripriont,
+      description,
       amount,
       installments,
     });

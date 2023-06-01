@@ -90,12 +90,19 @@ export default class ProductController {
     request: Request,
     response: Response,
   ): Promise<Response> {
-    const { productId, description, type, underConsultation, inRestocked } =
-      request.body;
+    const {
+      productId,
+      code,
+      description,
+      type,
+      underConsultation,
+      inRestocked,
+    } = request.body;
 
     const createProductTissue = container.resolve(CreateProductTissueService);
 
     const productTissue = await createProductTissue.execute({
+      code,
       productId,
       description,
       type,

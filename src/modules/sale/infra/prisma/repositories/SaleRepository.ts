@@ -83,7 +83,7 @@ class SaleRepository implements ISaleRepository {
       },
       data: {
         paymentFormId: salePaymentForm.paymentFormId,
-        descripriont: salePaymentForm.descripriont,
+        description: salePaymentForm.description,
         amount: salePaymentForm.amount,
         installments: salePaymentForm.installments,
       },
@@ -135,10 +135,11 @@ class SaleRepository implements ISaleRepository {
     return sale;
   }
 
-  public async list(customerId: string): Promise<Sale[]> {
+  public async list(customerId: string, status: string): Promise<Sale[]> {
     const sales = await prisma.sale.findMany({
       where: {
         customerId,
+        saleStatus: status,
       },
       include: {
         SaleItems: true,
@@ -177,9 +178,11 @@ class SaleRepository implements ISaleRepository {
         id: sale.id,
       },
       data: {
+        saleNumber: sale.saleNumber,
         clientId: sale.clientId,
         amount: sale.amount,
         discount: sale.discount,
+        increment: sale.increment,
         total: sale.total,
         notes: sale.notes,
         saleStatus: sale.saleStatus,
