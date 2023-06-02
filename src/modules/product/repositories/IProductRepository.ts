@@ -6,6 +6,7 @@ export default interface IProductRepository {
   create(data: Prisma.ProductUncheckedCreateInput): Promise<Product>;
   save(product: Product): Promise<Product>;
   list(customerId: string): Promise<Product[]>;
+  listByGroupId(customerId: string, groupId: string): Promise<Product[]>;
   delete(id: string): Promise<void>;
 
   createPrice(

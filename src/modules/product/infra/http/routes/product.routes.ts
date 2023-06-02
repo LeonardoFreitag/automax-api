@@ -143,6 +143,18 @@ productRouter.get(
   productController.list,
 );
 
+productRouter.get(
+  '/group',
+  ensureAuthenticated,
+  celebrate({
+    [Segments.QUERY]: {
+      customerId: Joi.string().uuid().required(),
+      groupId: Joi.string().uuid().required(),
+    },
+  }),
+  productController.listByGroupId,
+);
+
 productRouter.delete(
   '/',
   ensureAuthenticated,

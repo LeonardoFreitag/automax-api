@@ -3,6 +3,24 @@ import { Prisma, Product, ProductPrice, ProductTissue } from '@prisma/client';
 import { prisma } from '@shared/infra/prisma/prisma';
 
 class ProductRepository implements IProductRepository {
+  public async listByGroupId(
+    customerId: string,
+    groupId: string,
+  ): Promise<Product[]> {
+    const foundProducts = await prisma.product.findMany({
+      where: {
+        customerId,
+        groupId,
+      },
+      include: {
+        ProductPrice: true,
+        ProductTissue: true,
+      },
+    });
+
+    return foundProducts;
+  }
+
   public async createManyPrice(
     productPrice: Prisma.ProductPriceUncheckedCreateInput[],
   ): Promise<void> {

@@ -7,6 +7,7 @@ import UpdateProductService from '@modules/product/services/UdpateProductService
 import UpdateProductPriceService from '@modules/product/services/UdpateProductPriceService';
 import UpdateProductTissueService from '@modules/product/services/UdpateProductTissueService';
 import ListProductService from '@modules/product/services/ListProductService';
+import ListProductByGroupIdService from '@modules/product/services/ListProductByGroupIdService';
 import DeleteProductService from '@modules/product/services/DeleteProductService';
 import DeleteProductPriceService from '@modules/product/services/DeleteProductPriceService';
 import DeleteProductTissueService from '@modules/product/services/DeleteProductTissueService';
@@ -160,6 +161,24 @@ export default class ProductController {
     const listProducts = container.resolve(ListProductService);
 
     const Product = await listProducts.execute(String(customerId));
+
+    return response.json(Product);
+  }
+
+  public async listByGroupId(
+    request: Request,
+    response: Response,
+  ): Promise<Response> {
+    const { customerId, groupId } = request.query;
+
+    const listProductsByGroupId = container.resolve(
+      ListProductByGroupIdService,
+    );
+
+    const Product = await listProductsByGroupId.execute(
+      String(customerId),
+      String(groupId),
+    );
 
     return response.json(Product);
   }
