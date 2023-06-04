@@ -34,6 +34,7 @@ class UpdateSaleService {
     saleItem.groupName = data.groupName;
     saleItem.tissueId = data.tissueId;
     saleItem.tissueCode = data.tissueCode;
+    saleItem.tissueName = data.tissueName;
     saleItem.underMeasure = data.underMeasure;
     saleItem.widthSale = data.widthSale;
 

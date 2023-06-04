@@ -78,6 +78,7 @@ export default class SaleControllers {
       groupName,
       tissueId,
       tissueCode,
+      tissueName,
       underMeasure,
       widthSale,
     } = request.body;
@@ -102,6 +103,7 @@ export default class SaleControllers {
       groupName,
       tissueId,
       tissueCode,
+      tissueName,
       underMeasure,
       widthSale,
     });

@@ -244,6 +244,7 @@ model SaleItems {
   groupName     String?
   tissueId      String
   tissueCode    String
+  tissueName    String?
   underMeasure  Boolean
   widthSale     Decimal
 

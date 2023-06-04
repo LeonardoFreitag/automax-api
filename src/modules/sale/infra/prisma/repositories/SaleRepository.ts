@@ -52,6 +52,8 @@ class SaleRepository implements ISaleRepository {
         groupId: sale.groupId,
         groupName: sale.groupName,
         tissueId: sale.tissueId,
+        tissueCode: sale.tissueCode,
+        tissueName: sale.tissueName,
         underMeasure: sale.underMeasure,
         widthSale: sale.widthSale,
       },
