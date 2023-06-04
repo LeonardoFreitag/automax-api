@@ -1,0 +1,68 @@
+{
+  "customerId": "c7974325d97b4531a7983fdb81a9c4f1",
+  "sellerId": "c7974325d97b4531a7983fdb81a9c4f1",
+  "saleNumber": "000003", // enviar com 9999
+  "saleDate": "{% now 'iso-8601', '' %}",
+  "clientId": "645eef26-903e-4187-8286-d9fda171b716",
+  "SaleItems": [
+    {
+      "productId": "db5112ed-e75b-42c9-90d9-919d0022182c", // id do produto -> ProductModel
+      "code": "55", // codigo do produto ProductModel -> code
+      "reference": "1000000000559", // referencia do produto ProductModel -> reference
+      "description": "ADAPTADOR CX D'AQUA 50 X 1 1/2 AUTO AJUSTE",
+      "unity": "UN",
+      "tableId": "fc8aee79-8d56-4c7e-8f99-f12f1313f26e", // id da tabela de preço -> ProductPrice
+      "price": 5000, // preço, que pode ser o preço original ou o preço calculado sob medida
+      "quantity": 10, // quantidade solicitada pelo cliente
+      "amount": 50000, // price * quantity
+      "notes": "medate do pedido", // observacoes do item
+      "originalPrice": 5000, // preço original do produto
+      "groupId": "",
+      "tissueId": "77b46bd0-b80c-424f-a452-c4f51d82be0f",
+      "tissueCode": "77",
+      "underMeasure": false,
+      "widthSale": 3
+    },
+    {
+      "productId": "f0658abd-27ab-458a-bd35-820b21973116",
+      "code": "9",
+      "reference": "1000000000092",
+      "description": "LIMPA PARABRISA 100ML",
+      "unity": "UN",
+      "tableId": "e1618b47-6fa1-4a07-bda1-6ef69d49ffd7",
+      "price": 5000,
+      "quantity": 10,
+      "amount": 50000,
+      "notes": "medate do pedido",
+      "originalPrice": 5000,
+      "groupId": "",
+      "tissueId": "9128a508-72b5-47aa-a81a-790df59ccd89",
+      "tissueCode": "88",
+      "underMeasure": false,
+      "widthSale": 3
+    }
+  ],
+  "amount": 100000, // soma dos amounts dos itens
+  "discount": 0, // desconto
+  "increment": 0, // acrescimo
+  "total": 100000, // amount - discount + increment
+  "notes": "teste anotações do pedido", // observacoes do pedido
+  "saleStatus": "open", // status do pedido
+  "refusedNotes": "pedido não foi recusado", // enviar com n/d (nada digitado)
+  "returnedNotes": "pedido não foi retornado", // enviar com n/d (nada digitado)
+  "SalePaymentForm": [
+    {
+      "paymentFormId": "{% uuid 'v4' %}", // id do pagamento disponível em ClientPaymentForm
+      "description": "Cartão crédito", // descrição do pagamento
+      "amount": 10000, // valor do pagamento
+      "installments": 3 // quantidade de parcelas
+    },
+    {
+      "paymentFormId": "{% uuid 'v4' %}",
+      "description": "Cheque",
+      "amount": 10000,
+      "installments": 3
+    }
+  ],
+  "signatureBase64": "text" // assinatura do cliente em base64
+}

@@ -233,6 +233,7 @@ model SaleItems {
   description String
   unity       String
   tableId     String
+  tableName   String?
   price       Decimal
   quantity    Decimal
   amount      Decimal
@@ -240,6 +241,7 @@ model SaleItems {
 
   originalPrice Decimal
   groupId       String
+  groupName     String?
   tissueId      String
   tissueCode    String
   underMeasure  Boolean

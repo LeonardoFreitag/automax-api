@@ -24,12 +24,14 @@ class UpdateSaleService {
     saleItem.description = data.description;
     saleItem.unity = data.unity;
     saleItem.tableId = data.tableId;
+    saleItem.tableName = data.tableName;
     saleItem.price = data.price;
     saleItem.quantity = data.quantity;
     saleItem.amount = data.amount;
     saleItem.notes = data.notes;
     saleItem.originalPrice = data.originalPrice;
     saleItem.groupId = data.groupId;
+    saleItem.groupName = data.groupName;
     saleItem.tissueId = data.tissueId;
     saleItem.tissueCode = data.tissueCode;
     saleItem.underMeasure = data.underMeasure;
