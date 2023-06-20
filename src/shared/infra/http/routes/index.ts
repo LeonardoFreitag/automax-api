@@ -1,6 +1,7 @@
 import { Router } from 'express';
 
 import customerRouter from '@modules/customer/infra/http/routes/customer.routes';
+import phasesRouter from '@modules/phases/infra/http/routes/phases.routes';
 import usersRouter from '@modules/users/infra/http/routes/user.routes';
 import sessionsRouter from '@modules/users/infra/http/routes/sessions.routes';
 import passwordRouter from '@modules/users/infra/http/routes/password.routes';
@@ -9,10 +10,12 @@ import groupRouter from '@modules/group/infra/http/routes/group.routes';
 import productRouter from '@modules/product/infra/http/routes/product.routes';
 import saleRouter from '@modules/sale/infra/http/routes/sale.routes';
 import orderRouter from '@modules/order/infra/http/routes/order.routes';
-import orderItemRouter from '@modules/order/infra/http/routes/orderItem.routes';
-import orderItemPhaseRouter from '@modules/order/infra/http/routes/orderItemPhase.routes';
+import orderItemsPhasesRouter from '@modules/order/infra/http/routes/orderItemsPhases.routes';
 
 const routes = Router();
+
+// phases
+routes.use('/phases', phasesRouter);
 
 // customer
 routes.use('/customer', customerRouter);
@@ -34,7 +37,6 @@ routes.use('/sale', saleRouter);
 
 // order
 routes.use('/order', orderRouter);
-routes.use('/orderItem', orderItemRouter);
-routes.use('/orderItemPhase', orderItemPhaseRouter);
+routes.use('/orderItemsPhases', orderItemsPhasesRouter);
 
 export default routes;

@@ -3,15 +3,27 @@ import { prisma } from '@shared/infra/prisma/prisma';
 import { Order, Prisma } from '@prisma/client';
 
 class OrderRepository implements IOrderRepository {
+  public async findByCustomerIdAndTagId(
+    customerId: string,
+    tagId: string,
+  ): Promise<Order> {
+    const order = await prisma.order.findFirst({
+      where: {
+        customerId,
+        tagId,
+      },
+      include: {
+        OrderItemsPhases: true,
+      },
+    });
+    return order;
+  }
+
   public async findById(id: string): Promise<Order | undefined> {
     const order = await prisma.order.findUnique({
       where: { id },
       include: {
-        OrderItems: {
-          include: {
-            OrderItemsPhases: true,
-          },
-        },
+        OrderItemsPhases: true,
       },
     });
 
@@ -24,11 +36,7 @@ class OrderRepository implements IOrderRepository {
     const order = await prisma.order.findFirst({
       where: { orderNumber },
       include: {
-        OrderItems: {
-          include: {
-            OrderItemsPhases: true,
-          },
-        },
+        OrderItemsPhases: true,
       },
     });
 
@@ -41,11 +49,7 @@ class OrderRepository implements IOrderRepository {
         customerId,
       },
       include: {
-        OrderItems: {
-          include: {
-            OrderItemsPhases: true,
-          },
-        },
+        OrderItemsPhases: true,
       },
     });
 
@@ -56,14 +60,7 @@ class OrderRepository implements IOrderRepository {
     orderData: Prisma.OrderUncheckedCreateInput,
   ): Promise<Order> {
     const order = await prisma.order.create({
-      data: {
-        ...orderData,
-        OrderItems: {
-          createMany: {
-            data: orderData.OrderItems as Prisma.OrderItemsUncheckedCreateInput,
-          },
-        },
-      },
+      data: orderData,
     });
 
     return order;
@@ -75,12 +72,18 @@ class OrderRepository implements IOrderRepository {
         id: order.id,
       },
       data: {
-        userId: order.userId,
         orderDate: order.orderDate,
+        orderNumber: order.orderNumber,
         description: order.description,
         notes: order.notes,
-        finished: order.finished,
-        canceled: order.canceled,
+        status: order.status,
+        tagId: order.tagId,
+        tagProductId: order.tagProductId,
+        tagReference: order.tagReference,
+        tagProductName: order.tagProductName,
+        tagTissueName: order.tagTissueName,
+        tagSellerName: order.tagSellerName,
+        tagStatus: order.tagStatus,
       },
     });
     return updatedOrder;

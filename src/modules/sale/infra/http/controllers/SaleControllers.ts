@@ -29,6 +29,7 @@ export default class SaleControllers {
       saleStatus,
       refusedNotes,
       returnedNotes,
+      signatureBase64,
       SaleItems,
       SalePaymentForm,
     } = request.body;
@@ -49,6 +50,7 @@ export default class SaleControllers {
       saleStatus,
       refusedNotes,
       returnedNotes,
+      signatureBase64,
       SaleItems,
       SalePaymentForm,
     });

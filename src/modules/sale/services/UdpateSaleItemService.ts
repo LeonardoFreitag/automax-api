@@ -24,6 +24,7 @@ class UpdateSaleService {
     saleItem.description = data.description;
     saleItem.unity = data.unity;
     saleItem.tableId = data.tableId;
+    saleItem.tableCode = data.tableCode;
     saleItem.tableName = data.tableName;
     saleItem.price = data.price;
     saleItem.quantity = data.quantity;

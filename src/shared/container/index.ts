@@ -27,14 +27,14 @@ import SaleRepository from '@modules/sale/infra/prisma/repositories/SaleReposito
 import IOrderRepository from '@modules/order/repositories/IOrderRepository';
 import OrderRepository from '@modules/order/infra/prisma/repositories/OrderRepository';
 
-import IOrderItemsRepository from '@modules/order/repositories/IOrderItemsRepository';
-import OrderItemsRepository from '@modules/order/infra/prisma/repositories/OrderItemsRepository';
-
-import IOrderItemPhasesRepository from '@modules/order/repositories/IOrderItemPhasesRepository';
-import OrderItemPhasesRepository from '@modules/order/infra/prisma/repositories/OrderItemPhasesRepository';
+import IOrderItemsPhasesRepository from '@modules/order/repositories/IOrderItemsPhasesRepository';
+import OrderItemsPhasesRepository from '@modules/order/infra/prisma/repositories/OrderItemsPhasesRepository';
 
 import ICustomerRepository from '@modules/customer/repositories/ICustomerRepository';
 import CustomerRepository from '@modules/customer/infra/prisma/repositories/CustomerRepository';
+
+import IPhasesRepository from '@modules/phases/repositories/IPhasesRepository';
+import PhasesRepository from '@modules/phases/infra/prisma/repositories/PhasesRepository';
 
 container.registerSingleton<IUserRepository>('UserRepository', UserRepository);
 
@@ -69,17 +69,17 @@ container.registerSingleton<IOrderRepository>(
   OrderRepository,
 );
 
-container.registerSingleton<IOrderItemsRepository>(
-  'OrderItemsRepository',
-  OrderItemsRepository,
-);
-
-container.registerSingleton<IOrderItemPhasesRepository>(
-  'OrderItemPhasesRepository',
-  OrderItemPhasesRepository,
+container.registerSingleton<IOrderItemsPhasesRepository>(
+  'OrderItemsPhasesRepository',
+  OrderItemsPhasesRepository,
 );
 
 container.registerSingleton<ICustomerRepository>(
   'CustomerRepository',
   CustomerRepository,
+);
+
+container.registerSingleton<IPhasesRepository>(
+  'PhasesRepository',
+  PhasesRepository,
 );

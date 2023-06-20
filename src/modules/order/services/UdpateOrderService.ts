@@ -18,13 +18,18 @@ class UpdateOrderService {
       throw new AppError('Order not found');
     }
 
-    order.orderNumber = data.orderNumber;
-    order.userId = data.userId;
     order.orderDate = data.orderDate;
+    order.orderNumber = data.orderNumber;
     order.description = data.description;
     order.notes = data.notes;
-    order.finished = data.finished;
-    order.canceled = data.canceled;
+    order.status = data.status;
+    order.tagId = data.tagId;
+    order.tagProductId = data.tagProductId;
+    order.tagReference = data.tagReference;
+    order.tagProductName = data.tagProductName;
+    order.tagTissueName = data.tagTissueName;
+    order.tagSellerName = data.tagSellerName;
+    order.tagStatus = data.tagStatus;
 
     return this.orderRepository.save(order);
   }

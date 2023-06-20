@@ -18,6 +18,7 @@ class UpdateProductPriceService {
       throw new AppError('Product Price not found');
     }
 
+    productPrice.code = data.code;
     productPrice.tableName = data.tableName;
     productPrice.price = data.price;
     productPrice.height = data.height;

@@ -1,24 +1,33 @@
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
-import CreateOrderItemPhasesService from '@modules/order/services/CreateOrderItemPhasesService';
-import UpdateOrderItemPhasesService from '@modules/order/services/UdpateOrderItemPhasesService';
-import ListOrderItemPhasesService from '@modules/order/services/ListOrderItemPhasesService';
-import DeleteOrderItemPhasesService from '@modules/order/services/DeleteOrderItemPhasesService';
+import CreateOrderItemsPhasesService from '@modules/order/services/CreateOrderItemsPhasesService';
+import UpdateOrderItemsPhasesService from '@modules/order/services/UdpateOrderItemsPhasesService';
+import ListOrderItemsPhasesService from '@modules/order/services/ListOrderItemsPhasesService';
+import DeleteOrderItemsPhasesService from '@modules/order/services/DeleteOrderItemsPhasesService';
 
 export default class OrderItemPhaseControllers {
   public async create(request: Request, response: Response): Promise<Response> {
-    const { orderItemsId, employeeId, phaseDate, phaseId, notes } =
-      request.body;
+    const {
+      orderId,
+      employeeId,
+      employeeName,
+      phaseDate,
+      phaseId,
+      phaseName,
+      notes,
+    } = request.body;
 
     const createOrderItemPhaseService = container.resolve(
-      CreateOrderItemPhasesService,
+      CreateOrderItemsPhasesService,
     );
 
     const orderItemPhase = await createOrderItemPhaseService.execute({
-      orderItemsId,
+      orderId,
       employeeId,
+      employeeName,
       phaseDate,
       phaseId,
+      phaseName,
       notes,
     });
 
@@ -29,7 +38,7 @@ export default class OrderItemPhaseControllers {
     const data = request.body;
 
     const updateOrderItemPhaseService = container.resolve(
-      UpdateOrderItemPhasesService,
+      UpdateOrderItemsPhasesService,
     );
 
     const orderItemPhaseUpdated = await updateOrderItemPhaseService.execute(
@@ -40,14 +49,14 @@ export default class OrderItemPhaseControllers {
   }
 
   public async list(request: Request, response: Response): Promise<Response> {
-    const { orderItemsId } = request.query;
+    const { orderId } = request.query;
 
     const listOrderItemsPhaseService = container.resolve(
-      ListOrderItemPhasesService,
+      ListOrderItemsPhasesService,
     );
 
     const orderItemsPhase = await listOrderItemsPhaseService.execute(
-      String(orderItemsId),
+      String(orderId),
     );
 
     return response.json(orderItemsPhase);
@@ -57,7 +66,7 @@ export default class OrderItemPhaseControllers {
     const { id } = request.query;
 
     const deleteOrderItemPhaseService = container.resolve(
-      DeleteOrderItemPhasesService,
+      DeleteOrderItemsPhasesService,
     );
 
     await deleteOrderItemPhaseService.execute(String(id));

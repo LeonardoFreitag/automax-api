@@ -1,6 +1,7 @@
 import { injectable, inject } from 'tsyringe';
 import IOrderRepository from '@modules/order/repositories/IOrderRepository';
 import { Order, Prisma } from '@prisma/client';
+import AppError from '@shared/errors/AppError';
 
 @injectable()
 class CreateOrderService {
@@ -11,33 +12,42 @@ class CreateOrderService {
 
   public async execute({
     customerId,
-    orderNumber,
-    userId,
+    orderId,
     orderDate,
+    orderNumber,
     description,
     notes,
-    finished,
-    canceled,
-    OrderItems,
+    status,
+    tagId,
+    tagProductId,
+    tagReference,
+    tagProductName,
+    tagTissueName,
+    tagSellerName,
+    tagStatus,
   }: Prisma.OrderUncheckedCreateInput): Promise<Order> {
-    const checkOrderExists = await this.orderRepository.findByOrderNumber(
-      orderNumber,
-    );
+    const checkOrderExists =
+      await this.orderRepository.findByCustomerIdAndTagId(customerId, tagId);
 
     if (checkOrderExists) {
-      this.orderRepository.delete(checkOrderExists.id);
+      throw new AppError('Order already exists!');
     }
 
     const order = await this.orderRepository.create({
       customerId,
-      orderNumber,
-      userId,
+      orderId,
       orderDate,
+      orderNumber,
       description,
       notes,
-      finished,
-      canceled,
-      OrderItems,
+      status,
+      tagId,
+      tagProductId,
+      tagReference,
+      tagProductName,
+      tagTissueName,
+      tagSellerName,
+      tagStatus,
     });
 
     return order;

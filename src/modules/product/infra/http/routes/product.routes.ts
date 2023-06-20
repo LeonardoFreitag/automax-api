@@ -35,6 +35,7 @@ productRouter.post(
   celebrate({
     [Segments.BODY]: {
       productId: Joi.string().required(),
+      code: Joi.string().required(),
       tableName: Joi.string().required(),
       price: Joi.number().required(),
       height: Joi.number().required(),
@@ -96,6 +97,7 @@ productRouter.patch(
     [Segments.BODY]: {
       id: Joi.string().required(),
       productId: Joi.string().required(),
+      code: Joi.string().required(),
       tableName: Joi.string().required(),
       price: Joi.number().required(),
       height: Joi.number().required(),

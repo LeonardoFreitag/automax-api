@@ -53,8 +53,6 @@ class CreateCustomerService {
       email,
       cellphone,
       password: hashedPassword,
-      isComissioned: false,
-      perCommission: 0,
       UserRules:
         [] as Prisma.UserRulesUncheckedCreateNestedManyWithoutUserInput,
     });

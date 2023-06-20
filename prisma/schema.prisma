@@ -10,6 +10,18 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Customer {
+  id          String @id @default(uuid())
+  cnpj        String @unique
+  companyName String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  User      User[]
+
+  @@map("customer")
+}
+
 model User {
   id                String              @id @default(uuid())
   isAdmin           Boolean
@@ -90,6 +102,7 @@ model Client {
   updatedAt         DateTime            @updatedAt
   ClientContact     ClientContact[]
   ClientPaymentForm ClientPaymentForm[]
+  Sale              Sale[]
 
   @@map("client")
 }
@@ -160,6 +173,7 @@ model Product {
 
 model ProductPrice {
   id                   String   @id @default(uuid())
+  code                 String?
   tableName            String
   price                Decimal
   height               Decimal
@@ -206,6 +220,7 @@ model Sale {
   saleNumber        String
   saleDate          DateTime
   clientId          String
+  Client            Client?           @relation(fields: [clientId], references: [id])
   amount            Decimal
   discount          Decimal
   increment         Decimal
@@ -233,6 +248,7 @@ model SaleItems {
   description String
   unity       String
   tableId     String
+  tableCode   String?
   tableName   String?
   price       Decimal
   quantity    Decimal
@@ -276,61 +292,53 @@ model SalePaymentForm {
 model Order {
   id          String   @id @default(uuid())
   customerId  String
-  orderNumber String
-  userId      String
+  orderId     String // from firebird
   orderDate   DateTime
+  orderNumber String
   description String
   notes       String
-  finished    Boolean
-  canceled    Boolean
+  status      String // "open", "closed", "canceled"
 
-  createdAt  DateTime     @default(now())
-  updatedAt  DateTime     @updatedAt
-  OrderItems OrderItems[]
+  tagId          String
+  tagProductId   String
+  tagReference   String
+  tagProductName String
+  tagTissueName  String
+  tagSellerName  String
+  tagStatus      String
+
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+  OrderItemsPhases OrderItemsPhases[]
 
   @@map("order")
 }
 
-model OrderItems {
-  id          String @id @default(uuid())
-  productId   String
-  saleId      String
-  description String
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  order            Order              @relation(fields: [orderId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  orderId          String
-  OrderItemsPhases OrderItemsPhases[]
-
-  @@map("orderItems")
-}
-
 model OrderItemsPhases {
-  id         String   @id @default(uuid())
-  employeeId String
-  phaseDate  DateTime
-  phaseId    String
-  notes      String
+  id           String   @id @default(uuid())
+  employeeId   String // who did the phase
+  employeeName String
+  phaseDate    DateTime
+  phaseId      String
+  phaseName    String
+  notes        String
+
+  order   Order  @relation(fields: [orderId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  orderId String // id from order
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
-  orderItems   OrderItems @relation(fields: [orderItemsId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  orderItemsId String
 
   @@map("orderItemsPhases")
 }
 
-model Customer {
-  id          String @id @default(uuid())
-  cnpj        String @unique
-  companyName String
+model Phases {
+  id         String   @id @default(uuid())
+  customerId String
+  phase      String
+  orderPhase Int
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  User      User[]
-
-  @@map("customer")
+  @@map("phases")
 }

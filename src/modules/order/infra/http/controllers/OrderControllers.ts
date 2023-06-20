@@ -9,28 +9,38 @@ export default class OrderControllers {
   public async create(request: Request, response: Response): Promise<Response> {
     const {
       customerId,
-      orderNumber,
-      userId,
+      orderId,
       orderDate,
+      orderNumber,
       description,
       notes,
-      finished,
-      canceled,
-      OrderItems,
+      status,
+      tagId,
+      tagProductId,
+      tagReference,
+      tagProductName,
+      tagTissueName,
+      tagSellerName,
+      tagStatus,
     } = request.body;
 
     const createOrder = container.resolve(CreateOrderService);
 
     const order = await createOrder.execute({
       customerId,
-      orderNumber,
-      userId,
+      orderId,
       orderDate,
+      orderNumber,
       description,
       notes,
-      finished,
-      canceled,
-      OrderItems,
+      status,
+      tagId,
+      tagProductId,
+      tagReference,
+      tagProductName,
+      tagTissueName,
+      tagSellerName,
+      tagStatus,
     });
 
     return response.json(order);

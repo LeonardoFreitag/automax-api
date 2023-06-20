@@ -48,6 +48,7 @@ export default class ProductController {
   ): Promise<Response> {
     const {
       productId,
+      code,
       tableName,
       price,
       height,
@@ -68,6 +69,7 @@ export default class ProductController {
 
     const productPrice = await createProductPrice.execute({
       productId,
+      code,
       tableName,
       price,
       height,

@@ -43,6 +43,7 @@ class SaleRepository implements ISaleRepository {
         description: sale.description,
         unity: sale.unity,
         tableId: sale.tableId,
+        tableCode: sale.tableCode,
         tableName: sale.tableName,
         price: sale.price,
         quantity: sale.quantity,
@@ -148,6 +149,7 @@ class SaleRepository implements ISaleRepository {
       include: {
         SaleItems: true,
         SalePaymentForm: true,
+        Client: true,
       },
     });
 

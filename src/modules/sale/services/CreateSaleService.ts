@@ -23,6 +23,7 @@ class CreateSaleService {
     saleStatus,
     refusedNotes,
     returnedNotes,
+    signatureBase64,
     SaleItems,
     SalePaymentForm,
   }: Prisma.SaleUncheckedCreateInput): Promise<Sale> {
@@ -40,6 +41,7 @@ class CreateSaleService {
       saleStatus,
       refusedNotes,
       returnedNotes,
+      signatureBase64,
       SaleItems,
       SalePaymentForm,
     });

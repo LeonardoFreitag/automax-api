@@ -11,6 +11,7 @@ class CreateProductPriceService {
 
   public async execute({
     productId,
+    code,
     tableName,
     price,
     height,
@@ -28,6 +29,7 @@ class CreateProductPriceService {
   }: Prisma.ProductPriceUncheckedCreateInput): Promise<ProductPrice> {
     const productPrice = await this.productRepository.createPrice({
       productId,
+      code,
       tableName,
       price,
       height,
