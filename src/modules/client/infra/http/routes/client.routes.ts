@@ -82,7 +82,7 @@ clientRouter.patch(
       streetName: Joi.string().required(),
       streetNumber: Joi.string().required(),
       neighborhood: Joi.string().required(),
-      complement: Joi.string(),
+      complement: Joi.string().allow(''),
       cnpj: Joi.string().required(),
       ie: Joi.string().allow('isento'),
       cityCode: Joi.string().required(),
