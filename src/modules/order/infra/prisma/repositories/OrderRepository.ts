@@ -3,6 +3,19 @@ import { prisma } from '@shared/infra/prisma/prisma';
 import { Order, Prisma } from '@prisma/client';
 
 class OrderRepository implements IOrderRepository {
+  public async findByTagId(customerId: string, tagId: string): Promise<Order> {
+    const order = await prisma.order.findFirst({
+      where: {
+        customerId,
+        tagId,
+      },
+      include: {
+        OrderItemsPhases: true,
+      },
+    });
+    return order;
+  }
+
   public async findByCustomerIdAndTagId(
     customerId: string,
     tagId: string,

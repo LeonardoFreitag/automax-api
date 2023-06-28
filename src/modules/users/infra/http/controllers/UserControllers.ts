@@ -4,6 +4,7 @@ import CreateUserService from '@modules/users/services/CreateUserService';
 import CreateUserRuleService from '@modules/users/services/CreateUserRuleService';
 import UpdateUserService from '@modules/users/services/UdpateUserService';
 import ListUserService from '@modules/users/services/ListUsersService';
+import ListUsersByRuleService from '@modules/users/services/ListUsersByRuleService';
 import DeleteUserService from '@modules/users/services/DeleteUserService';
 import DeleteUserRuleService from '@modules/users/services/DeleteUserRuleService';
 import { classToClass } from 'class-transformer';
@@ -72,6 +73,19 @@ export default class UserController {
     const user = await listUsers.execute(String(customerId));
 
     return response.json(user);
+  }
+
+  public async listByRule(
+    request: Request,
+    response: Response,
+  ): Promise<Response> {
+    const { customerId, rule } = request.query;
+
+    const listUsers = container.resolve(ListUsersByRuleService);
+
+    const userList = await listUsers.execute(String(customerId), String(rule));
+
+    return response.json(userList);
   }
 
   public async delete(request: Request, response: Response): Promise<Response> {

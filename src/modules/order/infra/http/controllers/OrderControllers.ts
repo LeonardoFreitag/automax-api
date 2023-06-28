@@ -3,6 +3,7 @@ import { container } from 'tsyringe';
 import CreateOrderService from '@modules/order/services/CreateOrderService';
 import UpdateOrderService from '@modules/order/services/UdpateOrderService';
 import ListOrderService from '@modules/order/services/ListOrderService';
+import ListOrderByTagIdService from '@modules/order/services/ListOrderByTagIdService';
 import DeleteOrderService from '@modules/order/services/DeleteOrderService';
 
 export default class OrderControllers {
@@ -62,6 +63,19 @@ export default class OrderControllers {
     const listOrders = container.resolve(ListOrderService);
 
     const Order = await listOrders.execute(String(customerId));
+
+    return response.json(Order);
+  }
+
+  public async findByTagId(
+    request: Request,
+    response: Response,
+  ): Promise<Response> {
+    const { customerId, tagId } = request.query;
+
+    const listOrders = container.resolve(ListOrderByTagIdService);
+
+    const Order = await listOrders.execute(String(customerId), String(tagId));
 
     return response.json(Order);
   }

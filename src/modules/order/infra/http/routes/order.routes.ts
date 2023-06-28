@@ -67,6 +67,18 @@ orderRouter.get(
   orderController.list,
 );
 
+orderRouter.get(
+  '/tagId',
+  ensureAuthenticated,
+  celebrate({
+    [Segments.QUERY]: {
+      customerId: Joi.string().uuid().required(),
+      tagId: Joi.string().required(),
+    },
+  }),
+  orderController.findByTagId,
+);
+
 orderRouter.delete(
   '/',
   ensureAuthenticated,

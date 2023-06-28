@@ -3,6 +3,7 @@ import { Prisma, User, UserRules } from '@prisma/client';
 export default interface IUserRepository {
   findById(id: string): Promise<User | undefined>;
   findByEmail(email: string): Promise<User | undefined>;
+  listByRule(customerId: string, rule: string): Promise<User[]>;
   create(data: Prisma.UserUncheckedCreateInput): Promise<User>;
   save(user: User): Promise<User>;
   list(customerId: string): Promise<User[]>;

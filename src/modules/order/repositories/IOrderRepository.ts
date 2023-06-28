@@ -2,6 +2,7 @@ import { Order, Prisma } from '@prisma/client';
 
 export default interface IOrderRepository {
   findById(id: string): Promise<Order | undefined>;
+  findByTagId(customerId: string, tagId: string): Promise<Order | undefined>;
   findByOrderNumber(orderNumber: string): Promise<Order | undefined>;
   findByCustomerIdAndTagId(
     customerId: string,

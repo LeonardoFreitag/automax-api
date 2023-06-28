@@ -64,6 +64,17 @@ usersRouter.get(
   usersController.list,
 );
 
+usersRouter.get(
+  '/rule',
+  celebrate({
+    [Segments.QUERY]: {
+      customerId: Joi.string().uuid().required(),
+      rule: Joi.string().required(),
+    },
+  }),
+  usersController.listByRule,
+);
+
 usersRouter.delete(
   '/',
   celebrate({

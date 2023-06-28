@@ -3,6 +3,21 @@ import { Prisma, User, UserRules } from '@prisma/client';
 import { prisma } from '@shared/infra/prisma/prisma';
 
 class UserRepository implements IUserRepository {
+  public async listByRule(customerId: string, rule: string): Promise<User[]> {
+    const listUsers = await prisma.user.findMany({
+      where: {
+        customerId,
+        UserRules: {
+          some: {
+            rule,
+          },
+        },
+      },
+      include: { UserRules: true },
+    });
+    return listUsers;
+  }
+
   public async createManyRules(
     rules: Prisma.UserRulesUncheckedCreateInput[],
   ): Promise<void> {
