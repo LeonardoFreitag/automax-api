@@ -92,7 +92,7 @@ productRouter.get(
   celebrate({
     [Segments.QUERY]: {
       customerId: Joi.string().uuid().required(),
-      productPriceId: Joi.string().uuid().required(),
+      productPriceId: Joi.string().required(),
     },
   }),
   productTissueController.listByProductPriceId,

@@ -80,6 +80,7 @@ class UserRepository implements IUserRepository {
   public async findByEmail(email: string): Promise<User | undefined> {
     const user = await prisma.user.findFirst({
       where: { email },
+      include: { UserRules: true },
     });
 
     return user;
