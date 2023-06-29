@@ -14,7 +14,6 @@ class ProductRepository implements IProductRepository {
       },
       include: {
         ProductPrice: true,
-        ProductTissue: true,
       },
     });
 
@@ -29,14 +28,6 @@ class ProductRepository implements IProductRepository {
     });
   }
 
-  public async createManyTissue(
-    productTissue: Prisma.ProductTissueUncheckedCreateInput[],
-  ): Promise<void> {
-    await prisma.productTissue.createMany({
-      data: productTissue,
-    });
-  }
-
   public async findPriceById(id: string): Promise<ProductPrice> {
     const foundProductPrice = await prisma.productPrice.findUnique({
       where: {
@@ -44,15 +35,6 @@ class ProductRepository implements IProductRepository {
       },
     });
     return foundProductPrice;
-  }
-
-  public async findTissueById(id: string): Promise<ProductTissue> {
-    const foundProductTissue = await prisma.productTissue.findUnique({
-      where: {
-        id,
-      },
-    });
-    return foundProductTissue;
   }
 
   public async createPrice(
@@ -83,43 +65,11 @@ class ProductRepository implements IProductRepository {
     });
   }
 
-  public async createTissue(
-    productTissue: Prisma.ProductTissueUncheckedCreateInput,
-  ): Promise<ProductTissue> {
-    const newTissue = await prisma.productTissue.create({
-      data: productTissue,
-    });
-
-    return newTissue;
-  }
-
-  public async saveTissue(
-    productTissue: ProductTissue,
-  ): Promise<ProductTissue> {
-    const updatedTissue = await prisma.productTissue.update({
-      where: {
-        id: productTissue.id,
-      },
-      data: productTissue,
-    });
-
-    return updatedTissue;
-  }
-
-  public async deleteTissue(id: string): Promise<void> {
-    await prisma.productTissue.delete({
-      where: {
-        id,
-      },
-    });
-  }
-
   public async findById(id: string): Promise<Product | undefined> {
     const product = await prisma.product.findUnique({
       where: { id },
       include: {
         ProductPrice: true,
-        ProductTissue: true,
       },
     });
 
@@ -133,7 +83,6 @@ class ProductRepository implements IProductRepository {
       where: { reference },
       include: {
         ProductPrice: true,
-        ProductTissue: true,
       },
     });
 
@@ -147,7 +96,6 @@ class ProductRepository implements IProductRepository {
       },
       include: {
         ProductPrice: true,
-        ProductTissue: true,
       },
     });
 
@@ -163,11 +111,6 @@ class ProductRepository implements IProductRepository {
         ProductPrice: {
           createMany: {
             data: productData.ProductPrice as Prisma.ProductPriceUncheckedCreateInput,
-          },
-        },
-        ProductTissue: {
-          createMany: {
-            data: productData.ProductTissue as Prisma.ProductTissueUncheckedCreateInput,
           },
         },
       },
@@ -205,12 +148,6 @@ class ProductRepository implements IProductRepository {
       where: {
         productId,
       },
-    });
-  }
-
-  public async deleteTissues(productId: string): Promise<void> {
-    await prisma.productTissue.deleteMany({
-      where: { productId },
     });
   }
 }

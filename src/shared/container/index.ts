@@ -18,6 +18,9 @@ import ClientRepository from '@modules/client/infra/prisma/repositories/ClientRe
 import IProductRepository from '@modules/product/repositories/IProductRepository';
 import ProductRepository from '@modules/product/infra/prisma/repositories/ProductRepository';
 
+import IProductTissueRepository from '@modules/productTissue/repositories/IProductTissueRepository';
+import ProductTissueRepository from '@modules/productTissue/infra/prisma/repositories/ProductTissueRepository';
+
 import IGroupRepository from '@modules/group/repositories/IGroupRepository';
 import GroupRepository from '@modules/group/infra/prisma/repositories/GroupRepository';
 
@@ -57,9 +60,15 @@ container.registerSingleton<IGroupRepository>(
   'GroupRepository',
   GroupRepository,
 );
+
 container.registerSingleton<IProductRepository>(
   'ProductRepository',
   ProductRepository,
+);
+
+container.registerSingleton<IProductTissueRepository>(
+  'ProductTissueRepository',
+  ProductTissueRepository,
 );
 
 container.registerSingleton<ISaleRepository>('SaleRepository', SaleRepository);

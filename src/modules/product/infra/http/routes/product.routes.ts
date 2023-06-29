@@ -23,7 +23,6 @@ productRouter.post(
       unity: Joi.string().required(),
       groupId: Joi.string().required(),
       ProductPrice: Joi.array().required(),
-      ProductTissue: Joi.array().required(),
     },
   }),
   productController.create,
@@ -55,22 +54,6 @@ productRouter.post(
   productController.createProductPrice,
 );
 
-productRouter.post(
-  '/tissue',
-  ensureAuthenticated,
-  celebrate({
-    [Segments.BODY]: {
-      productId: Joi.string().required(),
-      code: Joi.string().required(),
-      description: Joi.string().required(),
-      type: Joi.string().required(),
-      underConsultation: Joi.bool().required(),
-      inRestocked: Joi.bool().required(),
-    },
-  }),
-  productController.createProductTissue,
-);
-
 productRouter.patch(
   '/',
   ensureAuthenticated,
@@ -84,7 +67,6 @@ productRouter.patch(
       unity: Joi.string().required(),
       groupId: Joi.string().required(),
       productPrice: Joi.array().required(),
-      productTissue: Joi.array().required(),
     },
   }),
   productController.update,
@@ -115,23 +97,6 @@ productRouter.patch(
     },
   }),
   productController.updateProductPrice,
-);
-
-productRouter.patch(
-  '/tissue',
-  ensureAuthenticated,
-  celebrate({
-    [Segments.BODY]: {
-      id: Joi.string().required(),
-      productId: Joi.string().required(),
-      code: Joi.string().required(),
-      description: Joi.string().required(),
-      type: Joi.string().required(),
-      underConsultation: Joi.bool().required(),
-      inRestocked: Joi.bool().required(),
-    },
-  }),
-  productController.updateProductTissue,
 );
 
 productRouter.get(
@@ -177,17 +142,6 @@ productRouter.delete(
     },
   }),
   productController.deleteProductPrice,
-);
-
-productRouter.delete(
-  '/tissue',
-  ensureAuthenticated,
-  celebrate({
-    [Segments.QUERY]: {
-      id: Joi.string().uuid().required(),
-    },
-  }),
-  productController.deleteProductTissue,
 );
 
 productRouter.post(

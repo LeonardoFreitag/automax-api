@@ -8,6 +8,7 @@ import passwordRouter from '@modules/users/infra/http/routes/password.routes';
 import clientRouter from '@modules/client/infra/http/routes/client.routes';
 import groupRouter from '@modules/group/infra/http/routes/group.routes';
 import productRouter from '@modules/product/infra/http/routes/product.routes';
+import productTissueRouter from '@modules/productTissue/infra/http/routes/productTissue.routes';
 import saleRouter from '@modules/sale/infra/http/routes/sale.routes';
 import orderRouter from '@modules/order/infra/http/routes/order.routes';
 import orderItemsPhasesRouter from '@modules/order/infra/http/routes/orderItemsPhases.routes';
@@ -31,6 +32,7 @@ routes.use('/client', clientRouter);
 // product
 routes.use('/group', groupRouter);
 routes.use('/product', productRouter);
+routes.use('/tissue', productTissueRouter);
 
 // sale
 routes.use('/sale', saleRouter);

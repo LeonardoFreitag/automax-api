@@ -1,29 +1,31 @@
 import { injectable, inject } from 'tsyringe';
-import IProductRepository from '@modules/product/repositories/IProductRepository';
+import IProductTissueRepository from '@modules/productTissue/repositories/IProductTissueRepository';
 import { Prisma, ProductTissue } from '@prisma/client';
 
 @injectable()
 class CreateProductTissueService {
   constructor(
-    @inject('ProductRepository')
-    private productRepository: IProductRepository,
+    @inject('ProductTissueRepository')
+    private productTissueRepository: IProductTissueRepository,
   ) {}
 
   public async execute({
-    productId,
     code,
     description,
     type,
     underConsultation,
     inRestocked,
+    customerId,
+    productPriceId,
   }: Prisma.ProductTissueUncheckedCreateInput): Promise<ProductTissue> {
-    const productPrice = await this.productRepository.createTissue({
-      productId,
+    const productPrice = await this.productTissueRepository.createTissue({
       code,
       description,
       type,
       underConsultation,
       inRestocked,
+      customerId,
+      productPriceId,
     });
 
     return productPrice;

@@ -19,15 +19,4 @@ export default interface IProductRepository {
   savePrice(productPrice: ProductPrice): Promise<ProductPrice>;
   deletePrice(id: string): Promise<void>;
   deletePrices(productId: string): Promise<void>;
-
-  createTissue(
-    productTissue: Prisma.ProductTissueUncheckedCreateInput,
-  ): Promise<ProductTissue>;
-  createManyTissue(
-    productTissue: Prisma.ProductTissueUncheckedCreateInput[],
-  ): Promise<void>;
-  findTissueById(id: string): Promise<ProductTissue | undefined>;
-  saveTissue(productTissue: ProductTissue): Promise<ProductTissue>;
-  deleteTissue(id: string): Promise<void>;
-  deleteTissues(productId: string): Promise<void>;
 }

@@ -1,18 +1,18 @@
 import AppError from '@shared/errors/AppError';
-import IProductRepository from '@modules/product/repositories/IProductRepository';
+import IProductTissueRepository from '@modules/productTissue/repositories/IProductTissueRepository';
 import { injectable, inject } from 'tsyringe';
 import { ProductTissue } from '@prisma/client';
 
 @injectable()
 class UpdateProductTissueService {
   constructor(
-    @inject('ProductRepository')
-    private productRepository: IProductRepository,
+    @inject('ProductTissueRepository')
+    private productTissueRepository: IProductTissueRepository,
   ) {}
 
   public async execute(data: ProductTissue): Promise<ProductTissue> {
     const { id } = data;
-    const productTissue = await this.productRepository.findTissueById(id);
+    const productTissue = await this.productTissueRepository.findTissueById(id);
 
     if (!productTissue) {
       throw new AppError('Product Price not found');
@@ -23,8 +23,10 @@ class UpdateProductTissueService {
     productTissue.type = data.type;
     productTissue.underConsultation = data.underConsultation;
     productTissue.inRestocked = data.inRestocked;
+    productTissue.customerId = data.customerId;
+    productTissue.productPriceId = data.productPriceId;
 
-    return this.productRepository.saveTissue(productTissue);
+    return this.productTissueRepository.saveTissue(productTissue);
   }
 }
 

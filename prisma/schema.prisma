@@ -160,10 +160,9 @@ model Product {
   photoUrl      String?
   photoSize     String?
 
-  createdAt     DateTime        @default(now())
-  updatedAt     DateTime        @updatedAt
-  ProductPrice  ProductPrice[]
-  ProductTissue ProductTissue[]
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  ProductPrice ProductPrice[]
 
   group   Group  @relation(fields: [groupId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   groupId String
@@ -199,6 +198,7 @@ model ProductPrice {
 
 model ProductTissue {
   id                String   @id @default(uuid())
+  customerId        String
   code              String
   description       String
   type              String
@@ -207,8 +207,7 @@ model ProductTissue {
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
 
-  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  productId String
+  productPriceId String
 
   @@map("productTissue")
 }

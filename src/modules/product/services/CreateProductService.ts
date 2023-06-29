@@ -17,7 +17,6 @@ class CreateProductService {
     unity,
     groupId,
     ProductPrice,
-    ProductTissue,
   }: Prisma.ProductUncheckedCreateInput): Promise<Product> {
     const checkProductExists = await this.productRepository.findByReference(
       reference,
@@ -35,7 +34,6 @@ class CreateProductService {
       unity,
       groupId,
       ProductPrice,
-      ProductTissue,
     });
 
     return product;
