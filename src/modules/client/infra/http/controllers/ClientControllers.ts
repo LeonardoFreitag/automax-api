@@ -145,7 +145,7 @@ export default class ClientController {
           isWhatsApp: item.isWhatsApp,
           email: item.email,
           job: item.job,
-          clientId: item.clientId,
+          clientId: data.id,
         };
       },
     );
@@ -156,7 +156,7 @@ export default class ClientController {
           paymentFormId: item.paymentFormId,
           description: item.description,
           installmentsLimit: item.installmentsLimit,
-          clientId: item.clientId,
+          clientId: data.id,
         };
       },
     );
