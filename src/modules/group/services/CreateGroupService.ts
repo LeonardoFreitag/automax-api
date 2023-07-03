@@ -14,10 +14,13 @@ class CreateGroupService {
     customerId,
     group,
   }: Prisma.GroupUncheckedCreateInput): Promise<Group> {
-    const checkGroupExists = await this.GroupRepository.findByGroup(group);
+    const checkGroupExists = await this.GroupRepository.findByGroup(
+      customerId,
+      group,
+    );
 
     if (checkGroupExists) {
-      throw new AppError('Group already exists!');
+      return checkGroupExists;
     }
 
     const newGroup = await this.GroupRepository.create({

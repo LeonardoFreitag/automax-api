@@ -3,9 +3,9 @@ import { Prisma, Group } from '@prisma/client';
 import { prisma } from '@shared/infra/prisma/prisma';
 
 class GroupRepository implements IGroupRepository {
-  public async findByGroup(group: string): Promise<Group> {
+  public async findByGroup(customerId: string, group: string): Promise<Group> {
     const foundGroup = await prisma.group.findFirst({
-      where: { group },
+      where: { customerId, group },
     });
     return foundGroup;
   }

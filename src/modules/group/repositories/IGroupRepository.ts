@@ -1,7 +1,7 @@
 import { Prisma, Group } from '@prisma/client';
 
 export default interface IGroupRepository {
-  findByGroup(group: string): Promise<Group | undefined>;
+  findByGroup(customerId: string, group: string): Promise<Group | undefined>;
   findById(id: string): Promise<Group | undefined>;
   create(data: Prisma.GroupUncheckedCreateInput): Promise<Group>;
   save(group: Group): Promise<Group>;
