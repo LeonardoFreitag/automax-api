@@ -6,5 +6,6 @@ export default interface ICustomerRepository {
   create(data: Prisma.CustomerUncheckedCreateInput): Promise<Customer>;
   save(ustomer: Customer): Promise<Customer>;
   list(cnpj: string): Promise<Customer[]>;
+  listAll(): Promise<Customer[]>;
   delete(id: string): Promise<void>;
 }

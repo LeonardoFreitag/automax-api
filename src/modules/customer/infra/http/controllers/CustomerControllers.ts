@@ -3,6 +3,7 @@ import { container } from 'tsyringe';
 import CreateCustomerService from '@modules/customer/services/CreateCustomerService';
 import UpdateCustomerService from '@modules/customer/services/UdpateCustomerService';
 import ListCustomerService from '@modules/customer/services/ListCustomerService';
+import ListAllCustomerService from '@modules/customer/services/ListAllCustomerService';
 import DeleteCustomerService from '@modules/customer/services/DeleteCustomerService';
 
 export default class CustomerControllers {
@@ -38,6 +39,17 @@ export default class CustomerControllers {
     const listCustomers = container.resolve(ListCustomerService);
 
     const customers = await listCustomers.execute(String(cnpj));
+
+    return response.json(customers);
+  }
+
+  public async listAll(
+    request: Request,
+    response: Response,
+  ): Promise<Response> {
+    const listCustomers = container.resolve(ListAllCustomerService);
+
+    const customers = await listCustomers.execute();
 
     return response.json(customers);
   }

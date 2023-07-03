@@ -42,6 +42,8 @@ customerRouter.get(
   customerController.list,
 );
 
+customerRouter.get('/all', customerController.listAll);
+
 customerRouter.delete(
   '/',
   celebrate({

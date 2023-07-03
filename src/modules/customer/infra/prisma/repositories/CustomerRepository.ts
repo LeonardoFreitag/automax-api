@@ -4,6 +4,17 @@ import { Customer, Prisma } from '@prisma/client';
 import { prisma } from '@shared/infra/prisma/prisma';
 
 class CustomerRepository implements ICustomerRepository {
+  public async listAll(): Promise<Customer[]> {
+    const customers = await prisma.customer.findMany({
+      include: {
+        User: {
+          include: { UserRules: true },
+        },
+      },
+    });
+    return customers;
+  }
+
   public async findById(id: string): Promise<Customer | undefined> {
     const customer = await prisma.customer.findUnique({
       where: { id },
