@@ -71,7 +71,10 @@ class CustomerRepository implements ICustomerRepository {
       where: {
         id: customer.id,
       },
-      data: customer,
+      data: {
+        cnpj: customer.cnpj,
+        companyName: customer.companyName,
+      },
     });
     return customerUpdated;
   }
