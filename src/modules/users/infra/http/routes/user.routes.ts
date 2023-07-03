@@ -54,6 +54,18 @@ usersRouter.patch(
   usersController.update,
 );
 
+usersRouter.patch(
+  '/updaterUserAdmin',
+  celebrate({
+    [Segments.QUERY]: {
+      customerId: Joi.string().required(),
+      old_email: Joi.string().email().required(),
+      new_email: Joi.string().email().required(),
+    },
+  }),
+  usersController.updateEmailUserAdmin,
+);
+
 usersRouter.get(
   '/',
   celebrate({

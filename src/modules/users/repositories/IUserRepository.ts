@@ -5,6 +5,11 @@ export default interface IUserRepository {
   findByEmail(email: string): Promise<User | undefined>;
   listByRule(customerId: string, rule: string): Promise<User[]>;
   create(data: Prisma.UserUncheckedCreateInput): Promise<User>;
+  updateEmailUserAdmin(
+    customerId: string,
+    old_email: string,
+    new_email: string,
+  ): Promise<User>;
   save(user: User): Promise<User>;
   list(customerId: string): Promise<User[]>;
   delete(id: string): Promise<void>;

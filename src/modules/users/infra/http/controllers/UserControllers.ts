@@ -3,11 +3,11 @@ import { container } from 'tsyringe';
 import CreateUserService from '@modules/users/services/CreateUserService';
 import CreateUserRuleService from '@modules/users/services/CreateUserRuleService';
 import UpdateUserService from '@modules/users/services/UdpateUserService';
+import UpateEmailUserAdminService from '@modules/users/services/UdpateEmailUserAdminService';
 import ListUserService from '@modules/users/services/ListUsersService';
 import ListUsersByRuleService from '@modules/users/services/ListUsersByRuleService';
 import DeleteUserService from '@modules/users/services/DeleteUserService';
 import DeleteUserRuleService from '@modules/users/services/DeleteUserRuleService';
-import { classToClass } from 'class-transformer';
 
 export default class UserController {
   public async create(request: Request, response: Response): Promise<Response> {
@@ -62,7 +62,24 @@ export default class UserController {
 
     const user = await updateUser.execute(data, rules);
 
-    return response.json(classToClass(user));
+    return response.json(user);
+  }
+
+  public async updateEmailUserAdmin(
+    request: Request,
+    response: Response,
+  ): Promise<Response> {
+    const { customerId, old_email, new_email } = request.query;
+
+    const updateUser = container.resolve(UpateEmailUserAdminService);
+
+    const user = await updateUser.execute(
+      String(customerId),
+      String(old_email),
+      String(new_email),
+    );
+
+    return response.json(user);
   }
 
   public async list(request: Request, response: Response): Promise<Response> {

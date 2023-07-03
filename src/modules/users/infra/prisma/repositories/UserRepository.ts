@@ -3,6 +3,41 @@ import { Prisma, User, UserRules } from '@prisma/client';
 import { prisma } from '@shared/infra/prisma/prisma';
 
 class UserRepository implements IUserRepository {
+  public async updateEmailUserAdmin(
+    customerId: string,
+    old_email: string,
+    new_email: string,
+  ): Promise<User> {
+    const userForUpdate = await prisma.user.findFirst({
+      where: {
+        email: old_email,
+        customerId,
+      },
+    });
+
+    if (userForUpdate) {
+      await prisma.user.update({
+        where: { id: userForUpdate.id },
+        data: {
+          email: new_email,
+        },
+      });
+    }
+
+    const updatedUser = await prisma.user.findFirst({
+      where: {
+        email: new_email,
+        customerId,
+      },
+    });
+
+    if (!updatedUser) {
+      throw new Error('User not found');
+    }
+
+    return updatedUser;
+  }
+
   public async listByRule(customerId: string, rule: string): Promise<User[]> {
     const listUsers = await prisma.user.findMany({
       where: {
