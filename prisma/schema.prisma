@@ -224,7 +224,7 @@ model Sale {
   discount          Decimal
   increment         Decimal
   total             Decimal
-  notes             String
+  notes             String?
   saleStatus        String // "open", "closed", "canceled"
   refusedNotes      String
   returnedNotes     String
@@ -252,7 +252,7 @@ model SaleItems {
   price       Decimal
   quantity    Decimal
   amount      Decimal
-  notes       String
+  notes       String?
 
   originalPrice Decimal
   groupId       String
