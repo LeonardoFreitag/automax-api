@@ -8,6 +8,7 @@ import UpdateSaleStatusService from '@modules/sale/services/UdpateSaleStatusServ
 import UpdateSaleItemService from '@modules/sale/services/UdpateSaleItemService';
 import UpdateSalePaymentFormService from '@modules/sale/services/UdpateSalePaymentFormService';
 import ListSaleService from '@modules/sale/services/ListSaleService';
+import ListSaleByIdService from '@modules/sale/services/ListSaleByIdService';
 import DeleteSaleService from '@modules/sale/services/DeleteSaleService';
 import DeleteSaleItemService from '@modules/sale/services/DeleteSaleItemService';
 import DeleteSalePaymentFormService from '@modules/sale/services/DeleteSalePaymentFormService';
@@ -195,6 +196,19 @@ export default class SaleControllers {
       String(customerId),
       String(saleStatus),
     );
+
+    return response.json(sale);
+  }
+
+  public async listSaleById(
+    request: Request,
+    response: Response,
+  ): Promise<Response> {
+    const { id } = request.query;
+
+    const listSales = container.resolve(ListSaleByIdService);
+
+    const sale = await listSales.execute(String(id));
 
     return response.json(sale);
   }

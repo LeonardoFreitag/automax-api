@@ -134,6 +134,10 @@ class SaleRepository implements ISaleRepository {
       },
     });
 
+    if (!sale) {
+      throw new AppError('Sale not found!');
+    }
+
     return sale;
   }
 
