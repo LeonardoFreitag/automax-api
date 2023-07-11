@@ -1,6 +1,7 @@
 import IOrderRepository from '@modules/order/repositories/IOrderRepository';
 import { prisma } from '@shared/infra/prisma/prisma';
 import { Order, Prisma } from '@prisma/client';
+import AppError from '@shared/errors/AppError';
 
 class OrderRepository implements IOrderRepository {
   public async findByTagId(customerId: string, tagId: string): Promise<Order> {
@@ -103,6 +104,14 @@ class OrderRepository implements IOrderRepository {
   }
 
   public async delete(id: string): Promise<void> {
+    const foundOrder = await prisma.order.findUnique({
+      where: { id },
+    });
+
+    if (!foundOrder) {
+      throw new AppError('Order not found');
+    }
+
     await prisma.order.delete({
       where: {
         id,

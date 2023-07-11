@@ -1,5 +1,6 @@
 import IGroupRepository from '@modules/group/repositories/IGroupRepository';
 import { Prisma, Group } from '@prisma/client';
+import AppError from '@shared/errors/AppError';
 import { prisma } from '@shared/infra/prisma/prisma';
 
 class GroupRepository implements IGroupRepository {
@@ -48,6 +49,14 @@ class GroupRepository implements IGroupRepository {
   }
 
   public async delete(id: string): Promise<void> {
+    const foundGroup = await prisma.group.findUnique({
+      where: { id },
+    });
+
+    if (!foundGroup) {
+      throw new AppError('Group not found');
+    }
+
     await prisma.group.delete({
       where: {
         id,

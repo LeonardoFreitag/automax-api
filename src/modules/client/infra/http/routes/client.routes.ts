@@ -144,6 +144,19 @@ clientRouter.get(
 );
 
 clientRouter.get(
+  '/paymentForm',
+  ensureAuthenticated,
+  celebrate({
+    [Segments.QUERY]: {
+      customerId: Joi.string().uuid().required(),
+      code: Joi.string().required(),
+      paymentFormId: Joi.string().required(),
+    },
+  }),
+  clientController.listByClientCodePaymentId,
+);
+
+clientRouter.get(
   '/seller',
   ensureAuthenticated,
   celebrate({

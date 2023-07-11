@@ -1,5 +1,6 @@
 import IPhasesRepository from '@modules/phases/repositories/IPhasesRepository';
 import { Phases, Prisma } from '@prisma/client';
+import AppError from '@shared/errors/AppError';
 
 import { prisma } from '@shared/infra/prisma/prisma';
 
@@ -41,6 +42,14 @@ class PhasesRepository implements IPhasesRepository {
   }
 
   public async delete(id: string): Promise<void> {
+    const foundPhases = await prisma.phases.findUnique({
+      where: { id },
+    });
+
+    if (!foundPhases) {
+      throw new AppError('Phases not found');
+    }
+
     await prisma.phases.delete({
       where: {
         id,

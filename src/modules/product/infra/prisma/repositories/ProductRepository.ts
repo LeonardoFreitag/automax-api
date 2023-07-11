@@ -1,8 +1,37 @@
 import IProductRepository from '@modules/product/repositories/IProductRepository';
 import { Prisma, Product, ProductPrice, ProductTissue } from '@prisma/client';
+import AppError from '@shared/errors/AppError';
 import { prisma } from '@shared/infra/prisma/prisma';
 
 class ProductRepository implements IProductRepository {
+  public async findByTablecode(
+    customerId: string,
+    productCode: string,
+    tableCode: string,
+    regionId: string,
+  ): Promise<ProductPrice | undefined> {
+    const foundProduct = await prisma.product.findFirst({
+      where: {
+        customerId,
+        code: productCode,
+        ProductPrice: {
+          some: {
+            code: tableCode,
+            regionId,
+          },
+        },
+      },
+      include: {
+        ProductPrice: true,
+      },
+    });
+    const foundProductPrice = foundProduct?.ProductPrice.find(
+      productPrice =>
+        productPrice.code === tableCode && productPrice.regionId === regionId,
+    );
+    return foundProductPrice;
+  }
+
   public async listByGroupId(
     customerId: string,
     groupId: string,
@@ -58,6 +87,14 @@ class ProductRepository implements IProductRepository {
   }
 
   public async deletePrice(id: string): Promise<void> {
+    const foundProductPrice = await prisma.productPrice.findUnique({
+      where: { id },
+    });
+
+    if (!foundProductPrice) {
+      throw new AppError('Product Price not found');
+    }
+
     await prisma.productPrice.delete({
       where: {
         id,
@@ -136,6 +173,14 @@ class ProductRepository implements IProductRepository {
   }
 
   public async delete(id: string): Promise<void> {
+    const foundProduct = await prisma.product.findUnique({
+      where: { id },
+    });
+
+    if (!foundProduct) {
+      throw new AppError('Product not found');
+    }
+
     await prisma.product.delete({
       where: {
         id,

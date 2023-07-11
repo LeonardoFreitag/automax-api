@@ -1,5 +1,6 @@
 import ISaleRepository from '@modules/sale/repositories/ISaleRepository';
 import { Prisma, Sale, SaleItems, SalePaymentForm } from '@prisma/client';
+import AppError from '@shared/errors/AppError';
 import { prisma } from '@shared/infra/prisma/prisma';
 
 class SaleRepository implements ISaleRepository {
@@ -63,6 +64,16 @@ class SaleRepository implements ISaleRepository {
   }
 
   public async deleteItem(id: string): Promise<void> {
+    const foundItem = await prisma.saleItems.findUnique({
+      where: {
+        id,
+      },
+    });
+
+    if (!foundItem) {
+      throw new AppError('Item not found!');
+    }
+
     await prisma.saleItems.delete({
       where: {
         id,
@@ -97,6 +108,16 @@ class SaleRepository implements ISaleRepository {
   }
 
   public async deletePaymentForm(id: string): Promise<void> {
+    const foundPaymentForm = await prisma.salePaymentForm.findUnique({
+      where: {
+        id,
+      },
+    });
+
+    if (!foundPaymentForm) {
+      throw new AppError('Payment Form not found!');
+    }
+
     await prisma.salePaymentForm.delete({
       where: {
         id,
@@ -175,7 +196,17 @@ class SaleRepository implements ISaleRepository {
       },
     });
 
-    return sale;
+    const saleCreated = await prisma.sale.findUnique({
+      where: {
+        id: sale.id,
+      },
+      include: {
+        SaleItems: true,
+        SalePaymentForm: true,
+      },
+    });
+
+    return saleCreated;
   }
 
   public async save(sale: Sale): Promise<Sale> {
@@ -203,6 +234,16 @@ class SaleRepository implements ISaleRepository {
   }
 
   public async delete(id: string): Promise<void> {
+    const foundSale = await prisma.sale.findUnique({
+      where: {
+        id,
+      },
+    });
+
+    if (!foundSale) {
+      throw new AppError('Sale not found!');
+    }
+
     await prisma.sale.delete({
       where: {
         id,

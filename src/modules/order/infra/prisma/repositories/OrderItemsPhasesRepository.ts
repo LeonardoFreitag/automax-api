@@ -1,5 +1,6 @@
 import IOrderItemsPhasesRepository from '@modules/order/repositories/IOrderItemsPhasesRepository';
 import { OrderItemsPhases, Prisma } from '@prisma/client';
+import AppError from '@shared/errors/AppError';
 import { prisma } from '@shared/infra/prisma/prisma';
 
 class OrderItemsPhasesRepository implements IOrderItemsPhasesRepository {
@@ -65,6 +66,14 @@ class OrderItemsPhasesRepository implements IOrderItemsPhasesRepository {
   }
 
   public async delete(id: string): Promise<void> {
+    const foundOrderItemsPhases = await prisma.orderItemsPhases.findUnique({
+      where: { id },
+    });
+
+    if (!foundOrderItemsPhases) {
+      throw new AppError('OrderItemsPhases not found');
+    }
+
     await prisma.orderItemsPhases.delete({
       where: { id },
     });

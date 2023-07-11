@@ -1,5 +1,6 @@
 import ICustomerRepository from '@modules/customer/repositories/ICustomerRepository';
 import { Customer, Prisma } from '@prisma/client';
+import AppError from '@shared/errors/AppError';
 
 import { prisma } from '@shared/infra/prisma/prisma';
 
@@ -80,6 +81,16 @@ class CustomerRepository implements ICustomerRepository {
   }
 
   public async delete(id: string): Promise<void> {
+    const foundCustomer = await prisma.customer.findUnique({
+      where: {
+        id,
+      },
+    });
+
+    if (!foundCustomer) {
+      throw new AppError('Customer not found');
+    }
+
     await prisma.customer.delete({
       where: {
         id,

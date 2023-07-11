@@ -34,6 +34,11 @@ export default interface IClientRepository {
   deletePaymentForm(id: string): Promise<void>;
   deletePaymentForms(clientId: string): Promise<void>;
   findPaymentFormById(id: string): Promise<ClientPaymentForm | undefined>;
+  findByClientCodePaymentId(
+    customerId: string,
+    code: string,
+    paymentFormId: string,
+  ): Promise<ClientPaymentForm | undefined>;
   savePaymentForm(
     clientPaymentForm: ClientPaymentForm,
   ): Promise<ClientPaymentForm>;

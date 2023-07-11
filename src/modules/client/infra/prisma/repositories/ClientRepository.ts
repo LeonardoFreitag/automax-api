@@ -5,9 +5,36 @@ import {
   ClientPaymentForm,
   Prisma,
 } from '@prisma/client';
+import AppError from '@shared/errors/AppError';
 import { prisma } from '@shared/infra/prisma/prisma';
 
 class ClientRepository implements IClientRepository {
+  public async findByClientCodePaymentId(
+    customerId: string,
+    code: string,
+    paymentFormId: string,
+  ): Promise<ClientPaymentForm> {
+    const foundClientPaymentForm = await prisma.client.findFirst({
+      where: {
+        customerId,
+        code,
+        ClientPaymentForm: {
+          some: {
+            paymentFormId,
+          },
+        },
+      },
+      include: {
+        ClientPaymentForm: true,
+      },
+    });
+    const foundClientPaymentFormPrice =
+      foundClientPaymentForm?.ClientPaymentForm.find(
+        clientPaymentForm => clientPaymentForm.paymentFormId === paymentFormId,
+      );
+    return foundClientPaymentFormPrice;
+  }
+
   public async listBySellerId(
     customerId: string,
     sellerId: string,
@@ -113,6 +140,16 @@ class ClientRepository implements IClientRepository {
   }
 
   public async deleteContact(id: string): Promise<void> {
+    const foundContact = await prisma.clientContact.findUnique({
+      where: {
+        id,
+      },
+    });
+
+    if (!foundContact) {
+      throw new AppError('Contact not found');
+    }
+
     await prisma.clientContact.delete({
       where: {
         id,
@@ -133,6 +170,16 @@ class ClientRepository implements IClientRepository {
   }
 
   public async deletePaymentForm(id: string): Promise<void> {
+    const foundPaymentForm = await prisma.clientPaymentForm.findUnique({
+      where: {
+        id,
+      },
+    });
+
+    if (!foundPaymentForm) {
+      throw new AppError('Payment form not found');
+    }
+
     await prisma.clientPaymentForm.delete({
       where: {
         id,
@@ -198,6 +245,16 @@ class ClientRepository implements IClientRepository {
   }
 
   public async delete(id: string): Promise<void> {
+    const foundClient = await prisma.client.findUnique({
+      where: {
+        id,
+      },
+    });
+
+    if (!foundClient) {
+      throw new AppError('Client not found');
+    }
+
     await prisma.client.delete({
       where: {
         id,

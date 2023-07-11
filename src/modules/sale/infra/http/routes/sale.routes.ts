@@ -74,9 +74,8 @@ saleRouter.post(
   celebrate({
     [Segments.BODY]: {
       saleId: Joi.string().required(),
-      tissueCode: Joi.string().required(),
       paymentFormId: Joi.string().required(),
-      descripriont: Joi.string().required(),
+      description: Joi.string().required(),
       amount: Joi.number().required(),
       installments: Joi.number().required(),
     },
@@ -161,9 +160,8 @@ saleRouter.patch(
     [Segments.BODY]: {
       id: Joi.string().required(),
       saleId: Joi.string().required(),
-      tissueCode: Joi.string().required(),
       paymentFormId: Joi.string().required(),
-      descripriont: Joi.string().required(),
+      description: Joi.string().required(),
       amount: Joi.number().required(),
       installments: Joi.number().required(),
     },

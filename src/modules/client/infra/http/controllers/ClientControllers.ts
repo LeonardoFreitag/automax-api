@@ -7,6 +7,7 @@ import UpdateClientService from '@modules/client/services/UdpateClientService';
 import UpdateClientContactService from '@modules/client/services/UdpateClientContactService';
 import UpdateClientPaymentFormService from '@modules/client/services/UdpateClientPaymentFormService';
 import ListClientService from '@modules/client/services/ListClientService';
+import ListByClientPaymentIdService from '@modules/client/services/ListByClientPaymentIdService';
 import ListClientBySellerIdService from '@modules/client/services/ListClientBySellerIdService';
 import DeleteClientService from '@modules/client/services/DeleteClientService';
 import DeleteClientContactService from '@modules/client/services/DeleteClientContactService';
@@ -221,6 +222,23 @@ export default class ClientController {
     const Client = await listClients.execute(
       String(customerId),
       String(sellerId),
+    );
+
+    return response.json(Client);
+  }
+
+  public async listByClientCodePaymentId(
+    request: Request,
+    response: Response,
+  ): Promise<Response> {
+    const { customerId, code, paymentFormId } = request.query;
+
+    const paymentForm = container.resolve(ListByClientPaymentIdService);
+
+    const Client = await paymentForm.execute(
+      String(customerId),
+      String(code),
+      String(paymentFormId),
     );
 
     return response.json(Client);

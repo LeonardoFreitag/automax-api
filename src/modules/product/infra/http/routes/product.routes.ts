@@ -122,6 +122,20 @@ productRouter.get(
   productController.listByGroupId,
 );
 
+productRouter.get(
+  '/tableCode',
+  ensureAuthenticated,
+  celebrate({
+    [Segments.QUERY]: {
+      customerId: Joi.string().uuid().required(),
+      productCode: Joi.string().required(),
+      tableCode: Joi.string().required(),
+      regionId: Joi.string().required(),
+    },
+  }),
+  productController.listByTableCode,
+);
+
 productRouter.delete(
   '/',
   ensureAuthenticated,
