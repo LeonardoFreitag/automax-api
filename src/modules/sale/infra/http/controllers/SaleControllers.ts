@@ -9,6 +9,7 @@ import UpdateSaleItemService from '@modules/sale/services/UdpateSaleItemService'
 import UpdateSalePaymentFormService from '@modules/sale/services/UdpateSalePaymentFormService';
 import ListSaleService from '@modules/sale/services/ListSaleService';
 import ListSaleByIdService from '@modules/sale/services/ListSaleByIdService';
+import ListSaleBySellerIdService from '@modules/sale/services/ListSaleBySellerIdService';
 import DeleteSaleService from '@modules/sale/services/DeleteSaleService';
 import DeleteSaleItemService from '@modules/sale/services/DeleteSaleItemService';
 import DeleteSalePaymentFormService from '@modules/sale/services/DeleteSalePaymentFormService';
@@ -209,6 +210,19 @@ export default class SaleControllers {
     const listSales = container.resolve(ListSaleByIdService);
 
     const sale = await listSales.execute(String(id));
+
+    return response.json(sale);
+  }
+
+  public async listSaleBySellerId(
+    request: Request,
+    response: Response,
+  ): Promise<Response> {
+    const { sellerId } = request.query;
+
+    const listSales = container.resolve(ListSaleBySellerIdService);
+
+    const sale = await listSales.execute(String(sellerId));
 
     return response.json(sale);
   }

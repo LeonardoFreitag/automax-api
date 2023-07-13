@@ -153,8 +153,8 @@ class SaleRepository implements ISaleRepository {
     return sale;
   }
 
-  public async findBySalerId(sellerId: string): Promise<Sale | undefined> {
-    const sale = await prisma.sale.findFirst({
+  public async listBySellerId(sellerId: string): Promise<Sale[]> {
+    const sale = await prisma.sale.findMany({
       where: { sellerId },
       include: {
         SaleItems: true,

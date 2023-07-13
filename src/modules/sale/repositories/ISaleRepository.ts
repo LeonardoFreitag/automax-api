@@ -2,7 +2,7 @@ import { Prisma, Sale, SaleItems, SalePaymentForm } from '@prisma/client';
 
 export default interface ISaleRepository {
   findById(id: string): Promise<Sale | undefined>;
-  findBySalerId(salerId: string): Promise<Sale | undefined>;
+  listBySellerId(sellerId: string): Promise<Sale[]>;
   findBySaleNumber(saleNumber: string): Promise<Sale | undefined>;
   create(dataProduct: Prisma.SaleUncheckedCreateInput): Promise<Sale>;
   save(sale: Sale): Promise<Sale>;

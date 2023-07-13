@@ -192,6 +192,17 @@ saleRouter.get(
   saleController.listSaleById,
 );
 
+saleRouter.get(
+  '/saleBySellerId',
+  ensureAuthenticated,
+  celebrate({
+    [Segments.QUERY]: {
+      sellerId: Joi.string().uuid().required(),
+    },
+  }),
+  saleController.listSaleBySellerId,
+);
+
 saleRouter.delete(
   '/',
   ensureAuthenticated,
