@@ -153,7 +153,7 @@ export default class SaleControllers {
   ): Promise<Response> {
     const data = request.body;
 
-    const updateSaleStatus = container.resolve(UpdateSaleService);
+    const updateSaleStatus = container.resolve(UpdateSaleStatusService);
 
     const sale = await updateSaleStatus.execute(data);
 

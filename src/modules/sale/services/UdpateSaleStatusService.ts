@@ -7,6 +7,7 @@ interface SaleStatus {
   id: string;
   saleNumber: string;
   saleStatus: string;
+  refusedNotes: string;
 }
 
 @injectable()
@@ -26,6 +27,7 @@ class UpdateSaleStatusService {
 
     sale.saleNumber = data.saleNumber;
     sale.saleStatus = data.saleStatus;
+    sale.refusedNotes = data.refusedNotes;
 
     return this.saleRepository.save(sale);
   }

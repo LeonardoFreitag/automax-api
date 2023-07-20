@@ -116,6 +116,7 @@ saleRouter.patch(
       id: Joi.string().required(),
       saleNumber: Joi.string().required(),
       saleStatus: Joi.string().required(),
+      refusedNotes: Joi.string().allow('').default(''),
     },
   }),
   saleController.updateStatus,
