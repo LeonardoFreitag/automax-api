@@ -123,6 +123,18 @@ saleRouter.patch(
 );
 
 saleRouter.patch(
+  '/saleNumber',
+  ensureAuthenticated,
+  celebrate({
+    [Segments.BODY]: {
+      id: Joi.string().required(),
+      saleNumber: Joi.string().required(),
+    },
+  }),
+  saleController.updateSaleNumber,
+);
+
+saleRouter.patch(
   '/item',
   ensureAuthenticated,
   celebrate({

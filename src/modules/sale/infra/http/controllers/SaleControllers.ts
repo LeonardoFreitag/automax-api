@@ -4,6 +4,7 @@ import CreateSaleService from '@modules/sale/services/CreateSaleService';
 import CreateSaleItemService from '@modules/sale/services/CreateSaleItemService';
 import CreateSalePaymentFormService from '@modules/sale/services/CreateSalePaymentFormService';
 import UpdateSaleService from '@modules/sale/services/UdpateSaleService';
+import UpdateSaleNumberService from '@modules/sale/services/UdpateSaleNumberService';
 import UpdateSaleStatusService from '@modules/sale/services/UdpateSaleStatusService';
 import UpdateSaleItemService from '@modules/sale/services/UdpateSaleItemService';
 import UpdateSalePaymentFormService from '@modules/sale/services/UdpateSalePaymentFormService';
@@ -143,6 +144,19 @@ export default class SaleControllers {
     const updateSaleStatus = container.resolve(UpdateSaleStatusService);
 
     const sale = await updateSaleStatus.execute(data);
+
+    return response.json(sale);
+  }
+
+  public async updateSaleNumber(
+    request: Request,
+    response: Response,
+  ): Promise<Response> {
+    const { id, saleNumber } = request.body;
+
+    const updateSaleNumber = container.resolve(UpdateSaleNumberService);
+
+    const sale = await updateSaleNumber.execute(String(id), String(saleNumber));
 
     return response.json(sale);
   }
