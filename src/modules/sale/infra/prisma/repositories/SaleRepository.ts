@@ -159,6 +159,7 @@ class SaleRepository implements ISaleRepository {
       include: {
         SaleItems: true,
         SalePaymentForm: true,
+        Client: true,
       },
     });
 
