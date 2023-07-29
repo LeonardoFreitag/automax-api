@@ -17,7 +17,7 @@ orderRouter.post(
       orderDate: Joi.string().required(),
       orderNumber: Joi.string().required(),
       description: Joi.string().required(),
-      notes: Joi.string().required(),
+      notes: Joi.string().empty('').default(''),
       status: Joi.string().required(),
       tagId: Joi.string().required(),
       tagProductId: Joi.string().required(),
