@@ -14,6 +14,11 @@ class OrderRepository implements IOrderRepository {
         OrderItemsPhases: true,
       },
     });
+
+    if (!order) {
+      throw new AppError('Order not found');
+    }
+
     return order;
   }
 
@@ -30,6 +35,11 @@ class OrderRepository implements IOrderRepository {
         OrderItemsPhases: true,
       },
     });
+
+    if (!order) {
+      throw new AppError('Order not found');
+    }
+
     return order;
   }
 
