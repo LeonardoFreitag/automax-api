@@ -49,6 +49,9 @@ class UserRepository implements IUserRepository {
         },
       },
       include: { UserRules: true },
+      orderBy: {
+        name: 'asc',
+      },
     });
     return listUsers;
   }

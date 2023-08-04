@@ -18,6 +18,9 @@ class PhasesRepository implements IPhasesRepository {
       where: {
         customerId,
       },
+      orderBy: {
+        phase: 'asc',
+      },
     });
 
     return phasess;
