@@ -25,6 +25,7 @@ export default class OrderControllers {
       tagStatus,
     } = request.body;
 
+    // console.log(request.body);
     const createOrder = container.resolve(CreateOrderService);
 
     const order = await createOrder.execute({

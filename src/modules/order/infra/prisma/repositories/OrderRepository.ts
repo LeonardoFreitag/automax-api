@@ -36,9 +36,9 @@ class OrderRepository implements IOrderRepository {
       },
     });
 
-    if (!order) {
-      throw new AppError('Order not found');
-    }
+    // if (!order) {
+    //   throw new AppError('Order not found');
+    // }
 
     return order;
   }

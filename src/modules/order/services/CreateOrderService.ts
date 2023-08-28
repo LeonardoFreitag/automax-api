@@ -29,6 +29,8 @@ class CreateOrderService {
     const checkOrderExists =
       await this.orderRepository.findByCustomerIdAndTagId(customerId, tagId);
 
+    // console.log(checkOrderExists);
+
     if (checkOrderExists) {
       throw new AppError('Order already exists!');
     }
