@@ -252,12 +252,12 @@ saleRouter.delete(
 saleRouter.post(
   '/uploadSignature',
   ensureAuthenticated,
-  celebrate({
-    [Segments.QUERY]: {
-      saleId: Joi.string().uuid().required(),
-      size: Joi.string().required(),
-    },
-  }),
+  // celebrate({
+  //   [Segments.BODY]: {
+  //     saleId: Joi.string().uuid().required(),
+  //     size: Joi.string().required(),
+  //   },
+  // }),
   upload.single('saleSignature'),
   saleController.uploadSignature,
 );

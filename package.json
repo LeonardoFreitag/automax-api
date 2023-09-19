@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "build": "babel src --extensions \".js,.ts\" --out-dir dist --copy-files",
-    "dev": "ts-node-dev -r tsconfig-paths/register --inspect --transpile-only --ignore-watch node_modules src/shared/infra/http/server.ts",
+    "dev": "tsx watch src/shared/infra/http/server.ts",
     "start": "ts-node src/shared/infra/http/server.ts",
     "test": "jest"
   },
@@ -35,7 +35,8 @@
     "eslint-plugin-prettier": "^3.4.0",
     "prettier": "^2.3.0",
     "prisma": "^4.14.1",
-    "ts-node-dev": "^1.1.6",
+    "ts-node-dev": "^2.0.0",
+    "tsx": "^3.12.10",
     "typescript": "4.2.4"
   },
   "dependencies": {

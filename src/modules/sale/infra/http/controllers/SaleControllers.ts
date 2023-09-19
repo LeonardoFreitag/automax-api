@@ -283,16 +283,20 @@ export default class SaleControllers {
     request: Request,
     response: Response,
   ): Promise<Response> {
-    const { saleId, size } = request.query;
+    const { saleId, size } = request.body;
     const uploadSignatureService = container.resolve(UploadSignatureService);
     const id = String(saleId);
     const sz = String(size);
-    const entrieAttach = await uploadSignatureService.execute({
+    const saleWithAttatch = await uploadSignatureService.execute({
       saleId: id,
       signatureSize: sz,
       signatureFileName: request.file.filename,
     });
 
-    return response.json(entrieAttach);
+    if (saleWithAttatch.id === undefined) {
+      return response.status(201).json({ error: 'Sale not found!' });
+    }
+
+    return response.json(saleWithAttatch);
   }
 }

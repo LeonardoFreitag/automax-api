@@ -24,7 +24,7 @@ class UploadSignatureService {
     const sale = await this.saleRepository.findById(saleId);
 
     if (!sale) {
-      throw new AppError('Sale not found');
+      return {} as Sale;
     }
 
     const fileName = await this.storageProvider.saveFile(signatureFileName);
