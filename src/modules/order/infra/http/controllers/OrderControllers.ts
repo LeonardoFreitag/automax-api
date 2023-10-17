@@ -5,6 +5,7 @@ import UpdateOrderService from '@modules/order/services/UdpateOrderService';
 import ListOrderService from '@modules/order/services/ListOrderService';
 import ListOrderByTagIdService from '@modules/order/services/ListOrderByTagIdService';
 import DeleteOrderService from '@modules/order/services/DeleteOrderService';
+import FinalizeOrderService from '@modules/order/services/FinalizeOrderService';
 
 export default class OrderControllers {
   public async create(request: Request, response: Response): Promise<Response> {
@@ -64,6 +65,19 @@ export default class OrderControllers {
     const listOrders = container.resolve(ListOrderService);
 
     const Order = await listOrders.execute(String(customerId));
+
+    return response.json(Order);
+  }
+
+  public async finalize(
+    request: Request,
+    response: Response,
+  ): Promise<Response> {
+    const { id, status } = request.query;
+
+    const finalizeOrder = container.resolve(FinalizeOrderService);
+
+    const Order = await finalizeOrder.execute(String(id), String(status));
 
     return response.json(Order);
   }

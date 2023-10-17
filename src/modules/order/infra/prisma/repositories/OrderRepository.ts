@@ -30,6 +30,7 @@ class OrderRepository implements IOrderRepository {
       where: {
         customerId,
         tagId,
+        status: 'open',
       },
       include: {
         OrderItemsPhases: true,
@@ -71,6 +72,7 @@ class OrderRepository implements IOrderRepository {
     const orders = await prisma.order.findMany({
       where: {
         customerId,
+        status: 'open',
       },
       include: {
         OrderItemsPhases: true,

@@ -56,6 +56,18 @@ orderRouter.patch(
   orderController.update,
 );
 
+orderRouter.patch(
+  '/finalize',
+  ensureAuthenticated,
+  celebrate({
+    [Segments.QUERY]: {
+      id: Joi.string().required(),
+      status: Joi.string().required(),
+    },
+  }),
+  orderController.finalize,
+);
+
 orderRouter.get(
   '/',
   ensureAuthenticated,
