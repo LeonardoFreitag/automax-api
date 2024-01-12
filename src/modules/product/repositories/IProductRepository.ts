@@ -1,4 +1,4 @@
-import { Prisma, Product, ProductPrice, ProductTissue } from '@prisma/client';
+import { Prisma, Product, ProductPrice } from '@prisma/client';
 
 export default interface IProductRepository {
   findById(id: string): Promise<Product | undefined>;

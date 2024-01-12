@@ -10,6 +10,7 @@ import ListProductByGroupIdService from '@modules/product/services/ListProductBy
 import DeleteProductService from '@modules/product/services/DeleteProductService';
 import DeleteProductPriceService from '@modules/product/services/DeleteProductPriceService';
 import UploadPhotoService from '@modules/product/services/UploadPhotoService';
+import CheckExistsProductService from '@modules/product/services/CheckExistsProductService';
 
 export default class ProductController {
   public async create(request: Request, response: Response): Promise<Response> {
@@ -88,6 +89,28 @@ export default class ProductController {
   public async update(request: Request, response: Response): Promise<Response> {
     const data = request.body;
     const { productPrice } = request.body;
+
+    const existsProduct = container.resolve(CheckExistsProductService);
+
+    const exists = await existsProduct.execute(data.id);
+
+    if (!exists) {
+      const createProductService = container.resolve(CreateProductService);
+
+      const newProduct = {
+        customerId: data.customerId,
+        code: data.code,
+        reference: data.reference,
+        description: data.description,
+        unity: data.unity,
+        groupId: data.groupId,
+        ProductPrice: productPrice,
+      };
+
+      const product = await createProductService.execute(newProduct);
+
+      return response.json(product);
+    }
 
     const updateProduct = container.resolve(UpdateProductService);
 
