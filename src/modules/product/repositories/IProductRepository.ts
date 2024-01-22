@@ -2,7 +2,14 @@ import { Prisma, Product, ProductPrice } from '@prisma/client';
 
 export default interface IProductRepository {
   findById(id: string): Promise<Product | undefined>;
-  findByReference(reference: string): Promise<Product | undefined>;
+  findByProductCode(
+    customerId: string,
+    productCode: string,
+  ): Promise<Product | undefined>;
+  findByReference(
+    customerId: string,
+    reference: string,
+  ): Promise<Product | undefined>;
   findByTablecode(
     customerId: string,
     productCode: string,

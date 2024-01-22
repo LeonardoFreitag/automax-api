@@ -50,7 +50,7 @@ class PhasesRepository implements IPhasesRepository {
     });
 
     if (!foundPhases) {
-      throw new AppError('Phases not found');
+      throw new AppError('Phases not found', 404);
     }
 
     await prisma.phases.delete({

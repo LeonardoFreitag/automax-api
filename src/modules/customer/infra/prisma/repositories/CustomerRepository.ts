@@ -88,7 +88,7 @@ class CustomerRepository implements ICustomerRepository {
     });
 
     if (!foundCustomer) {
-      throw new AppError('Customer not found');
+      throw new AppError('Customer not found', 404);
     }
 
     await prisma.customer.delete({

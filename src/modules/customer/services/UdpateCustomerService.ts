@@ -15,7 +15,7 @@ class UpdateCustomerService {
     const customer = await this.customerRepository.findById(id);
 
     if (!customer) {
-      throw new AppError('Customer not found');
+      throw new AppError('Customer not found', 404);
     }
 
     customer.cnpj = data.cnpj;

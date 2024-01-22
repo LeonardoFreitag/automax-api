@@ -15,7 +15,7 @@ class UpdateProductPriceService {
     const productPrice = await this.productRepository.findPriceById(id);
 
     if (!productPrice) {
-      throw new AppError('Product Price not found');
+      throw new AppError('Product Price not found', 404);
     }
 
     productPrice.code = data.code;

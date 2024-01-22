@@ -23,7 +23,7 @@ class UpdateEmailUserAdminService {
     const foundUser = await this.userRepository.findByEmail(old_email);
 
     if (!foundUser) {
-      throw new AppError('User not found');
+      throw new AppError('User not found', 404);
     }
 
     const userWithUpdatedEmail = await this.userRepository.findByEmail(
@@ -31,7 +31,7 @@ class UpdateEmailUserAdminService {
     );
 
     if (userWithUpdatedEmail && userWithUpdatedEmail.id !== foundUser.id) {
-      throw new AppError('E-mail already in use.');
+      throw new AppError('E-mail already in use.', 409);
     }
 
     const updateduser = await this.userRepository.updateEmailUserAdmin(

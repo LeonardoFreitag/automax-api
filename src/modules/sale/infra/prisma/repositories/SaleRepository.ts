@@ -71,7 +71,7 @@ class SaleRepository implements ISaleRepository {
     });
 
     if (!foundItem) {
-      throw new AppError('Item not found!');
+      throw new AppError('Item not found!', 404);
     }
 
     await prisma.saleItems.delete({
@@ -115,7 +115,7 @@ class SaleRepository implements ISaleRepository {
     });
 
     if (!foundPaymentForm) {
-      throw new AppError('Payment Form not found!');
+      throw new AppError('Payment Form not found!', 404);
     }
 
     await prisma.salePaymentForm.delete({
@@ -242,7 +242,7 @@ class SaleRepository implements ISaleRepository {
     });
 
     if (!foundSale) {
-      throw new AppError('Sale not found!');
+      throw new AppError('Sale not found!', 404);
     }
 
     await prisma.sale.delete({

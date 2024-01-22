@@ -15,7 +15,7 @@ class UpdateOrderItemsPhasesService {
     const orderItemsPhases = await this.orderItemsPhasesRepository.findById(id);
 
     if (!orderItemsPhases) {
-      throw new AppError('OrderItemsPhases not found');
+      throw new AppError('OrderItemsPhases not found', 404);
     }
 
     orderItemsPhases.employeeId = data.employeeId;

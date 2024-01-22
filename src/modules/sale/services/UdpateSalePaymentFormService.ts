@@ -15,7 +15,7 @@ class UpdateSaleService {
     const salePaymentForm = await this.saleRepository.findPaymentFormById(id);
 
     if (!salePaymentForm) {
-      throw new AppError('Sale Item not found');
+      throw new AppError('Sale Item not found', 404);
     }
 
     salePaymentForm.paymentFormId = data.paymentFormId;

@@ -15,7 +15,7 @@ class UpdateClientContactService {
     const contact = await this.clientRepository.findContactById(id);
 
     if (!contact) {
-      throw new AppError('Contact not found');
+      throw new AppError('Contact not found', 404);
     }
 
     contact.name = data.name;

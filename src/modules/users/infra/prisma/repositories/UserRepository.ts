@@ -1,5 +1,6 @@
 import IUserRepository from '@modules/users/repositories/IUserRepository';
 import { Prisma, User, UserRules } from '@prisma/client';
+import AppError from '@shared/errors/AppError';
 import { prisma } from '@shared/infra/prisma/prisma';
 
 class UserRepository implements IUserRepository {
@@ -32,7 +33,7 @@ class UserRepository implements IUserRepository {
     });
 
     if (!updatedUser) {
-      throw new Error('User not found');
+      throw new AppError('User not found', 404);
     }
 
     return updatedUser;

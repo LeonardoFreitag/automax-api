@@ -26,7 +26,7 @@ class CreateOrderItemsPhasesService {
       );
 
     if (checkOrderItemsPhasesExists) {
-      throw new AppError('Phase already exists!');
+      throw new AppError('Phase already exists!', 400);
     }
 
     const orderItemsPhases = await this.orderItemsPhasesRepository.create({

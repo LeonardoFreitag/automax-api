@@ -1,8 +1,7 @@
 import AppError from '@shared/errors/AppError';
 import IUserRepository from '@modules/users/repositories/IUserRepository';
 import { injectable, inject } from 'tsyringe';
-
-import User from '@modules/users/infra/typeorm/entities/User';
+import { User } from '@prisma/client';
 
 interface IResponse {
   user: User;
@@ -23,7 +22,7 @@ class ShowProfileService {
     const user = await this.userRepository.findById(user_id);
 
     if (!user) {
-      throw new AppError('User not found');
+      throw new AppError('User not found', 404);
     }
 
     return { user };

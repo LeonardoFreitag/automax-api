@@ -18,8 +18,9 @@ class CreateProductService {
     groupId,
     ProductPrice,
   }: Prisma.ProductUncheckedCreateInput): Promise<Product> {
-    const checkProductExists = await this.productRepository.findByReference(
-      reference,
+    const checkProductExists = await this.productRepository.findByProductCode(
+      customerId,
+      code,
     );
 
     if (checkProductExists) {

@@ -15,7 +15,7 @@ class UpdateSaleService {
     const saleItem = await this.saleRepository.findItemById(id);
 
     if (!saleItem) {
-      throw new AppError('Sale Item not found');
+      throw new AppError('Sale Item not found', 404);
     }
 
     saleItem.productId = data.productId;

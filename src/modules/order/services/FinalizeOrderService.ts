@@ -14,7 +14,7 @@ class FinalizeOrderService {
     const order = await this.orderRepository.findById(id);
 
     if (!order) {
-      throw new AppError('Order not found');
+      throw new AppError('Order not found', 404);
     }
 
     order.status = status;

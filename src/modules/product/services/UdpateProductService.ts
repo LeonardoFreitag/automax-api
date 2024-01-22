@@ -1,9 +1,10 @@
 import AppError from '@shared/errors/AppError';
 import IProductRepository from '@modules/product/repositories/IProductRepository';
 import { injectable, inject } from 'tsyringe';
-import { Product } from '@prisma/client';
+import { Prisma, Product } from '@prisma/client';
 
 interface ProductPriceModel {
+  code: string;
   tableName: string;
   price: number;
   height: number;
@@ -17,6 +18,7 @@ interface ProductPriceModel {
   depthOpen: number;
   depthOpenUnity: string;
   additionalPercentage: number;
+  regionId: string;
   productId: string;
 }
 
@@ -35,7 +37,39 @@ class UpdateProductService {
     const product = await this.productRepository.findById(id);
 
     if (!product) {
-      throw new AppError('Product not found');
+      const priceList = productPrice.map(price => {
+        return {
+          productId: data.id,
+          code: price.code,
+          tableName: price.tableName,
+          price: price.price,
+          height: price.height,
+          heightUnity: price.heightUnity,
+          minWidth: price.minWidth,
+          width: price.width,
+          maxWidth: price.maxWidth,
+          widthUnity: price.widthUnity,
+          depth: price.depth,
+          depthUnity: price.depthUnity,
+          depthOpen: price.depthOpen,
+          depthOpenUnity: price.depthOpenUnity,
+          additionalPercentage: price.additionalPercentage,
+          regionId: price.regionId,
+        };
+      });
+
+      const newProduct = await this.productRepository.create({
+        customerId: data.customerId,
+        code: data.code,
+        reference: data.reference,
+        description: data.description,
+        unity: data.unity,
+        groupId: data.groupId,
+        ProductPrice:
+          priceList as Prisma.ProductPriceUncheckedCreateNestedManyWithoutProductInput,
+      });
+
+      return newProduct;
     }
 
     await this.productRepository.deletePrices(data.id);

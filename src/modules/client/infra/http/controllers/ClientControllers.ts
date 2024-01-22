@@ -131,12 +131,6 @@ export default class ClientController {
 
     const { contacts, paymentForms } = request.body;
 
-    // console.log(data);
-    // console.log(contacts);
-    // console.log(paymentForms);
-
-    // return response.json([]);
-
     const contactList: ContactUpdateModel[] = contacts.map(
       (item: ContactUpdateModel) => {
         return {

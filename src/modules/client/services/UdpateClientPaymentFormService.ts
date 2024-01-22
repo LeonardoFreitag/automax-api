@@ -15,7 +15,7 @@ class UpdateClientService {
     const paymentForm = await this.clientRepository.findPaymentFormById(id);
 
     if (!paymentForm) {
-      throw new AppError('PaymentForm not found');
+      throw new AppError('PaymentForm not found', 404);
     }
 
     paymentForm.paymentFormId = data.paymentFormId;

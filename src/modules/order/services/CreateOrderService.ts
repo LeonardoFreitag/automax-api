@@ -32,7 +32,7 @@ class CreateOrderService {
     // console.log(checkOrderExists);
 
     if (checkOrderExists) {
-      throw new AppError('Order already exists!');
+      throw new AppError('Order already exists!', 400);
     }
 
     const order = await this.orderRepository.create({

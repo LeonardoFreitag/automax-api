@@ -22,7 +22,25 @@ class UpdateProfileService {
     const foundUser = await this.userRepository.findById(user.id);
 
     if (!foundUser) {
-      throw new AppError('User not found');
+      const rulesList = rules.map(item => {
+        return {
+          rule: item.rule,
+        };
+      });
+
+      const newUser = await this.userRepository.create({
+        customerId: user.customerId,
+        isAdmin: user.isAdmin,
+        name: user.name,
+        email: user.email,
+        cellphone: user.cellphone,
+        password: user.password,
+        regionId: user.regionId,
+        UserRules:
+          rulesList as Prisma.UserRulesUncheckedCreateNestedManyWithoutUserInput,
+      });
+
+      return newUser;
     }
 
     const userWithUpdatedEmail = await this.userRepository.findByEmail(
@@ -30,7 +48,7 @@ class UpdateProfileService {
     );
 
     if (userWithUpdatedEmail && userWithUpdatedEmail.id !== user.id) {
-      throw new AppError('E-mail already in use.');
+      throw new AppError('E-mail already in use.', 409);
     }
 
     const newRules: Prisma.UserRulesUncheckedCreateInput[] = rules.map(item => {

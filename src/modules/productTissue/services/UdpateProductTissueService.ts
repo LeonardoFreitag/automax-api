@@ -15,7 +15,17 @@ class UpdateProductTissueService {
     const productTissue = await this.productTissueRepository.findTissueById(id);
 
     if (!productTissue) {
-      throw new AppError('Product Price not found');
+      const newProductTissue = await this.productTissueRepository.createTissue({
+        code: data.code,
+        description: data.description,
+        type: data.type,
+        underConsultation: data.underConsultation,
+        inRestocked: data.inRestocked,
+        customerId: data.customerId,
+        productPriceId: data.productPriceId,
+      });
+
+      return newProductTissue;
     }
 
     productTissue.code = data.code;

@@ -147,7 +147,7 @@ class ClientRepository implements IClientRepository {
     });
 
     if (!foundContact) {
-      throw new AppError('Contact not found');
+      throw new AppError('Contact not found', 404);
     }
 
     await prisma.clientContact.delete({
@@ -177,7 +177,7 @@ class ClientRepository implements IClientRepository {
     });
 
     if (!foundPaymentForm) {
-      throw new AppError('Payment form not found');
+      throw new AppError('Payment form not found', 404);
     }
 
     await prisma.clientPaymentForm.delete({
@@ -252,7 +252,7 @@ class ClientRepository implements IClientRepository {
     });
 
     if (!foundClient) {
-      throw new AppError('Client not found');
+      throw new AppError('Client not found', 404);
     }
 
     await prisma.client.delete({

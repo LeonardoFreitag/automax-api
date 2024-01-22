@@ -1,7 +1,7 @@
 import AppError from '@shared/errors/AppError';
 import IClientRepository from '@modules/client/repositories/IClientRepository';
 import { injectable, inject } from 'tsyringe';
-import { Client } from '@prisma/client';
+import { Client, Prisma } from '@prisma/client';
 
 interface ContactUpdateModel {
   clientId: string;
@@ -35,7 +35,51 @@ class UpdateClientService {
     const client = await this.clientRepository.findById(data.id as string);
 
     if (!client) {
-      throw new AppError('Client not found');
+      const ContactList = contact.map(item => {
+        return {
+          name: item.name,
+          fone: item.fone,
+          foneType: item.foneType,
+          isWhatsApp: item.isWhatsApp,
+          email: item.email,
+          job: item.job,
+        };
+      });
+
+      const PaymentFormList = paymentForm.map(item => {
+        return {
+          paymentFormId: item.paymentFormId,
+          description: item.description,
+          installmentsLimit: item.installmentsLimit,
+        };
+      });
+
+      const newClient = await this.clientRepository.create({
+        customerId: data.customerId,
+        code: data.code,
+        companyName: data.companyName,
+        comercialName: data.comercialName,
+        zipCode: data.zipCode,
+        streetName: data.streetName,
+        streetNumber: data.streetNumber,
+        neighborhood: data.neighborhood,
+        complement: data.complement,
+        cnpj: data.cnpj,
+        ie: data.ie,
+        cityCode: data.cityCode,
+        city: data.city,
+        stateCode: data.stateCode,
+        state: data.state,
+        financialPendency: data.financialPendency,
+        isNew: data.isNew,
+        sellerId: data.sellerId,
+        ClientContact:
+          ContactList as Prisma.ClientContactUncheckedCreateNestedManyWithoutClientInput,
+        ClientPaymentForm:
+          PaymentFormList as Prisma.ClientPaymentFormUncheckedCreateNestedManyWithoutClientInput,
+      });
+
+      return newClient;
     }
 
     await this.clientRepository.deleteContacts(data.id as string);

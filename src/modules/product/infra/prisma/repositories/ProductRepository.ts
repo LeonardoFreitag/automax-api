@@ -4,6 +4,19 @@ import AppError from '@shared/errors/AppError';
 import { prisma } from '@shared/infra/prisma/prisma';
 
 class ProductRepository implements IProductRepository {
+  public async findByProductCode(
+    customerId: string,
+    productCode: string,
+  ): Promise<Product> {
+    const foundProduct = await prisma.product.findFirst({
+      where: {
+        customerId,
+        code: productCode,
+      },
+    });
+    return foundProduct;
+  }
+
   public async findByTablecode(
     customerId: string,
     productCode: string,
@@ -92,7 +105,7 @@ class ProductRepository implements IProductRepository {
     });
 
     if (!foundProductPrice) {
-      throw new AppError('Product Price not found');
+      throw new AppError('Product Price not found', 404);
     }
 
     await prisma.productPrice.delete({
@@ -114,10 +127,11 @@ class ProductRepository implements IProductRepository {
   }
 
   public async findByReference(
+    customerId: string,
     reference: string,
   ): Promise<Product | undefined> {
     const product = await prisma.product.findFirst({
-      where: { reference },
+      where: { customerId, reference },
       include: {
         ProductPrice: true,
       },
@@ -178,7 +192,7 @@ class ProductRepository implements IProductRepository {
     });
 
     if (!foundProduct) {
-      throw new AppError('Product not found');
+      throw new AppError('Product not found', 404);
     }
 
     await prisma.product.delete({

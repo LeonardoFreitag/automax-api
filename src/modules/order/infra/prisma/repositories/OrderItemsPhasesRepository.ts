@@ -71,7 +71,7 @@ class OrderItemsPhasesRepository implements IOrderItemsPhasesRepository {
     });
 
     if (!foundOrderItemsPhases) {
-      throw new AppError('OrderItemsPhases not found');
+      throw new AppError('OrderItemsPhases not found', 404);
     }
 
     await prisma.orderItemsPhases.delete({

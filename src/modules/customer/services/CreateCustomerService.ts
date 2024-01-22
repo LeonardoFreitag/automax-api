@@ -33,12 +33,16 @@ class CreateCustomerService {
   }: ICreateCustomerDTO): Promise<Customer> {
     const hashedPassword = await this.hashProvider.generateHash(password);
 
-    const checkUserExists = await this.userRepository.findByEmail(email);
+    const checkEmailExists = await this.userRepository.findByEmail(email);
 
-    const checkCustomerExists = await this.customerRepository.findByCnpj(cnpj);
+    if (checkEmailExists) {
+      throw new AppError('E-mail already exists!', 408);
+    }
 
-    if (checkCustomerExists || checkUserExists) {
-      throw new AppError('Customer already exists!');
+    const checkCnpjExists = await this.customerRepository.findByCnpj(cnpj);
+
+    if (checkCnpjExists) {
+      throw new AppError('CNPJ already exists!', 409);
     }
 
     const customer = await this.customerRepository.create({

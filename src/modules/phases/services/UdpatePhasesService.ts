@@ -15,7 +15,7 @@ class UpdatePhasesService {
     const phaseUpdate = await this.phasesRepository.findById(id);
 
     if (!phaseUpdate) {
-      throw new AppError('Phases not found');
+      throw new AppError('Phases not found', 404);
     }
 
     phaseUpdate.customerId = data.customerId;

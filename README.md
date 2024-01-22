@@ -1,7 +1,3 @@
-## partner customer list all - ok
-
-## partner request authorization - ok
-
-## partner customer list authorizeded
-
-## customer authorize partner update
+## lista de error devolvidos
+- 408 e-mail já existe
+- 409 cnpj já existe

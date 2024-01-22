@@ -16,7 +16,7 @@ class OrderRepository implements IOrderRepository {
     });
 
     if (!order) {
-      throw new AppError('Order not found');
+      throw new AppError('Order not found', 404);
     }
 
     return order;
@@ -121,7 +121,7 @@ class OrderRepository implements IOrderRepository {
     });
 
     if (!foundOrder) {
-      throw new AppError('Order not found');
+      throw new AppError('Order not found', 404);
     }
 
     await prisma.order.delete({

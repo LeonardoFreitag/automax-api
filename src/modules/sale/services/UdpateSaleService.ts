@@ -15,7 +15,7 @@ class UpdateSaleService {
     const sale = await this.saleRepository.findById(id);
 
     if (!sale) {
-      throw new AppError('Sale not found');
+      throw new AppError('Sale not found', 404);
     }
 
     sale.saleNumber = data.saleNumber;

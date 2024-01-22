@@ -28,7 +28,7 @@ class UploadPhotoService {
     const product = await this.productRepository.findById(productId);
 
     if (!product) {
-      throw new AppError('Product not found');
+      throw new AppError('Product not found', 404);
     }
 
     const fileName = await this.storageProvider.saveFile(photoFileName);
