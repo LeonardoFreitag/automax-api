@@ -48,6 +48,9 @@ class ClientRepository implements IClientRepository {
         ClientContact: true,
         ClientPaymentForm: true,
       },
+      orderBy: {
+        comercialName: 'asc',
+      },
     });
     return listClient;
   }
@@ -209,6 +212,9 @@ class ClientRepository implements IClientRepository {
         customerId,
       },
       include: { ClientContact: true, ClientPaymentForm: true },
+      orderBy: {
+        comercialName: 'asc',
+      },
     });
 
     return clients;

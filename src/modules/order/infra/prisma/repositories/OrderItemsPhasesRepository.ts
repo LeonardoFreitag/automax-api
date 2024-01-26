@@ -1,9 +1,60 @@
 import IOrderItemsPhasesRepository from '@modules/order/repositories/IOrderItemsPhasesRepository';
-import { OrderItemsPhases, Prisma } from '@prisma/client';
+import { Order, OrderItemsPhases, Prisma } from '@prisma/client';
 import AppError from '@shared/errors/AppError';
 import { prisma } from '@shared/infra/prisma/prisma';
 
 class OrderItemsPhasesRepository implements IOrderItemsPhasesRepository {
+  public async listAllCaptureToday(dateCapture: string): Promise<Order[]> {
+    const todayStart = new Date(dateCapture);
+    todayStart.setHours(0, 0, 0, 0);
+
+    const todayEnd = new Date();
+    todayEnd.setHours(23, 59, 59, 999);
+
+    const orderItemsPhases = await prisma.orderItemsPhases.findMany({
+      where: {
+        phaseDate: {
+          gte: todayStart,
+          lte: todayEnd,
+        },
+      },
+    });
+
+    const orderIds = orderItemsPhases.map(oip => oip.orderId);
+
+    const orders = await prisma.order.findMany({
+      include: {
+        OrderItemsPhases: true,
+      },
+      where: {
+        id: {
+          in: orderIds,
+        },
+      },
+    });
+
+    return orders;
+  }
+
+  public async listToday(dateCapture: string): Promise<OrderItemsPhases[]> {
+    const todayStart = new Date(dateCapture);
+    todayStart.setHours(0, 0, 0, 0);
+
+    const todayEnd = new Date();
+    todayEnd.setHours(23, 59, 59, 999);
+
+    const orderItemsPhasess = await prisma.orderItemsPhases.findMany({
+      where: {
+        phaseDate: {
+          gte: todayStart,
+          lte: todayEnd,
+        },
+      },
+    });
+
+    return orderItemsPhasess;
+  }
+
   public async findById(id: string): Promise<OrderItemsPhases> {
     const orderItemsPhases = await prisma.orderItemsPhases.findUnique({
       where: {

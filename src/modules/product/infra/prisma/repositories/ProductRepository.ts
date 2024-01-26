@@ -57,6 +57,9 @@ class ProductRepository implements IProductRepository {
       include: {
         ProductPrice: true,
       },
+      orderBy: {
+        description: 'asc',
+      },
     });
 
     return foundProducts;
@@ -147,6 +150,9 @@ class ProductRepository implements IProductRepository {
       },
       include: {
         ProductPrice: true,
+      },
+      orderBy: {
+        description: 'asc',
       },
     });
 

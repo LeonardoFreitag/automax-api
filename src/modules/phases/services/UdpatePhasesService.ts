@@ -1,4 +1,3 @@
-import AppError from '@shared/errors/AppError';
 import IPhasesRepository from '@modules/phases/repositories/IPhasesRepository';
 import { injectable, inject } from 'tsyringe';
 import { Phases } from '@prisma/client';
@@ -15,7 +14,13 @@ class UpdatePhasesService {
     const phaseUpdate = await this.phasesRepository.findById(id);
 
     if (!phaseUpdate) {
-      throw new AppError('Phases not found', 404);
+      const newPhase = await this.phasesRepository.create({
+        customerId: data.customerId,
+        phase: data.phase,
+        orderPhase: data.orderPhase,
+      });
+
+      return newPhase;
     }
 
     phaseUpdate.customerId = data.customerId;

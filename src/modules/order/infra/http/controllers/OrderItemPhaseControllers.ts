@@ -4,6 +4,7 @@ import CreateOrderItemsPhasesService from '@modules/order/services/CreateOrderIt
 import UpdateOrderItemsPhasesService from '@modules/order/services/UdpateOrderItemsPhasesService';
 import ListOrderItemsPhasesService from '@modules/order/services/ListOrderItemsPhasesService';
 import DeleteOrderItemsPhasesService from '@modules/order/services/DeleteOrderItemsPhasesService';
+import ListItemsPhasesTodayService from '@modules/order/services/ListItemsPhasesTodayService';
 
 export default class OrderItemPhaseControllers {
   public async create(request: Request, response: Response): Promise<Response> {
@@ -57,6 +58,23 @@ export default class OrderItemPhaseControllers {
 
     const orderItemsPhase = await listOrderItemsPhaseService.execute(
       String(orderId),
+    );
+
+    return response.json(orderItemsPhase);
+  }
+
+  public async listToday(
+    request: Request,
+    response: Response,
+  ): Promise<Response> {
+    const { dateCapture } = request.query;
+
+    const listItemsPhasesTodayService = container.resolve(
+      ListItemsPhasesTodayService,
+    );
+
+    const orderItemsPhase = await listItemsPhasesTodayService.execute(
+      String(dateCapture),
     );
 
     return response.json(orderItemsPhase);

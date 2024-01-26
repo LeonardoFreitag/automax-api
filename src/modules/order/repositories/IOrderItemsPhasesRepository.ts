@@ -1,4 +1,4 @@
-import { OrderItemsPhases, Prisma } from '@prisma/client';
+import { Order, OrderItemsPhases, Prisma } from '@prisma/client';
 
 export default interface IOrderItemsPhasesRepository {
   findByOrderIdAndPhaseId(
@@ -11,5 +11,7 @@ export default interface IOrderItemsPhasesRepository {
   ): Promise<OrderItemsPhases>;
   save(orderItemsPhases: OrderItemsPhases): Promise<OrderItemsPhases>;
   list(orderId: string): Promise<OrderItemsPhases[]>;
+  listToday(dateCapture: string): Promise<OrderItemsPhases[]>;
+  listAllCaptureToday(dateCapture: string): Promise<Order[]>;
   delete(id: string): Promise<void>;
 }
