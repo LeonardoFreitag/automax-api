@@ -11,5 +11,6 @@ export default interface IOrderRepository {
   create(data: Prisma.OrderUncheckedCreateInput): Promise<Order>;
   save(Oorder: Order): Promise<Order>;
   list(customerId: string): Promise<Order[]>;
+  listByEmployeeId(customerId: string, employeeId: string): Promise<Order[]>;
   delete(id: string): Promise<void>;
 }

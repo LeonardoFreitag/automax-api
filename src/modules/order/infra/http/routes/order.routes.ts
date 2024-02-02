@@ -80,6 +80,18 @@ orderRouter.get(
 );
 
 orderRouter.get(
+  '/employeeId',
+  ensureAuthenticated,
+  celebrate({
+    [Segments.QUERY]: {
+      customerId: Joi.string().uuid().required(),
+      employeeId: Joi.string().uuid().required(),
+    },
+  }),
+  orderController.listByEmployeeId,
+);
+
+orderRouter.get(
   '/tagId',
   ensureAuthenticated,
   celebrate({

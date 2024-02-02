@@ -4,6 +4,29 @@ import { Order, Prisma } from '@prisma/client';
 import AppError from '@shared/errors/AppError';
 
 class OrderRepository implements IOrderRepository {
+  public async listByEmployeeId(
+    customerId: string,
+    employeeId: string,
+  ): Promise<Order[]> {
+    // console.log('employeeId', employeeId);
+    // console.log('customerId', customerId);
+    const orders = await prisma.order.findMany({
+      where: {
+        customerId,
+        OrderItemsPhases: {
+          some: {
+            employeeId,
+          },
+        },
+      },
+      include: {
+        OrderItemsPhases: true,
+      },
+    });
+
+    return orders;
+  }
+
   public async findByTagId(customerId: string, tagId: string): Promise<Order> {
     const order = await prisma.order.findFirst({
       where: {

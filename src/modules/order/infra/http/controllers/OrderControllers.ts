@@ -6,6 +6,7 @@ import ListOrderService from '@modules/order/services/ListOrderService';
 import ListOrderByTagIdService from '@modules/order/services/ListOrderByTagIdService';
 import DeleteOrderService from '@modules/order/services/DeleteOrderService';
 import FinalizeOrderService from '@modules/order/services/FinalizeOrderService';
+import ListOrderByEmployeeService from '@modules/order/services/ListOrderByEmployeeService';
 
 export default class OrderControllers {
   public async create(request: Request, response: Response): Promise<Response> {
@@ -91,6 +92,22 @@ export default class OrderControllers {
     const listOrders = container.resolve(ListOrderByTagIdService);
 
     const Order = await listOrders.execute(String(customerId), String(tagId));
+
+    return response.json(Order);
+  }
+
+  public async listByEmployeeId(
+    request: Request,
+    response: Response,
+  ): Promise<Response> {
+    const { customerId, employeeId } = request.query;
+
+    const listOrders = container.resolve(ListOrderByEmployeeService);
+
+    const Order = await listOrders.execute(
+      String(customerId),
+      String(employeeId),
+    );
 
     return response.json(Order);
   }
