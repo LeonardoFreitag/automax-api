@@ -100,13 +100,15 @@ export default class OrderControllers {
     request: Request,
     response: Response,
   ): Promise<Response> {
-    const { customerId, employeeId } = request.query;
+    const { customerId, employeeId, initialDate, finalDate } = request.query;
 
     const listOrders = container.resolve(ListOrderByEmployeeService);
 
     const Order = await listOrders.execute(
       String(customerId),
       String(employeeId),
+      String(initialDate),
+      String(finalDate),
     );
 
     return response.json(Order);

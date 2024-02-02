@@ -7,20 +7,36 @@ class OrderRepository implements IOrderRepository {
   public async listByEmployeeId(
     customerId: string,
     employeeId: string,
+    initialDate: string,
+    finalDate: string,
   ): Promise<Order[]> {
     // console.log('employeeId', employeeId);
     // console.log('customerId', customerId);
+    const dateStart = new Date(initialDate);
+    const dateEnd = new Date(finalDate);
+
+    dateStart.setHours(0, 0, 0, 0);
+
+    dateEnd.setHours(23, 59, 59, 999);
+
     const orders = await prisma.order.findMany({
       where: {
         customerId,
         OrderItemsPhases: {
           some: {
             employeeId,
+            phaseDate: {
+              gte: dateStart,
+              lte: dateEnd,
+            },
           },
         },
       },
       include: {
         OrderItemsPhases: true,
+      },
+      orderBy: {
+        orderDate: 'desc',
       },
     });
 

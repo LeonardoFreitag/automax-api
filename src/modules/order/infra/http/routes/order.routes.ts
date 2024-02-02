@@ -86,6 +86,8 @@ orderRouter.get(
     [Segments.QUERY]: {
       customerId: Joi.string().uuid().required(),
       employeeId: Joi.string().uuid().required(),
+      initialDate: Joi.string().required(),
+      finalDate: Joi.string().required(),
     },
   }),
   orderController.listByEmployeeId,
