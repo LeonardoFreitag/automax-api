@@ -7,6 +7,7 @@ import ListOrderByTagIdService from '@modules/order/services/ListOrderByTagIdSer
 import DeleteOrderService from '@modules/order/services/DeleteOrderService';
 import FinalizeOrderService from '@modules/order/services/FinalizeOrderService';
 import ListOrderByEmployeeService from '@modules/order/services/ListOrderByEmployeeService';
+import ListOrderByPeriodService from '@modules/order/services/ListOrderByPeriodService';
 
 export default class OrderControllers {
   public async create(request: Request, response: Response): Promise<Response> {
@@ -107,6 +108,23 @@ export default class OrderControllers {
     const Order = await listOrders.execute(
       String(customerId),
       String(employeeId),
+      String(initialDate),
+      String(finalDate),
+    );
+
+    return response.json(Order);
+  }
+
+  public async listByPeriod(
+    request: Request,
+    response: Response,
+  ): Promise<Response> {
+    const { customerId, initialDate, finalDate } = request.query;
+
+    const listOrders = container.resolve(ListOrderByPeriodService);
+
+    const Order = await listOrders.execute(
+      String(customerId),
       String(initialDate),
       String(finalDate),
     );

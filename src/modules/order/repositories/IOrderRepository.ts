@@ -17,5 +17,10 @@ export default interface IOrderRepository {
     initialDate: string,
     finalDate: string,
   ): Promise<Order[]>;
+  listByPeriodo(
+    customerId: string,
+    initialDate: string,
+    finalDate: string,
+  ): Promise<Order[]>;
   delete(id: string): Promise<void>;
 }

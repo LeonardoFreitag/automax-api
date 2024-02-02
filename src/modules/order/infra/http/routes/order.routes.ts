@@ -94,6 +94,19 @@ orderRouter.get(
 );
 
 orderRouter.get(
+  '/period',
+  ensureAuthenticated,
+  celebrate({
+    [Segments.QUERY]: {
+      customerId: Joi.string().uuid().required(),
+      initialDate: Joi.string().required(),
+      finalDate: Joi.string().required(),
+    },
+  }),
+  orderController.listByPeriod,
+);
+
+orderRouter.get(
   '/tagId',
   ensureAuthenticated,
   celebrate({

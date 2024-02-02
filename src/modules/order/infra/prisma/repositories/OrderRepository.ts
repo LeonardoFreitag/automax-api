@@ -4,6 +4,37 @@ import { Order, Prisma } from '@prisma/client';
 import AppError from '@shared/errors/AppError';
 
 class OrderRepository implements IOrderRepository {
+  public async listByPeriodo(
+    customerId: string,
+    initialDate: string,
+    finalDate: string,
+  ): Promise<Order[]> {
+    const dateStart = new Date(initialDate);
+    const dateEnd = new Date(finalDate);
+
+    dateStart.setHours(0, 0, 0, 0);
+
+    dateEnd.setHours(23, 59, 59, 999);
+
+    const orders = await prisma.order.findMany({
+      where: {
+        customerId,
+        orderDate: {
+          gte: dateStart,
+          lte: dateEnd,
+        },
+      },
+      include: {
+        OrderItemsPhases: true,
+      },
+      orderBy: {
+        orderDate: 'desc',
+      },
+    });
+
+    return orders;
+  }
+
   public async listByEmployeeId(
     customerId: string,
     employeeId: string,
