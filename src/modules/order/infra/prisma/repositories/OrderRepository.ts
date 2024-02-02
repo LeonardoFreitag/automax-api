@@ -16,19 +16,26 @@ class OrderRepository implements IOrderRepository {
 
     dateEnd.setHours(23, 59, 59, 999);
 
-    const orders = await prisma.order.findMany({
+    const orderItemsPhases = await prisma.orderItemsPhases.findMany({
       where: {
-        customerId,
-        orderDate: {
+        phaseDate: {
           gte: dateStart,
           lte: dateEnd,
         },
       },
+    });
+
+    const orderIds = orderItemsPhases.map(oip => oip.orderId);
+
+    const orders = await prisma.order.findMany({
       include: {
         OrderItemsPhases: true,
       },
-      orderBy: {
-        orderDate: 'desc',
+      where: {
+        customerId,
+        id: {
+          in: orderIds,
+        },
       },
     });
 
@@ -41,8 +48,6 @@ class OrderRepository implements IOrderRepository {
     initialDate: string,
     finalDate: string,
   ): Promise<Order[]> {
-    // console.log('employeeId', employeeId);
-    // console.log('customerId', customerId);
     const dateStart = new Date(initialDate);
     const dateEnd = new Date(finalDate);
 
@@ -50,24 +55,27 @@ class OrderRepository implements IOrderRepository {
 
     dateEnd.setHours(23, 59, 59, 999);
 
-    const orders = await prisma.order.findMany({
+    const orderItemsPhases = await prisma.orderItemsPhases.findMany({
       where: {
-        customerId,
-        OrderItemsPhases: {
-          some: {
-            employeeId,
-            phaseDate: {
-              gte: dateStart,
-              lte: dateEnd,
-            },
-          },
+        employeeId,
+        phaseDate: {
+          gte: dateStart,
+          lte: dateEnd,
         },
       },
+    });
+
+    const orderIds = orderItemsPhases.map(oip => oip.orderId);
+
+    const orders = await prisma.order.findMany({
       include: {
         OrderItemsPhases: true,
       },
-      orderBy: {
-        orderDate: 'desc',
+      where: {
+        customerId,
+        id: {
+          in: orderIds,
+        },
       },
     });
 
