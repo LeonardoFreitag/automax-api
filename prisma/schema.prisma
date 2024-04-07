@@ -341,3 +341,10 @@ model Phases {
 
   @@map("phases")
 }
+
+model Registro {
+  id       String @id
+  validade String
+
+  @@map("registro")
+}

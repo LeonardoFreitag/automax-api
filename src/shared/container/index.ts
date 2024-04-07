@@ -39,6 +39,9 @@ import CustomerRepository from '@modules/customer/infra/prisma/repositories/Cust
 import IPhasesRepository from '@modules/phases/repositories/IPhasesRepository';
 import PhasesRepository from '@modules/phases/infra/prisma/repositories/PhasesRepository';
 
+import IRegistroRepository from '@modules/registro/repositories/IRegistroRepository';
+import RegistroRepository from '@modules/registro/infra/prisma/repositories/RegistroRepository';
+
 container.registerSingleton<IUserRepository>('UserRepository', UserRepository);
 
 container.registerSingleton<IUserTokensRepository>(
@@ -91,4 +94,9 @@ container.registerSingleton<ICustomerRepository>(
 container.registerSingleton<IPhasesRepository>(
   'PhasesRepository',
   PhasesRepository,
+);
+
+container.registerSingleton<IRegistroRepository>(
+  'RegistroRepository',
+  RegistroRepository,
 );

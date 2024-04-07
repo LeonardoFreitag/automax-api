@@ -12,6 +12,7 @@ import productTissueRouter from '@modules/productTissue/infra/http/routes/produc
 import saleRouter from '@modules/sale/infra/http/routes/sale.routes';
 import orderRouter from '@modules/order/infra/http/routes/order.routes';
 import orderItemsPhasesRouter from '@modules/order/infra/http/routes/orderItemsPhases.routes';
+import registroRouter from '@modules/registro/infra/http/routes/registro.routes';
 
 const routes = Router();
 
@@ -40,5 +41,7 @@ routes.use('/sale', saleRouter);
 // order
 routes.use('/order', orderRouter);
 routes.use('/orderItemsPhases', orderItemsPhasesRouter);
+
+routes.use('/registro', registroRouter);
 
 export default routes;
