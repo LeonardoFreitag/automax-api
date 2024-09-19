@@ -21,4 +21,5 @@ export interface ClientModel {
   contacts: ClientContactModel[];
   paymentForm: ClientPaymentFormModel[];
   isNew: boolean;
+  isActivated: boolean;
 }

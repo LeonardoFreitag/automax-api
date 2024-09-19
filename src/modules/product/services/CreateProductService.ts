@@ -24,7 +24,7 @@ class CreateProductService {
     );
 
     if (checkProductExists) {
-      this.productRepository.delete(checkProductExists.id);
+      await this.productRepository.delete(checkProductExists.id);
     }
 
     const product = await this.productRepository.create({

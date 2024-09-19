@@ -100,6 +100,18 @@ clientRouter.patch(
 );
 
 clientRouter.patch(
+  '/status',
+  ensureAuthenticated,
+  celebrate({
+    [Segments.BODY]: {
+      id: Joi.string().required(),
+      isActivated: Joi.bool().required(),
+    },
+  }),
+  clientController.changeClientStatus,
+);
+
+clientRouter.patch(
   '/contact',
   ensureAuthenticated,
   celebrate({

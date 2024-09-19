@@ -12,6 +12,7 @@ import ListClientBySellerIdService from '@modules/client/services/ListClientBySe
 import DeleteClientService from '@modules/client/services/DeleteClientService';
 import DeleteClientContactService from '@modules/client/services/DeleteClientContactService';
 import DeleteClientPaymentFormService from '@modules/client/services/DeleteClientPaymentFormService';
+import ChangeStatusClienteService from '@modules/client/services/ChangeStatusClienteService';
 
 interface PaymentFormUpdateModel {
   paymentFormId: string;
@@ -246,6 +247,24 @@ export default class ClientController {
     await deleteClientService.execute(String(id));
 
     return response.status(204).json();
+  }
+
+  public async changeClientStatus(
+    request: Request,
+    response: Response,
+  ): Promise<Response> {
+    const { id, isActivated } = request.body;
+
+    const changeClientStatusService = container.resolve(
+      ChangeStatusClienteService,
+    );
+
+    const updatedClient = await changeClientStatusService.execute(
+      String(id),
+      Boolean(isActivated),
+    );
+
+    return response.json(updatedClient);
   }
 
   public async deleteContact(

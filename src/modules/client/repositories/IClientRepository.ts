@@ -13,6 +13,7 @@ export default interface IClientRepository {
   list(customerId: string): Promise<Client[]>;
   listBySellerId(customerId: string, sellerId: string): Promise<Client[]>;
   delete(id: string): Promise<void>;
+  changeActivation(id: string, isActivated: boolean): Promise<Client>;
 
   createContact(
     data: Prisma.ClientContactUncheckedCreateInput,

@@ -35,14 +35,17 @@ class CreateCustomerService {
 
     const checkEmailExists = await this.userRepository.findByEmail(email);
 
-    if (checkEmailExists) {
-      throw new AppError('E-mail already exists!', 408);
-    }
+    // console.log(checkEmailExists);
 
     const checkCnpjExists = await this.customerRepository.findByCnpj(cnpj);
 
-    if (checkCnpjExists) {
-      throw new AppError('CNPJ already exists!', 409);
+    // console.log(checkCnpjExists);
+
+    if (checkCnpjExists && checkEmailExists) {
+      if (checkEmailExists.customerId === checkCnpjExists.id) {
+        return checkCnpjExists;
+      }
+      throw new AppError('Verifique a configuração da conta', 400);
     }
 
     const customer = await this.customerRepository.create({

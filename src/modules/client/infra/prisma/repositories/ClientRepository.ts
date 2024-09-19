@@ -9,6 +9,27 @@ import AppError from '@shared/errors/AppError';
 import { prisma } from '@shared/infra/prisma/prisma';
 
 class ClientRepository implements IClientRepository {
+  public async changeActivation(
+    id: string,
+    isActivated: boolean,
+  ): Promise<Client> {
+    await prisma.client.update({
+      where: {
+        id,
+      },
+      data: {
+        isActivated,
+      },
+    });
+    const updatedClient = await prisma.client.findUnique({
+      where: {
+        id,
+      },
+    });
+
+    return updatedClient;
+  }
+
   public async findByClientCodePaymentId(
     customerId: string,
     code: string,
@@ -43,6 +64,7 @@ class ClientRepository implements IClientRepository {
       where: {
         customerId,
         sellerId,
+        isActivated: true,
       },
       include: {
         ClientContact: true,
