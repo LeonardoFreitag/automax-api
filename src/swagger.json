@@ -16,6 +16,10 @@
     {
       "name": "user",
       "description": "User operations"
+    },
+    {
+      "name": "client",
+      "description": "Client operations"
     }
   ],
   "paths": {
@@ -1074,6 +1078,1365 @@
                       "type": "string"
                     },
                     "refreshToken": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/client": {
+      "post":{
+        "tags": [
+          "client"
+        ],
+        "summary": "Create a new client",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "customerId": {
+                    "type": "string"
+                  },
+                  "code": {
+                    "type": "string"
+                  },
+                  "companyName": {
+                    "type": "string"
+                  },
+                  "comercialName": {
+                    "type": "string"
+                  },
+                  "zipCode": {
+                    "type": "string"
+                  },
+                  "streetName": {
+                    "type": "string"
+                  },
+                  "streetNumber": {
+                    "type": "string"
+                  },
+                  "neighborhood": {
+                    "type": "string"
+                  },
+                  "complement": {
+                    "type": "string"
+                  },
+                  "cnpj": {
+                    "type": "string"
+                  },
+                  "ie": {
+                    "type": "string"
+                  },
+                  "cityCode": {
+                    "type": "string"
+                  },
+                  "cityName": {
+                    "type": "string"
+                  },
+                  "stateCode": {
+                    "type": "string"
+                  },
+                  "state": {
+                    "type": "string"
+                  },
+                  "finacialPendency": {
+                    "type": "boolean"
+                  },
+                  "isNew": {
+                    "type": "boolean"
+                  },
+                  "sellerId": {
+                    "type": "string"
+                  },
+                  "ClientContact": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "fone": {
+                          "type": "string"
+                        },
+                        "foneType": {
+                          "type": "string"
+                        },
+                        "isWhatsApp": {
+                          "type": "boolean"
+                        },
+                        "email": {
+                          "type": "string"
+                        },
+                        "job": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  },
+                  "ClientPaymentFormList": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "paymentFormId": {
+                          "type": "string"
+                        },
+                        "description": {
+                          "type": "string"
+                        },
+                        "installmentsLimit": {
+                          "type": "number"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "customerId": {
+                      "type": "string"
+                    },
+                    "code": {
+                      "type": "string"
+                    },
+                    "companyName": {
+                      "type": "string"
+                    },
+                    "comercialName": {
+                      "type": "string"
+                    },
+                    "zipCode": {
+                      "type": "string"
+                    },
+                    "streetName": {
+                      "type": "string"
+                    },
+                    "streetNumber": {
+                      "type": "string"
+                    },
+                    "neighborhood": {
+                      "type": "string"
+                    },
+                    "complement": {
+                      "type": "string"
+                    },
+                    "cnpj": {
+                      "type": "string"
+                    },
+                    "ie": {
+                      "type": "string"
+                    },
+                    "cityCode": {
+                      "type": "string"
+                    },
+                    "city": {
+                      "type": "string"
+                    },
+                    "stateCode": {
+                      "type": "string"
+                    },
+                    "state": {
+                      "type": "string"
+                    },
+                    "finacialPendency": {
+                      "type": "boolean"
+                    },
+                    "isNew": {
+                      "type": "boolean"
+                    },
+                    "sellerId": {
+                      "type": "string"
+                    },
+                    "createdAt": {
+                      "type": "date"
+                    },
+                    "updatedAt": {
+                      "type": "date"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "client"
+        ],
+        "summary": "Update a client",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "customerId": {
+                    "type": "string"
+                  },
+                  "code": {
+                    "type": "string"
+                  },
+                  "companyName": {
+                    "type": "string"
+                  },
+                  "comercialName": {
+                    "type": "string"
+                  },
+                  "zipCode": {
+                    "type": "string"
+                  },
+                  "streetName": {
+                    "type": "string"
+                  },
+                  "streetNumber": {
+                    "type": "string"
+                  },
+                  "neighborhood": {
+                    "type": "string"
+                  },
+                  "complement": {
+                    "type": "string"
+                  },
+                  "cnpj": {
+                    "type": "string"
+                  },
+                  "ie": {
+                    "type": "string"
+                  },
+                  "cityCode": {
+                    "type": "string"
+                  },
+                  "city": {
+                    "type": "string"
+                  },
+                  "stateCode": {
+                    "type": "string"
+                  },
+                  "state": {
+                    "type": "string"
+                  },
+                  "finacialPendency": {
+                    "type": "boolean"
+                  },
+                  "isNew": {
+                    "type": "boolean"
+                  },
+                  "sellerId": {
+                    "type": "string"
+                  },
+                  "contacts": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "fone": {
+                          "type": "string"
+                        },
+                        "foneType": {
+                          "type": "string"
+                        },
+                        "isWhatsApp": {
+                          "type": "boolean"
+                        },
+                        "email": {
+                          "type": "string"
+                        },
+                        "job": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  },
+                  "paymentForms": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "paymentFormId": {
+                          "type": "string"
+                        },
+                        "description": {
+                          "type": "string"
+                        },
+                        "installmentsLimit": {
+                          "type": "number"
+                        },
+                        "clientId": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "customerId": {
+                      "type": "string"
+                    },
+                    "code": {
+                      "type": "string"
+                    },
+                    "companyName": {
+                      "type": "string"
+                    },
+                    "comercialName": {
+                      "type": "string"
+                    },
+                    "zipCode": {
+                      "type": "string"
+                    },
+                    "streetName": {
+                      "type": "string"
+                    },
+                    "streetNumber": {
+                      "type": "string"
+                    },
+                    "neighborhood": {
+                      "type": "string"
+                    },
+                    "complement": {
+                      "type": "string"
+                    },
+                    "cnpj": {
+                      "type": "string"
+                    },
+                    "ie": {
+                      "type": "string"
+                    },
+                    "cityCode": {
+                      "type": "string"
+                    },
+                    "city": {
+                      "type": "string"
+                    },
+                    "stateCode": {
+                      "type": "string"
+                    },
+                    "state": {
+                      "type": "string"
+                    },
+                    "finacialPendency": {
+                      "type": "boolean"
+                    },
+                    "isNew": {
+                      "type": "boolean"
+                    },
+                    "sellerId": {
+                      "type": "string"
+                    },
+                    "createdAt": {
+                      "type": "date"
+                    },
+                    "updatedAt": {
+                      "type": "date"
+                    },
+                    "ClientContactList": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "fone": {
+                            "type": "string"
+                          },
+                          "foneType": {
+                            "type": "string"
+                          },
+                          "isWhatsApp": {
+                            "type": "boolean"
+                          },
+                          "email": {
+                            "type": "string"
+                          },
+                          "job": {
+                            "type": "string"
+                          },
+                          "createdAt": {
+                            "type": "date"
+                          },
+                          "updatedAt": {
+                            "type": "date" 
+                          },
+                          "clientId": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    },
+                    "ClientPaymentFormList": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "paymentFormId": {
+                            "type": "string"
+                          },
+                          "description": {
+                            "type": "string"
+                          },
+                          "installmentsLimit": {
+                            "type": "number"
+                          },
+                          "createdAt": {
+                            "type": "date"
+                          },
+                          "updatedAt": {
+                            "type": "date"
+                          },
+                          "clientId": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete":{
+        "tags": [
+          "client"
+        ],
+        "summary": "Delete a client",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get":{
+        "tags": [
+          "client"
+        ],
+        "summary": "Get client by customerId",
+        "parameters": [
+          {
+            "name": "customerId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "customerId": {
+                        "type": "string"
+                      },
+                      "code": {
+                        "type": "string"
+                      },
+                      "companyName": {
+                        "type": "string"
+                      },
+                      "comercialName": {
+                        "type": "string"
+                      },
+                      "zipCode": {
+                        "type": "string"
+                      },
+                      "streetName": {
+                        "type": "string"
+                      },
+                      "streetNumber": {
+                        "type": "string"
+                      },
+                      "neighborhood": {
+                        "type": "string"
+                      },
+                      "complement": {
+                        "type": "string"
+                      },
+                      "cnpj": {
+                        "type": "string"
+                      },
+                      "ie": {
+                        "type": "string"
+                      },
+                      "cityCode": {
+                        "type": "string"
+                      },
+                      "city": {
+                        "type": "string"
+                      },
+                      "stateCode": {
+                        "type": "string"
+                      },
+                      "state": {
+                        "type": "string"
+                      },
+                      "finacialPendency": {
+                        "type": "boolean"
+                      },
+                      "isNew": {
+                        "type": "boolean"
+                      },
+                      "sellerId": {
+                        "type": "string"
+                      },
+                      "createdAt": {
+                        "type": "date"
+                      },
+                      "updatedAt": {
+                        "type": "date"
+                      },
+                      "ClientContactList": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string"
+                            },
+                            "name": {
+                              "type": "string"
+                            },
+                            "fone": {
+                              "type": "string"
+                            },
+                            "foneType": {
+                              "type": "string"
+                            },
+                            "isWhatsApp": {
+                              "type": "boolean"
+                            },
+                            "email": {
+                              "type": "string"
+                            },
+                            "job": {
+                              "type": "string"
+                            },
+                            "createdAt": {
+                              "type": "date"
+                            },
+                            "updatedAt": {
+                              "type": "date"
+                            },
+                            "clientId": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      },
+                      "ClientPaymentFormList": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string"
+                            },
+                            "paymentFormId": {
+                              "type": "string"
+                            },
+                            "description": {
+                              "type": "string"
+                            },
+                            "installmentsLimit": {
+                              "type": "number"
+                            },
+                            "createdAt": {
+                              "type": "date"
+                            },
+                            "updatedAt": {
+                              "type": "date"
+                            },
+                            "clientId": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/client/seller": {
+      "get":{
+        "tags": [
+          "client"
+        ],
+        "summary": "Get client by sellerId",
+        "parameters": [
+          {
+            "name": "customerId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sellerId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "customerId": {
+                        "type": "string"
+                      },
+                      "code": {
+                        "type": "string"
+                      },
+                      "companyName": {
+                        "type": "string"
+                      },
+                      "comercialName": {
+                        "type": "string"
+                      },
+                      "zipCode": {
+                        "type": "string"
+                      },
+                      "streetName": {
+                        "type": "string"
+                      },
+                      "streetNumber": {
+                        "type": "string"
+                      },
+                      "neighborhood": {
+                        "type": "string"
+                      },
+                      "complement": {
+                        "type": "string"
+                      },
+                      "cnpj": {
+                        "type": "string"
+                      },
+                      "ie": {
+                        "type": "string"
+                      },
+                      "cityCode": {
+                        "type": "string"
+                      },
+                      "city": {
+                        "type": "string"
+                      },
+                      "stateCode": {
+                        "type": "string"
+                      },
+                      "state": {
+                        "type": "string"
+                      },
+                      "finacialPendency": {
+                        "type": "boolean"
+                      },
+                      "isNew": {
+                        "type": "boolean"
+                      },
+                      "sellerId": {
+                        "type": "string"
+                      },
+                      "createdAt": {
+                        "type": "date"
+                      },
+                      "updatedAt": {
+                        "type": "date"
+                      },
+                      "ClientContactList": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string"
+                            },
+                            "name": {
+                              "type": "string"
+                            },
+                            "fone": {
+                              "type": "string"
+                            },
+                            "foneType": {
+                              "type": "string"
+                            },
+                            "isWhatsApp": {
+                              "type": "boolean"
+                            },
+                            "email": {
+                              "type": "string"
+                            },
+                            "job": {
+                              "type": "string"
+                            },
+                            "createdAt": {
+                              "type": "date"
+                            },
+                            "updatedAt": {
+                              "type": "date"
+                            },
+                            "clientId": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      },
+                      "ClientPaymentFormList": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string"
+                            },
+                            "paymentFormId": {
+                              "type": "string"
+                            },
+                            "description": {
+                              "type": "string"
+                            },
+                            "installmentsLimit": {
+                              "type": "number"
+                            },
+                            "createdAt": {
+                              "type": "date"
+                            },
+                            "updatedAt": {
+                              "type": "date"
+                            },
+                            "clientId": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/client/status": {
+      "patch":{
+        "tags": [
+          "client"
+        ],
+        "summary": "Update a client status",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "isActivated": {
+                    "type": "boolean"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "customerId": {
+                      "type": "string"
+                    },
+                    "code": {
+                      "type": "string"
+                    },
+                    "companyName": {
+                      "type": "string"
+                    },
+                    "comercialName": {
+                      "type": "string"
+                    },
+                    "zipCode": {
+                      "type": "string"
+                    },
+                    "streetName": {
+                      "type": "string"
+                    },
+                    "streetNumber": {
+                      "type": "string"
+                    },
+                    "neighborhood": {
+                      "type": "string"
+                    },
+                    "complement": {
+                      "type": "string"
+                    },
+                    "cnpj": {
+                      "type": "string"
+                    },
+                    "ie": {
+                      "type": "string"
+                    },
+                    "cityCode": {
+                      "type": "string"
+                    },
+                    "city": {
+                      "type": "string"
+                    },
+                    "stateCode": {
+                      "type": "string"
+                    },
+                    "state": {
+                      "type": "string"
+                    },
+                    "finacialPendency": {
+                      "type": "boolean"
+                    },
+                    "isNew": {
+                      "type": "boolean"
+                    },
+                    "sellerId": {
+                      "type": "string"
+                    },
+                    "createdAt": {
+                      "type": "date"
+                    },
+                    "updatedAt": {
+                      "type": "date"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/client/contact": {
+      "post":{
+        "tags": [
+          "client"
+        ],
+        "summary": "Create a new contact",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "clientId": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "fone": {
+                    "type": "string"
+                  },
+                  "foneType": {
+                    "type": "string"
+                  },
+                  "isWhatsApp": {
+                    "type": "boolean"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "job": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "clientId": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "fone": {
+                      "type": "string"
+                    },
+                    "foneType": {
+                      "type": "string"
+                    },
+                    "isWhatsApp": {
+                      "type": "boolean"
+                    },
+                    "email": {
+                      "type": "string"
+                    },
+                    "job": {
+                      "type": "string"
+                    },
+                    "createdAt": {
+                      "type": "date"
+                    },
+                    "updatedAt": {
+                      "type": "date"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch":{
+        "tags": [
+          "client"
+        ],
+        "summary": "Update a contact",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "clientId": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "fone": {
+                    "type": "string"
+                  },
+                  "foneType": {
+                    "type": "string"
+                  },
+                  "isWhatsApp": {
+                    "type": "boolean"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "job": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "clientId": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "fone": {
+                      "type": "string"
+                    },
+                    "foneType": {
+                      "type": "string"
+                    },
+                    "isWhatsApp": {
+                      "type": "boolean"
+                    },
+                    "email": {
+                      "type": "string"
+                    },
+                    "job": {
+                      "type": "string"
+                    },
+                    "createdAt": {
+                      "type": "date"
+                    },
+                    "updatedAt": {
+                      "type": "date"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete":{
+        "tags": [
+          "client"
+        ],
+        "summary": "Delete a contact",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/client/paymentForm": {
+      "post":{
+        "tags": [
+          "client"
+        ],
+        "summary": "Create a new payment form",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "clientId": {
+                    "type": "string"
+                  },
+                  "paymentFormId": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "installmentsLimit": {
+                    "type": "number"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "clientId": {
+                      "type": "string"
+                    },
+                    "paymentFormId": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "installmentsLimit": {
+                      "type": "number"
+                    },
+                    "createdAt": {
+                      "type": "date"
+                    },
+                    "updatedAt": {
+                      "type": "date"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch":{
+        "tags": [
+          "client"
+        ],
+        "summary": "Update a payment form",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "clientId": {
+                    "type": "string"
+                  },
+                  "paymentFormId": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "installmentsLimit": {
+                    "type": "number"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "clientId": {
+                      "type": "string"
+                    },
+                    "paymentFormId": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "installmentsLimit": {
+                      "type": "number"
+                    },
+                    "createdAt": {
+                      "type": "date"
+                    },
+                    "updatedAt": {
+                      "type": "date"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get":{
+        "tags": [
+          "client"
+        ],
+        "summary": "Get payment form by clientId",
+        "parameters": [
+          {
+            "name": "customerId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "code",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "paymentFormId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "clientId": {
+                        "type": "string"
+                      },
+                      "paymentFormId": {
+                        "type": "string"
+                      },
+                      "description": {
+                        "type": "string"
+                      },
+                      "installmentsLimit": {
+                        "type": "number"
+                      },
+                      "createdAt": {
+                        "type": "date"
+                      },
+                      "updatedAt": {
+                        "type": "date"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete":{
+        "tags": [
+          "client"
+        ],
+        "summary": "Delete a payment form",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
                       "type": "string"
                     }
                   }
