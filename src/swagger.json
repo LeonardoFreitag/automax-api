@@ -1,8 +1,8 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "title": "OlhaAquiMT API Documentação",
-    "description": "Documentação da API OlhaAquiMT",
+    "title": "AutoMax API Documentação",
+    "description": "Documentação da API AutoMax",
     "version": "1.0.0",
     "contact": {
       "email": "freitagnx@gmail.com"
