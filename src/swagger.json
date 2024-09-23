@@ -20,6 +20,34 @@
     {
       "name": "client",
       "description": "Client operations"
+    },
+    {
+      "name": "group",
+      "description": "Group operations"
+    },
+    {
+      "name": "product",
+      "description": "Product operations"
+    },
+    {
+      "name": "tissue",
+      "description": "ProductTissue operations"
+    },
+    {
+      "name": "phases",
+      "description": "Phases operations"
+    },
+    {
+      "name": "sales",
+      "description": "Sales operations"
+    },
+    {
+      "name": "order",
+      "description": "Order operations"
+    },
+    {
+      "name": "orderItemPhase",
+      "description": "OrderItemPhase operations"
     }
   ],
   "paths": {
@@ -2438,6 +2466,4965 @@
                   "properties": {
                     "message": {
                       "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/group": {
+      "post":{
+        "tags": [
+          "group"
+        ],
+        "summary": "Create a new group",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "customerId": {
+                    "type": "string"
+                  },
+                  "group": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch":{
+        "tags": [
+          "group"
+        ],
+        "summary": "Update a group",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "customerId": {
+                    "type": "string"
+                  },
+                  "group": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "customerId": {
+                      "type": "string"
+                    },
+                    "group": {
+                      "type": "string"
+                    },
+                    "createdAt": {
+                      "type": "date"
+                    },
+                    "updatedAt": {
+                      "type": "date"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get":{
+        "tags": [
+          "group"
+        ],
+        "summary": "Get group by customerId",
+        "parameters": [
+          {
+            "name": "customerId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "customerId": {
+                        "type": "string"
+                      },
+                      "group": {
+                        "type": "string"
+                      },
+                      "createdAt": {
+                        "type": "date"
+                      },
+                      "updatedAt": {
+                        "type": "date"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete":{
+        "tags": [
+          "group"
+        ],
+        "summary": "Delete a group",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/product": {
+      "post":{
+        "tags": [
+          "product"
+        ],
+        "summary": "Create a new product",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "customerId": {
+                    "type": "string"
+                  },
+                  "code": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "unit": {
+                    "type": "string"
+                  },
+                  "groupId": {
+                    "type": "string"
+                  },
+                  "ProductPrice": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "tableName": {
+                          "type": "string"
+                        },
+                        "price": {
+                          "type": "number"
+                        },
+                        "height": {
+                          "type": "number"
+                        },
+                        "heightUnit": {
+                          "type": "string"
+                        },
+                        "minWidth": {
+                          "type": "number"
+                        },
+                        "width": {
+                          "type": "number"
+                        },
+                        "maxWidth": {
+                          "type": "number"
+                        },
+                        "widthUnity": {
+                          "type": "string"
+                        },
+                        "depth": {
+                          "type": "number"
+                        },
+                        "depthUnity": {
+                          "type": "string"
+                        },
+                        "depthOpen": {
+                          "type": "number"
+                        },
+                        "deptOpenUnity": {
+                          "type": "string"
+                        },
+                        "additionalPercentage": {
+                          "type": "number"
+                        },
+                        "regionId": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "customerId": {
+                      "type": "string"
+                    },
+                    "code": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "unit": {
+                      "type": "string"
+                    },
+                    "groupId": {
+                      "type": "string"
+                    },
+                    "createdAt": {
+                      "type": "date"
+                    },
+                    "updatedAt": {
+                      "type": "date"
+                    },
+                    "ProductPrice": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "tableName": {
+                            "type": "string"
+                          },
+                          "price": {
+                            "type": "number"
+                          },
+                          "height": {
+                            "type": "number"
+                          },
+                          "heightUnit": {
+                            "type": "string"
+                          },
+                          "minWidth": {
+                            "type": "number"
+                          },
+                          "width": {
+                            "type": "number"
+                          },
+                          "maxWidth": {
+                            "type": "number"
+                          },
+                          "widthUnity": {
+                            "type": "string"
+                          },
+                          "depth": {
+                            "type": "number"
+                          },
+                          "depthUnity": {
+                            "type": "string"
+                          },
+                          "depthOpen": {
+                            "type": "number"
+                          },
+                          "deptOpenUnity": {
+                            "type": "string"
+                          },
+                          "additionalPercentage": {
+                            "type": "number"
+                          },
+                          "regionId": {
+                            "type": "string"
+                          },
+                          "createdAt": {
+                            "type": "date"
+                          },
+                          "updatedAt": {
+                            "type": "date"
+                          },
+                          "productId": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch":{
+        "tags": [
+          "product"
+        ],
+        "summary": "Update a product",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "customerId": {
+                    "type": "string"
+                  },
+                  "code": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "unit": {
+                    "type": "string"
+                  },
+                  "groupId": {
+                    "type": "string"
+                  },
+                  "productPrice": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "tableName": {
+                          "type": "string"
+                        },
+                        "price": {
+                          "type": "number"
+                        },
+                        "height": {
+                          "type": "number"
+                        },
+                        "heightUnit": {
+                          "type": "string"
+                        },
+                        "minWidth": {
+                          "type": "number"
+                        },
+                        "width": {
+                          "type": "number"
+                        },
+                        "maxWidth": {
+                          "type": "number"
+                        },
+                        "widthUnity": {
+                          "type": "string"
+                        },
+                        "depth": {
+                          "type": "number"
+                        },
+                        "depthUnity": {
+                          "type": "string"
+                        },
+                        "depthOpen": {
+                          "type": "number"
+                        },
+                        "deptOpenUnity": {
+                          "type": "string"
+                        },
+                        "additionalPercentage": {
+                          "type": "number"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "customerId": {
+                      "type": "string"
+                    },
+                    "code": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "unit": {
+                      "type": "string"
+                    },
+                    "photoFileName":{
+                      "type": "string"
+                    },
+                    "photoUrl":{
+                      "type": "string"
+                    },
+                    "photoSize":{
+                      "type": "number"
+                    },
+                    "createdAt": {
+                      "type": "date"
+                    },
+                    "updatedAt": {
+                      "type": "date"
+                    },
+                    "groupId": {
+                      "type": "string"
+                    },
+                    "ProductPrice": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "code": {
+                            "type": "string"
+                          },
+                          "tableName": {
+                            "type": "string"
+                          },
+                          "price": {
+                            "type": "number"
+                          },
+                          "height": {
+                            "type": "number"
+                          },
+                          "heightUnity": {
+                            "type": "string"
+                          },
+                          "minWidth": {
+                            "type": "number"
+                          },
+                          "width": {
+                            "type": "number"
+                          },
+                          "maxWidth": {
+                            "type": "number"
+                          },
+                          "widthUnity": {
+                            "type": "string"
+                          },
+                          "depth": {
+                            "type": "number"
+                          },
+                          "depthUnity": {
+                            "type": "string"
+                          },
+                          "depthOpen": {
+                            "type": "number"
+                          },
+                          "deptOpenUnity": {
+                            "type": "string"
+                          },
+                          "additionalPercentage": {
+                            "type": "number"
+                          },
+                          "regionId": {
+                            "type": "string"
+                          },
+                          "createdAt": {
+                            "type": "date"
+                          },
+                          "updatedAt": {
+                            "type": "date"
+                          },
+                          "productId": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get":{
+        "tags": [
+          "product"
+        ],
+        "summary": "Get product by customerId",
+        "parameters": [
+          {
+            "name": "customerId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "customerId": {
+                        "type": "string"
+                      },
+                      "code": {
+                        "type": "string"
+                      },
+                      "reference": {
+                        "type": "string"
+                      },
+                      "description": {
+                        "type": "string"
+                      },
+                      "unit": {
+                        "type": "string"
+                      },
+                      "photoFileName":{
+                        "type": "string"
+                      },
+                      "photoUrl":{
+                        "type": "string"
+                      },
+                      "photoSize":{
+                        "type": "number"
+                      },
+                      "createdAt": {
+                        "type": "date"
+                      },
+                      "updatedAt": {
+                        "type": "date"
+                      },
+                      "groupId": {
+                        "type": "string"
+                      },
+                      "ProductPrice": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string"
+                            },
+                            "tableName": {
+                              "type": "string"
+                            },
+                            "price": {
+                              "type": "number"
+                            },
+                            "height": {
+                              "type": "number"
+                            },
+                            "heightUnity": {
+                              "type": "string"
+                            },
+                            "minWidth": {
+                              "type": "number"
+                            },
+                            "width": {
+                              "type": "number"
+                            },
+                            "maxWidth": {
+                              "type": "number"
+                            },
+                            "widthUnity": {
+                              "type": "string"
+                            },
+                            "depth": {
+                              "type": "number"
+                            },
+                            "depthUnity": {
+                              "type": "string"
+                            },
+                            "depthOpen": {
+                              "type": "number"
+                            },
+                            "depthOpenUnity": {
+                              "type": "string"
+                            },
+                            "additionalPercentage": {
+                              "type": "number"
+                            },
+                            "regionId": {
+                              "type": "string"
+                            },
+                            "createdAt": {
+                              "type": "date"
+                            },
+                            "updatedAt": {
+                              "type": "date"
+                            },
+                            "productId": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete":{
+        "tags": [
+          "product"
+        ],
+        "summary": "Delete a product",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/product/group":{
+      "get":{
+        "tags": [
+          "product"
+        ],
+        "summary": "Get product by groupId",
+        "parameters": [
+          {
+            "name": "customerId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "groupId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "customerId": {
+                        "type": "string"
+                      },
+                      "code": {
+                        "type": "string"
+                      },
+                      "reference": {
+                        "type": "string"
+                      },
+                      "description": {
+                        "type": "string"
+                      },
+                      "unit": {
+                        "type": "string"
+                      },
+                      "photoFileName":{
+                        "type": "string"
+                      },
+                      "photoUrl":{
+                        "type": "string"
+                      },
+                      "photoSize":{
+                        "type": "number"
+                      },
+                      "createdAt": {
+                        "type": "date"
+                      },
+                      "updatedAt": {
+                        "type": "date"
+                      },
+                      "groupId": {
+                        "type": "string"
+                      },
+                      "ProductPrice": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string"
+                            },
+                            "tableName": {
+                              "type": "string"
+                            },
+                            "price": {
+                              "type": "number"
+                            },
+                            "height": {
+                              "type": "number"
+                            },
+                            "heightUnity": {
+                              "type": "string"
+                            },
+                            "minWidth": {
+                              "type": "number"
+                            },
+                            "width": {
+                              "type": "number"
+                            },
+                            "maxWidth": {
+                              "type": "number"
+                            },
+                            "widthUnity": {
+                              "type": "string"
+                            },
+                            "depth": {
+                              "type": "number"
+                            },
+                            "depthUnity": {
+                              "type": "string"
+                            },
+                            "depthOpen": {
+                              "type": "number"
+                            },
+                            "depthOpenUnity": {
+                              "type": "string"
+                            },
+                            "additionalPercentage": {
+                              "type": "number"
+                            },
+                            "regionId": {
+                              "type": "string"
+                            },
+                            "createdAt": {
+                              "type": "date"
+                            },
+                            "updatedAt": {
+                              "type": "date"
+                            },
+                            "productId": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/product/tableCode": {
+      "get":{
+        "tags": [
+          "product"
+        ],
+        "summary": "Get product by tableCode",
+        "parameters": [
+          {
+            "name": "customerId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "productCode",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "tableCode",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "regionId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "customerId": {
+                        "type": "string"
+                      },
+                      "code": {
+                        "type": "string"
+                      },
+                      "reference": {
+                        "type": "string"
+                      },
+                      "description": {
+                        "type": "string"
+                      },
+                      "unit": {
+                        "type": "string"
+                      },
+                      "photoFileName":{
+                        "type": "string"
+                      },
+                      "photoUrl":{
+                        "type": "string"
+                      },
+                      "photoSize":{
+                        "type": "number"
+                      },
+                      "createdAt": {
+                        "type": "date"
+                      },
+                      "updatedAt": {
+                        "type": "date"
+                      },
+                      "groupId": {
+                        "type": "string"
+                      },
+                      "ProductPrice": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string"
+                            },
+                            "tableName": {
+                              "type": "string"
+                            },
+                            "price": {
+                              "type": "number"
+                            },
+                            "height": {
+                              "type": "number"
+                            },
+                            "heightUnity": {
+                              "type": "string"
+                            },
+                            "minWidth": {
+                              "type": "number"
+                            },
+                            "width": {
+                              "type": "number"
+                            },
+                            "maxWidth": {
+                              "type": "number"
+                            },
+                            "widthUnity": {
+                              "type": "string"
+                            },
+                            "depth": {
+                              "type": "number"
+                            },
+                            "depthUnity": {
+                              "type": "string"
+                            },
+                            "depthOpen": {
+                              "type": "number"
+                            },
+                            "depthOpenUnity": {
+                              "type": "string"
+                            },
+                            "additionalPercentage": {
+                              "type": "number"
+                            },
+                            "regionId": {
+                              "type": "string"
+                            },
+                            "createdAt": {
+                              "type": "date"
+                            },
+                            "updatedAt": {
+                              "type": "date"
+                            },
+                            "productId": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/product/uploadPhoto": {
+      "post":{
+        "tags": [
+          "product"
+        ],
+        "summary": "Upload a photo",
+        "parameters": [
+          {
+            "name": "productId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "photo": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "customerId": {
+                      "type": "string"
+                    },
+                    "code": {
+                      "type": "number"
+                    },
+                    "reference": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "unity": {
+                      "type": "string"
+                    },
+                    "photoFileName": {
+                      "type": "string"
+                    },
+                    "photoUrl": {
+                      "type": "string"
+                    },
+                    "photoSize": {
+                      "type": "number"
+                    },
+                    "createdAt": {
+                      "type": "date"
+                    },
+                    "updatedAt": {
+                      "type": "date"
+                    },
+                    "groupId": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/product/price": {
+      "post":{
+        "tags": [
+          "product"
+        ],
+        "summary": "Create a new price",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "productId": {
+                    "type": "string"
+                  },
+                  "tableName": {
+                    "type": "string"
+                  },
+                  "price": {
+                    "type": "number"
+                  },
+                  "height": {
+                    "type": "number"
+                  },
+                  "heightUnity": {
+                    "type": "string"
+                  },
+                  "minWidth": {
+                    "type": "number"
+                  },
+                  "width": {
+                    "type": "number"
+                  },
+                  "maxWidth": {
+                    "type": "number"
+                  },
+                  "widthUnity": {
+                    "type": "string"
+                  },
+                  "depth": {
+                    "type": "number"
+                  },
+                  "depthUnity": {
+                    "type": "string"
+                  },
+                  "depthOpen": {
+                    "type": "number"
+                  },
+                  "depthOpenUnity": {
+                    "type": "string"
+                  },
+                  "additionalPercentage": {
+                    "type": "number"
+                  },
+                  "regionId": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "productId": {
+                      "type": "string"
+                    },
+                    "tableName": {
+                      "type": "string"
+                    },
+                    "price": {
+                      "type": "number"
+                    },
+                    "height": {
+                      "type": "number"
+                    },
+                    "heightUnity": {
+                      "type": "string"
+                    },
+                    "minWidth": {
+                      "type": "number"
+                    },
+                    "width": {
+                      "type": "number"
+                    },
+                    "maxWidth": {
+                      "type": "number"
+                    },
+                    "widthUnity": {
+                      "type": "string"
+                    },
+                    "depth": {
+                      "type": "number"
+                    },
+                    "depthUnity": {
+                      "type": "string"
+                    },
+                    "depthOpen:": {
+                      "type": "number"
+                    },
+                    "depthOpenUnity": {
+                      "type": "string"
+                    },
+                    "additionalPercentage": {
+                      "type": "number"
+                    },
+                    "regionId": {
+                      "type": "string"
+                    },
+                    "createdAt": {
+                      "type": "date"
+                    },
+                    "updatedAt": {
+                      "type": "date"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch":{
+        "tags": [
+          "product"
+        ],
+        "summary": "Update a price",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "productId": {
+                    "type": "string"
+                  },
+                  "tableName": {
+                    "type": "string"
+                  },
+                  "price": {
+                    "type": "number"
+                  },
+                  "height": {
+                    "type": "number"
+                  },
+                  "heightUnity": {
+                    "type": "string"
+                  },
+                  "minWidth": {
+                    "type": "number"
+                  },
+                  "width": {
+                    "type": "number"
+                  },
+                  "maxWidth": {
+                    "type": "number"
+                  },
+                  "widthUnity": {
+                    "type": "string"
+                  },
+                  "depth": {
+                    "type": "number"
+                  },
+                  "depthUnity": {
+                    "type": "string"
+                  },
+                  "depthOpen": {
+                    "type": "number"
+                  },
+                  "depthOpenUnity": {
+                    "type": "string"
+                  },
+                  "additionalPercentage": {
+                    "type": "number"
+                  },
+                  "regionId": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "productId": {
+                      "type": "string"
+                    },
+                    "tableName": {
+                      "type": "string"
+                    },
+                    "price": {
+                      "type": "number"
+                    },
+                    "height": {
+                      "type": "number"
+                    },
+                    "heightUnity": {
+                      "type": "string"
+                    },
+                    "minWidth": {
+                      "type": "number"
+                    },
+                    "width": {
+                      "type": "number"
+                    },
+                    "maxWidth": {
+                      "type": "number"
+                    },
+                    "widthUnity": {
+                      "type": "string"
+                    },
+                    "depth": {
+                      "type": "number"
+                    },
+                    "depthUnity": {
+                      "type": "string"
+                    },
+                    "depthOpen:": {
+                      "type": "number"
+                    },
+                    "depthOpenUnity": {
+                      "type": "string"
+                    },
+                    "additionalPercentage": {
+                      "type": "number"
+                    },
+                    "regionId": {
+                      "type": "string"
+                    },
+                    "createdAt": {
+                      "type": "date"
+                    },
+                    "updatedAt": {
+                      "type": "date"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete":{
+        "tags": [
+          "product"
+        ],
+        "summary": "Delete a price",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tissue": {
+      "post":{
+        "tags": [
+          "tissue"
+        ],
+        "summary": "Create a new tissue",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "customerId": {
+                    "type": "string"
+                  },
+                  "code": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "type": {
+                    "type": "string"
+                  },
+                  "underConsultation": {
+                    "type": "boolean"
+                  },
+                  "inRestocked": {
+                    "type": "boolean"
+                  },
+                  "productPriceId": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "customerId": {
+                      "type": "string"
+                    },
+                    "code": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string"
+                    },
+                    "underConsultation": {
+                      "type": "boolean"
+                    },
+                    "inRestocked": {
+                      "type": "boolean"
+                    },
+                    "productPriceId": {
+                      "type": "string"
+                    },
+                    "createdAt": {
+                      "type": "date"
+                    },
+                    "updatedAt": {
+                      "type": "date"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch":{
+        "tags": [
+          "tissue"
+        ],
+        "summary": "Update a tissue",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "customerId": {
+                    "type": "string"
+                  },
+                  "code": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "type": {
+                    "type": "string"
+                  },
+                  "underConsultation": {
+                    "type": "boolean"
+                  },
+                  "inRestocked": {
+                    "type": "boolean"
+                  },
+                  "productPriceId": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "customerId": {
+                      "type": "string"
+                    },
+                    "code": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string"
+                    },
+                    "underConsultation": {
+                      "type": "boolean"
+                    },
+                    "inRestocked": {
+                      "type": "boolean"
+                    },
+                    "productPriceId": {
+                      "type": "string"
+                    },
+                    "createdAt": {
+                      "type": "date"
+                    },
+                    "updatedAt": {
+                      "type": "date"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tissue/customerId": {
+      "get":{
+        "tags": [
+          "tissue"
+        ],
+        "summary": "Get tissue by customerId",
+        "parameters": [
+          {
+            "name": "customerId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "customerId": {
+                        "type": "string"
+                      },
+                      "code": {
+                        "type": "string"
+                      },
+                      "description": {
+                        "type": "string"
+                      },
+                      "type": {
+                        "type": "string"
+                      },
+                      "underConsultation": {
+                        "type": "boolean"
+                      },
+                      "inRestocked": {
+                        "type": "boolean"
+                      },
+                      "productPriceId": {
+                        "type": "string"
+                      },
+                      "createdAt": {
+                        "type": "date"
+                      },
+                      "updatedAt": {
+                        "type": "date"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete":{
+        "tags": [
+          "tissue"
+        ],
+        "summary": "Delete a tissue",
+        "parameters": [
+          {
+            "name": "customerId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tissue/productPriceId": {
+      "get":{
+        "tags": [
+          "tissue"
+        ],
+        "summary": "Get tissue by productPriceId",
+        "parameters": [
+          {
+            "name": "customerId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "productPriceId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "customerId": {
+                        "type": "string"
+                      },
+                      "code": {
+                        "type": "string"
+                      },
+                      "description": {
+                        "type": "string"
+                      },
+                      "type": {
+                        "type": "string"
+                      },
+                      "underConsultation": {
+                        "type": "boolean"
+                      },
+                      "inRestocked": {
+                        "type": "boolean"
+                      },
+                      "productPriceId": {
+                        "type": "string"
+                      },
+                      "createdAt": {
+                        "type": "date"
+                      },
+                      "updatedAt": {
+                        "type": "date"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/phases": {
+      "post":{
+        "tags": [
+          "phases"
+        ],
+        "summary": "Create a new phase",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "customerId": {
+                    "type": "string"
+                  },
+                  "phase": {
+                    "type": "string"
+                  },
+                  "orderPhase": {
+                    "type": "number"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "customerId": {
+                      "type": "string"
+                    },
+                    "phase": {
+                      "type": "string"
+                    },
+                    "phaseOrder": {
+                      "type": "string"
+                    },
+                    "createdAt": {
+                      "type": "date"
+                    },
+                    "updatedAt": {
+                      "type": "date"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch":{
+        "tags": [
+          "phases"
+        ],
+        "summary": "Update a phase",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "customerId": {
+                    "type": "string"
+                  },
+                  "phase": {
+                    "type": "string"
+                  },
+                  "orderPhase": {
+                    "type": "number"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "customerId": {
+                      "type": "string"
+                    },
+                    "phase": {
+                      "type": "string"
+                    },
+                    "phaseOrder": {
+                      "type": "string"
+                    },
+                    "createdAt": {
+                      "type": "date"
+                    },
+                    "updatedAt": {
+                      "type": "date"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get":{
+        "tags": [
+          "phases"
+        ],
+        "summary": "Get phases by customerId",
+        "parameters": [
+          {
+            "name": "customerId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "customerId": {
+                        "type": "string"
+                      },
+                      "phase": {
+                        "type": "string"
+                      },
+                      "orderPhase": {
+                        "type": "number"
+                      },
+                      "createdAt": {
+                        "type": "date"
+                      },
+                      "updatedAt": {
+                        "type": "date"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete":{
+        "tags": [
+          "phases"
+        ],
+        "summary": "Delete a phase",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/sale": {
+      "post":{
+        "tags": [
+          "sale"
+        ],
+        "summary": "Create a new sale",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "customerId": {
+                    "type": "string"
+                  },
+                  "sellerId": {
+                    "type": "string"
+                  },
+                  "saleNumber": {
+                    "type": "string"
+                  },
+                  "saleDate": {
+                    "type": "date"
+                  },
+                  "clientId": {
+                    "type": "string"
+                  },
+                  "amount": {
+                    "type": "number"
+                  },
+                  "discount": {
+                    "type": "number"
+                  },
+                  "date": {
+                    "type": "date"
+                  },
+                  "increment": {
+                    "type": "number"
+                  },
+                  "total": {
+                    "type": "number"
+                  },
+                  "notes": {
+                    "type": "string"
+                  },
+                  "saleStatus": {
+                    "type": "string"
+                  },
+                  "refusedNotes": {
+                    "type": "string"
+                  },
+                  "returnedNotes": {
+                    "type": "string"
+                  },
+                  "signatureBase64": {
+                    "type": "string"
+                  },
+                  "SaleItems": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "productId": {
+                          "type": "string"
+                        },
+                        "code": {
+                          "type": "string"
+                        },
+                        "reference": {
+                          "type": "string"
+                        },
+                        "description": {
+                          "type": "string"
+                        },
+                        "unity": {
+                          "type": "string"
+                        },
+                        "tableId": {
+                          "type": "string"
+                        },
+                        "tableCode": {
+                          "type": "string"
+                        },
+                        "tableName": {
+                          "type": "string"
+                        },
+                        "price": {
+                          "type": "number"
+                        },
+                        "quantity": {
+                          "type": "number"
+                        },
+                        "amount": {
+                          "type": "number"
+                        },
+                        "notes": {
+                          "type": "string"
+                        },
+                        "originalPrice": {
+                          "type": "number"
+                        },
+                        "groupId": {
+                          "type": "string"
+                        },
+                        "groupName": {
+                          "type": "string"
+                        },
+                        "tissueId": {
+                          "type": "string"
+                        },
+                        "tissueCode": {
+                          "type": "string"
+                        },
+                        "underMeasure": {
+                          "type": "boolean"
+                        },
+                        "widthSale": {
+                          "type": "number"
+                        }
+                      }
+                    }
+                  },
+                  "SalePaymentForm":{
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "paymentFormId": {
+                          "type": "string"
+                        },
+                        "description": {
+                          "type": "string"
+                        },
+                        "amount": {
+                          "type": "number"
+                        },
+                        "installments": {
+                          "type": "number"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "customerId": {
+                        "type": "string"
+                      },
+                      "sellerId": {
+                        "type": "string"
+                      },
+                      "saleNumber": {
+                        "type": "string"
+                      },
+                      "saleDate": {
+                        "type": "date"
+                      },
+                      "clientId": {
+                        "type": "string"
+                      },
+                      "amount": {
+                        "type": "number"
+                      },
+                      "discount": {
+                        "type": "number"
+                      },
+                      "date": {
+                        "type": "date"
+                      },
+                      "increment": {
+                        "type": "number"
+                      },
+                      "total": {
+                        "type": "number"
+                      },
+                      "notes": {
+                        "type": "string"
+                      },
+                      "saleStatus": {
+                        "type": "string"
+                      },
+                      "refusedNotes": {
+                        "type": "string"
+                      },
+                      "returnedNotes": {
+                        "type": "string"
+                      },
+                      "signatureFileName": {
+                        "type": "string"
+                      },
+                      "signatureUrl": {
+                        "type": "string"
+                      },
+                      "signatureBase64": {
+                        "type": "string"
+                      },
+                      "createdAt": {
+                        "type": "date"
+                      },
+                      "updatedAt": {
+                        "type": "date"
+                      },
+                      "SaleItems": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string"
+                            },
+                            "productId": {
+                              "type": "string"
+                            },
+                            "code": {
+                              "type": "string"
+                            },
+                            "reference": {
+                              "type": "string"
+                            },
+                            "description": {
+                              "type": "string"
+                            },
+                            "unity": {
+                              "type": "string"
+                            },
+                            "tableId": {
+                              "type": "string"
+                            },
+                            "tableCode": {
+                              "type": "string"
+                            },
+                            "tableName": {
+                              "type": "string"
+                            },
+                            "price": {
+                              "type": "number"
+                            },
+                            "quantity": {
+                              "type": "number"
+                            },
+                            "amount": {
+                              "type": "number"
+                            },
+                            "notes": {
+                              "type": "string"
+                            },
+                            "originalPrice": {
+                              "type": "number"
+                            },
+                            "groupId": {
+                              "type": "string"
+                            },
+                            "groupName": {
+                              "type": "string"
+                            },
+                            "tissueId": {
+                              "type": "string"
+                            },
+                            "tissueCode": {
+                              "type": "string"
+                            },
+                            "tissueName": {
+                              "type": "string"
+                            },
+                            "underMeasure": {
+                              "type": "boolean"
+                            },
+                            "widthSale": {
+                              "type": "number"
+                            },
+                            "createdAt": {
+                              "type": "date"
+                            },
+                            "updatedAt": {
+                              "type": "date"
+                            },
+                            "saleId": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch":{
+        "tags": [
+          "sale"
+        ],
+        "summary": "Update a sale",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "customerId": {
+                    "type": "string"
+                  },
+                  "sellerId": {
+                    "type": "string"
+                  },
+                  "saleNumber": {
+                    "type": "string"
+                  },
+                  "saleDate": {
+                    "type": "date"
+                  },
+                  "clientId": {
+                    "type": "string"
+                  },
+                  "amount": {
+                    "type": "number"
+                  },
+                  "discount": {
+                    "type": "number"
+                  },
+                  "increment": {
+                    "type": "number"
+                  },
+                  "total": {
+                    "type": "number"
+                  },
+                  "notes": {
+                    "type": "string"
+                  },
+                  "saleStatus": {
+                    "type": "string"
+                  },
+                  "refusedNotes": {
+                    "type": "string"
+                  },
+                  "returnedNotes": {
+                    "type": "string"
+                  },
+                  "signatureFileName": {
+                    "type": "string"
+                  },
+                  "signatureUrl": {
+                    "type": "string"
+                  },
+                  "signatureBase64": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "customerId": {
+                      "type": "string"
+                    },
+                    "sellerId": {
+                      "type": "string"
+                    },
+                    "saleNumber": {
+                      "type": "string"
+                    },
+                    "saleDate": {
+                      "type": "date"
+                    },
+                    "clientId": {
+                      "type": "string"
+                    },
+                    "amount": {
+                      "type": "number"
+                    },
+                    "discount": {
+                      "type": "number"
+                    },
+                    "increment": {
+                      "type": "number"
+                    },
+                    "total": {
+                      "type": "number"
+                    },
+                    "notes": {
+                      "type": "string"
+                    },
+                    "saleStatus": {
+                      "type": "string"
+                    },
+                    "refusedNotes": {
+                      "type": "string"
+                    },
+                    "returnedNotes": {
+                      "type": "string"
+                    },
+                    "signatureFileName": {
+                      "type": "string"
+                    },
+                    "signatureUrl": {
+                      "type": "string"
+                    },
+                    "signatureBase64": {
+                      "type": "string"
+                    },
+                    "createdAt": {
+                      "type": "date"
+                    },
+                    "updatedAt": {
+                      "type": "date"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete":{
+        "tags": [
+          "sale"
+        ],
+        "summary": "Delete a sale",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get":{
+        "tags": [
+          "sale"
+        ],
+        "summary": "Get sale by customerId",
+        "parameters": [
+          {
+            "name": "customerId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "saleStatus",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "customerId": {
+                        "type": "string"
+                      },
+                      "sellerId": {
+                        "type": "string"
+                      },
+                      "saleNumber": {
+                        "type": "string"
+                      },
+                      "saleDate": {
+                        "type": "date"
+                      },
+                      "clientId": {
+                        "type": "string"
+                      },
+                      "amount": {
+                        "type": "number"
+                      },
+                      "discount": {
+                        "type": "number"
+                      },
+                      "date": {
+                        "type": "date"
+                      },
+                      "increment": {
+                        "type": "number"
+                      },
+                      "total": {
+                        "type": "number"
+                      },
+                      "notes": {
+                        "type": "string"
+                      },
+                      "saleStatus": {
+                        "type": "string"
+                      },
+                      "refusedNotes": {
+                        "type": "string"
+                      },
+                      "returnedNotes": {
+                        "type": "string"
+                      },
+                      "signatureFileName": {
+                        "type": "string"
+                      },
+                      "signatureUrl": {
+                        "type": "string"
+                      },
+                      "signatureBase64": {
+                        "type": "string"
+                      },
+                      "createdAt": {
+                        "type": "date"
+                      },
+                      "updatedAt": {
+                        "type": "date"
+                      },
+                      "SaleItems":{
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string"
+                            },
+                            "productId": {
+                              "type": "string"
+                            },
+                            "code": {
+                              "type": "string"
+                            },
+                            "reference": {
+                              "type": "string"
+                            },
+                            "description": {
+                              "type": "string"
+                            },
+                            "unity": {
+                              "type": "string"
+                            },
+                            "tableId": {
+                              "type": "string"
+                            },
+                            "tableCode": {
+                              "type": "string"
+                            },
+                            "tableName": {
+                              "type": "string"
+                            },
+                            "price": {
+                              "type": "number"
+                            },
+                            "quantity": {
+                              "type": "number"
+                            },
+                            "amount": {
+                              "type": "number"
+                            },
+                            "notes": {
+                              "type": "string"
+                            },
+                            "originalPrice": {
+                              "type": "number"
+                            },
+                            "groupId": {
+                              "type": "string"
+                            },
+                            "groupName": {
+                              "type": "string"
+                            },
+                            "tissueId": {
+                              "type": "string"
+                            },
+                            "tissueCode": {
+                              "type": "string"
+                            },
+                            "tissueName": {
+                              "type": "string"
+                            },
+                            "underMeasure": {
+                              "type": "boolean"
+                            },
+                            "widthSale": {
+                              "type": "number"
+                            },
+                            "createdAt": {
+                              "type": "date"
+                            },
+                            "updatedAt": {
+                              "type": "date"
+                            },
+                            "saleId": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      },
+                      "SalePaymentForm": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string"
+                            },
+                            "saleId": {
+                              "type": "string"
+                            },
+                            "paymentFormId": {
+                              "type": "string"
+                            },
+                            "description": {
+                              "type": "string"
+                            },
+                            "amount": {
+                              "type": "number"
+                            },
+                            "installments": {
+                              "type": "number"
+                            },
+                            "createdAt": {
+                              "type": "date"
+                            },
+                            "updatedAt": {
+                              "type": "date"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/sale/saleById": {
+      "get":{
+        "tags": [
+          "sale"
+        ],
+        "summary": "Get sale by saleId",
+        "parameters": [
+          {
+            "name": "saleId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "customerId": {
+                      "type": "string"
+                    },
+                    "sellerId": {
+                      "type": "string"
+                    },
+                    "saleNumber": {
+                      "type": "string"
+                    },
+                    "saleDate": {
+                      "type": "date"
+                    },
+                    "clientId": {
+                      "type": "string"
+                    },
+                    "amount": {
+                      "type": "number"
+                    },
+                    "discount": {
+                      "type": "number"
+                    },
+                    "date": {
+                      "type": "date"
+                    },
+                    "increment": {
+                      "type": "number"
+                    },
+                    "total": {
+                      "type": "number"
+                    },
+                    "notes": {
+                      "type": "string"
+                    },
+                    "saleStatus": {
+                      "type": "string"
+                    },
+                    "refusedNotes": {
+                      "type": "string"
+                    },
+                    "returnedNotes": {
+                      "type": "string"
+                    },
+                    "signatureFileName": {
+                      "type": "string"
+                    },
+                    "signatureUrl": {
+                      "type": "string"
+                    },
+                    "signatureBase64": {
+                      "type": "string"
+                    },
+                    "createdAt": {
+                      "type": "date"
+                    },
+                    "updatedAt": {
+                      "type": "date"
+                    },
+                    "SaleItems":{
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "productId": {
+                            "type": "string"
+                          },
+                          "code": {
+                            "type": "string"
+                          },
+                          "reference": {
+                            "type": "string"
+                          },
+                          "description": {
+                            "type": "string"
+                          },
+                          "unity": {
+                            "type": "string"
+                          },
+                          "tableId": {
+                            "type": "string"
+                          },
+                          "tableCode": {
+                            "type": "string"
+                          },
+                          "tableName": {
+                            "type": "string"
+                          },
+                          "price": {
+                            "type": "number"
+                          },
+                          "quantity": {
+                            "type": "number"
+                          },
+                          "amount": {
+                            "type": "number"
+                          },
+                          "notes": {
+                            "type": "string"
+                          },
+                          "originalPrice": {
+                            "type": "number"
+                          },
+                          "groupId": {
+                            "type": "string"
+                          },
+                          "groupName": {
+                            "type": "string"
+                          },
+                          "tissueId": {
+                            "type": "string"
+                          },
+                          "tissueCode": {
+                            "type": "string"
+                          },
+                          "tissueName": {
+                            "type": "string"
+                          },
+                          "underMeasure": {
+                            "type": "boolean"
+                          },
+                          "widthSale": {
+                            "type": "number"
+                          },
+                          "createdAt": {
+                            "type": "date"
+                          },
+                          "updatedAt": {
+                            "type": "date"
+                          },
+                          "saleId": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    },
+                    "SalePaymentForm": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "saleId": {
+                            "type": "string"
+                          },
+                          "paymentFormId": {
+                            "type": "string"
+                          },
+                          "description": {
+                            "type": "string"
+                          },
+                          "amount": {
+                            "type": "number"
+                          },
+                          "installments": {
+                            "type": "number"
+                          },
+                          "createdAt": {
+                            "type": "date"
+                          },
+                          "updatedAt": {
+                            "type": "date"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/sale/saleBySellerId": {
+      "get":{
+        "tags": [
+          "sale"
+        ],
+        "summary": "Get sale by sellerId",
+        "parameters": [
+          {
+            "name": "sellerId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "customerId": {
+                      "type": "string"
+                    },
+                    "sellerId": {
+                      "type": "string"
+                    },
+                    "saleNumber": {
+                      "type": "string"
+                    },
+                    "saleDate": {
+                      "type": "date"
+                    },
+                    "clientId": {
+                      "type": "string"
+                    },
+                    "amount": {
+                      "type": "number"
+                    },
+                    "discount": {
+                      "type": "number"
+                    },
+                    "date": {
+                      "type": "date"
+                    },
+                    "increment": {
+                      "type": "number"
+                    },
+                    "total": {
+                      "type": "number"
+                    },
+                    "notes": {
+                      "type": "string"
+                    },
+                    "saleStatus": {
+                      "type": "string"
+                    },
+                    "refusedNotes": {
+                      "type": "string"
+                    },
+                    "returnedNotes": {
+                      "type": "string"
+                    },
+                    "signatureFileName": {
+                      "type": "string"
+                    },
+                    "signatureUrl": {
+                      "type": "string"
+                    },
+                    "signatureBase64": {
+                      "type": "string"
+                    },
+                    "createdAt": {
+                      "type": "date"
+                    },
+                    "updatedAt": {
+                      "type": "date"
+                    },
+                    "SaleItems":{
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "productId": {
+                            "type": "string"
+                          },
+                          "code": {
+                            "type": "string"
+                          },
+                          "reference": {
+                            "type": "string"
+                          },
+                          "description": {
+                            "type": "string"
+                          },
+                          "unity": {
+                            "type": "string"
+                          },
+                          "tableId": {
+                            "type": "string"
+                          },
+                          "tableCode": {
+                            "type": "string"
+                          },
+                          "tableName": {
+                            "type": "string"
+                          },
+                          "price": {
+                            "type": "number"
+                          },
+                          "quantity": {
+                            "type": "number"
+                          },
+                          "amount": {
+                            "type": "number"
+                          },
+                          "notes": {
+                            "type": "string"
+                          },
+                          "originalPrice": {
+                            "type": "number"
+                          },
+                          "groupId": {
+                            "type": "string"
+                          },
+                          "groupName": {
+                            "type": "string"
+                          },
+                          "tissueId": {
+                            "type": "string"
+                          },
+                          "tissueCode": {
+                            "type": "string"
+                          },
+                          "tissueName": {
+                            "type": "string"
+                          },
+                          "underMeasure": {
+                            "type": "boolean"
+                          },
+                          "widthSale": {
+                            "type": "number"
+                          },
+                          "createdAt": {
+                            "type": "date"
+                          },
+                          "updatedAt": {
+                            "type": "date"
+                          },
+                          "saleId": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    },
+                    "SalePaymentForm": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "saleId": {
+                            "type": "string"
+                          },
+                          "paymentFormId": {
+                            "type": "string"
+                          },
+                          "description": {
+                            "type": "string"
+                          },
+                          "amount": {
+                            "type": "number"
+                          },
+                          "installments": {
+                            "type": "number"
+                          },
+                          "createdAt": {
+                            "type": "date"
+                          },
+                          "updatedAt": {
+                            "type": "date"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/sale/status": {
+      "patch":{
+        "tags": [
+          "sale"
+        ],
+        "summary": "Update sale status",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "saleNumber": {
+                    "type": "string"
+                  },
+                  "saleStatus": {
+                    "type": "string"
+                  },
+                  "refusedNotes": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "customerId": {
+                      "type": "string"
+                    },
+                    "sellerId": {
+                      "type": "string"
+                    },
+                    "saleNumber": {
+                      "type": "string"
+                    },
+                    "saleDate": {
+                      "type": "date"
+                    },
+                    "clientId": {
+                      "type": "string"
+                    },
+                    "amount": {
+                      "type": "number"
+                    },
+                    "discount": {
+                      "type": "number"
+                    },
+                    "date": {
+                      "type": "date"
+                    },
+                    "increment": {
+                      "type": "number"
+                    },
+                    "total": {
+                      "type": "number"
+                    },
+                    "notes": {
+                      "type": "string"
+                    },
+                    "saleStatus": {
+                      "type": "string"
+                    },
+                    "refusedNotes": {
+                      "type": "string"
+                    },
+                    "returnedNotes": {
+                      "type": "string"
+                    },
+                    "signatureFileName": {
+                      "type": "string"
+                    },
+                    "signatureUrl": {
+                      "type": "string"
+                    },
+                    "signatureBase64": {
+                      "type": "string"
+                    },
+                    "createdAt": {
+                      "type": "date"
+                    },
+                    "updatedAt": {
+                      "type": "date"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/sale/saleNumber": {
+      "patch":{
+        "tags": [
+          "sale"
+        ],
+        "summary": "Update sale number",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "saleNumber": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses":{
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "customerId": {
+                      "type": "string"
+                    },
+                    "sellerId": {
+                      "type": "string"
+                    },
+                    "saleNumber": {
+                      "type": "string"
+                    },
+                    "saleDate": {
+                      "type": "date"
+                    },
+                    "clientId": {
+                      "type": "string"
+                    },
+                    "amount": {
+                      "type": "number"
+                    },
+                    "discount": {
+                      "type": "number"
+                    },
+                    "date": {
+                      "type": "date"
+                    },
+                    "increment": {
+                      "type": "number"
+                    },
+                    "total": {
+                      "type": "number"
+                    },
+                    "notes": {
+                      "type": "string"
+                    },
+                    "saleStatus": {
+                      "type": "string"
+                    },
+                    "refusedNotes": {
+                      "type": "string"
+                    },
+                    "returnedNotes": {
+                      "type": "string"
+                    },
+                    "signatureFileName": {
+                      "type": "string"
+                    },
+                    "signatureUrl": {
+                      "type": "string"
+                    },
+                    "signatureBase64": {
+                      "type": "string"
+                    },
+                    "createdAt": {
+                      "type": "date"
+                    },
+                    "updatedAt": {
+                      "type": "date"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/sale/item": {
+      "post":{
+        "tags": [
+          "sale"
+        ],
+        "summary": "Create a new sale item",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "saleId": {
+                    "type": "string"
+                  },
+                  "productId": {
+                    "type": "string"
+                  },
+                  "code": {
+                    "type": "string"
+                  },
+                  "reference": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "unity": {
+                    "type": "string"
+                  },
+                  "tableId": {
+                    "type": "string"
+                  },
+                  "tableCode": {
+                    "type": "string"
+                  },
+                  "tableName": {
+                    "type": "string"
+                  },
+                  "price": {
+                    "type": "number"
+                  },
+                  "quantity": {
+                    "type": "number"
+                  },
+                  "amount": {
+                    "type": "number"
+                  },
+                  "notes": {
+                    "type": "string"
+                  },
+                  "originalPrice": {
+                    "type": "number"
+                  },
+                  "groupId": {
+                    "type": "string"
+                  },
+                  "groupName": {
+                    "type": "string"
+                  },
+                  "tissueId": {
+                    "type": "string"
+                  },
+                  "tissueCode": {
+                    "type": "string"
+                  },
+                  "tissueName": {
+                    "type": "string"
+                  },
+                  "underMeasure": {
+                    "type": "boolean"
+                  },
+                  "widthSale": {
+                    "type": "number"
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "productId": {
+                        "type": "string"
+                      },
+                      "code": {
+                        "type": "string"
+                      },
+                      "reference": {
+                        "type": "string"
+                      },
+                      "description": {
+                        "type": "string"
+                      },
+                      "unity": {
+                        "type": "string"
+                      },
+                      "tableId": {
+                        "type": "string"
+                      },
+                      "tableCode": {
+                        "type": "string"
+                      },
+                      "tableName": {
+                        "type": "string"
+                      },
+                      "price": {
+                        "type": "number"
+                      },
+                      "quantity": {
+                        "type": "number"
+                      },
+                      "amount": {
+                        "type": "number"
+                      },
+                      "notes": {
+                        "type": "string"
+                      },
+                      "originalPrice": {
+                        "type": "number"
+                      },
+                      "groupId": {
+                        "type": "string"
+                      },
+                      "groupName": {
+                        "type": "string"
+                      },
+                      "tissueId": {
+                        "type": "string"
+                      },
+                      "tissueCode": {
+                        "type": "string"
+                      },
+                      "tissueName": {
+                        "type": "string"
+                      },
+                      "underMeasure": {
+                        "type": "boolean"
+                      },
+                      "widthSale": {
+                        "type": "number"
+                      },
+                      "createdAt": {
+                        "type": "date"
+                      },
+                      "updatedAt": {
+                        "type": "date"
+                      },
+                      "saleId": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch":{
+        "tags": [
+          "sale"
+        ],
+        "summary": "Update a sale item",
+        "requestBody":{
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "productId": {
+                    "type": "string"
+                  },
+                  "code": {
+                    "type": "string"
+                  },
+                  "reference": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "unity": {
+                    "type": "string"
+                  },
+                  "tableId": {
+                    "type": "string"
+                  },
+                  "tableCode": {
+                    "type": "string"
+                  },
+                  "tableName": {
+                    "type": "string"
+                  },
+                  "price": {
+                    "type": "number"
+                  },
+                  "quantity": {
+                    "type": "number"
+                  },
+                  "amount": {
+                    "type": "number"
+                  },
+                  "notes": {
+                    "type": "string"
+                  },
+                  "originalPrice": {
+                    "type": "number"
+                  },
+                  "groupId": {
+                    "type": "string"
+                  },
+                  "groupName": {
+                    "type": "string"
+                  },
+                  "tissueId": {
+                    "type": "string"
+                  },
+                  "tissueCode": {
+                    "type": "string"
+                  },
+                  "tissueName": {
+                    "type": "string"
+                  },
+                  "underMeasure": {
+                    "type": "boolean"
+                  },
+                  "widthSale": {
+                    "type": "number"
+                  },
+                  "saleId": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "productId": {
+                      "type": "string"
+                    },
+                    "code": {
+                      "type": "string"
+                    },
+                    "reference": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "unity": {
+                      "type": "string"
+                    },
+                    "tableId": {
+                      "type": "string"
+                    },
+                    "tableCode": {
+                      "type": "string"
+                    },
+                    "tableName": {
+                      "type": "string"
+                    },
+                    "price": {
+                      "type": "number"
+                    },
+                    "quantity": {
+                      "type": "number"
+                    },
+                    "amount": {
+                      "type": "number"
+                    },
+                    "notes": {
+                      "type": "string"
+                    },
+                    "originalPrice": {
+                      "type": "number"
+                    },
+                    "groupId": {
+                      "type": "string"
+                    },
+                    "groupName": {
+                      "type": "string"
+                    },
+                    "tissueId": {
+                      "type": "string"
+                    },
+                    "tissueCode": {
+                      "type": "string"
+                    },
+                    "tissueName": {
+                      "type": "string"
+                    },
+                    "underMeasure": {
+                      "type": "boolean"
+                    },
+                    "widthSale": {
+                      "type": "number"
+                    },
+                    "createdAt": {
+                      "type": "date"
+                    },
+                    "updatedAt": {
+                      "type": "date"
+                    },
+                    "saleId": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete":{
+        "tags": [
+          "sale"
+        ],
+        "summary": "Delete a sale item",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/sale/paymentForm": {
+      "post":{
+        "tags": [
+          "sale"
+        ],
+        "summary": "Create a new sale payment form",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "saleId": {
+                    "type": "string"
+                  },
+                  "paymentFormId": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "amount": {
+                    "type": "number"
+                  },
+                  "installments": {
+                    "type": "number"
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "saleId": {
+                        "type": "string"
+                      },
+                      "paymentFormId": {
+                        "type": "string"
+                      },
+                      "description": {
+                        "type": "string"
+                      },
+                      "amount": {
+                        "type": "number"
+                      },
+                      "installments": {
+                        "type": "number"
+                      },
+                      "createdAt": {
+                        "type": "date"
+                      },
+                      "updatedAt": {
+                        "type": "date"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch":{
+        "tags": [
+          "sale"
+        ],
+        "summary": "Update a sale payment form",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "saleId": {
+                    "type": "string"
+                  },
+                  "paymentFormId": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "amount": {
+                    "type": "number"
+                  },
+                  "installments": {
+                    "type": "number"
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "saleId": {
+                        "type": "string"
+                      },
+                      "paymentFormId": {
+                        "type": "string"
+                      },
+                      "description": {
+                        "type": "string"
+                      },
+                      "amount": {
+                        "type": "number"
+                      },
+                      "installments": {
+                        "type": "number"
+                      },
+                      "createdAt": {
+                        "type": "date"
+                      },
+                      "updatedAt": {
+                        "type": "date"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete":{
+        "tags": [
+          "sale"
+        ],
+        "summary": "Delete a sale payment form",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/order": {
+      "post":{
+        "tags": [
+          "order"
+        ],
+        "summary": "Create a new order",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "customerId": {
+                    "type": "string"
+                  },
+                  "orderId": {
+                    "type": "string"
+                  },
+                  "orderNumber": {
+                    "type": "string"
+                  },
+                  "orderDate": {
+                    "type": "date"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "notes": {
+                    "type": "string"
+                  },
+                  "status": {
+                    "type": "string"
+                  },
+                  "tagId": {
+                    "type": "string"
+                  },
+                  "tagProductId": {
+                    "type": "string"
+                  },
+                  "tagReference": {
+                    "type": "string"
+                  },
+                  "tagProductName": {
+                    "type": "string"
+                  },
+                  "tagTissueName": {
+                    "type": "string"
+                  },
+                  "tagSellerName": {
+                    "type": "string"
+                  },
+                  "tagStatus": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "customerId": {
+                      "type": "string"
+                    },
+                    "orderId": {
+                      "type": "string"
+                    },
+                    "orderNumber": {
+                      "type": "string"
+                    },
+                    "orderDate": {
+                      "type": "date"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "notes": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "string"
+                    },
+                    "tagId": {
+                      "type": "string"
+                    },
+                    "tagProductId": {
+                      "type": "string"
+                    },
+                    "tagReference": {
+                      "type": "string"
+                    },
+                    "tagProductName": {
+                      "type": "string"
+                    },
+                    "tagTissueName": {
+                      "type": "string"
+                    },
+                    "tagSellerName": {
+                      "type": "string"
+                    },
+                    "tagStatus": {
+                      "type": "string"
+                    },
+                    "createdAt": {
+                      "type": "date"
+                    },
+                    "updatedAt": {
+                      "type": "date"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch":{
+        "tags": [
+          "order"
+        ],
+        "summary": "Update order",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "customerId": {
+                    "type": "string"
+                  },
+                  "orderId": {
+                    "type": "string"
+                  },
+                  "orderNumber": {
+                    "type": "string"
+                  },
+                  "orderDate": {
+                    "type": "date"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "notes": {
+                    "type": "string"
+                  },
+                  "status": {
+                    "type": "string"
+                  },
+                  "tagId": {
+                    "type": "string"
+                  },
+                  "tagProductId": {
+                    "type": "string"
+                  },
+                  "tagReference": {
+                    "type": "string"
+                  },
+                  "tagProductName": {
+                    "type": "string"
+                  },
+                  "tagTissueName": {
+                    "type": "string"
+                  },
+                  "tagSellerName": {
+                    "type": "string"
+                  },
+                  "tagStatus": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "customerId": {
+                        "type": "string"
+                      },
+                      "orderId": {
+                        "type": "string"
+                      },
+                      "orderNumber": {
+                        "type": "string"
+                      },
+                      "orderDate": {
+                        "type": "date"
+                      },
+                      "description": {
+                        "type": "string"
+                      },
+                      "notes": {
+                        "type": "string"
+                      },
+                      "status": {
+                        "type": "string"
+                      },
+                      "tagId": {
+                        "type": "string"
+                      },
+                      "tagProductId": {
+                        "type": "string"
+                      },
+                      "tagReference": {
+                        "type": "string"
+                      },
+                      "tagProductName": {
+                        "type": "string"
+                      },
+                      "tagTissueName": {
+                        "type": "string"
+                      },
+                      "tagSellerName": {
+                        "type": "string"
+                      },
+                      "tagStatus": {
+                        "type": "string"
+                      },
+                      "createdAt": {
+                        "type": "date"
+                      },
+                      "updatedAt": {
+                        "type": "date"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get":{
+        "tags": [
+          "order"
+        ],
+        "summary": "Get order by customerId",
+        "parameters": [
+          {
+            "name": "customerId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "customerId": {
+                        "type": "string"
+                      },
+                      "orderId": {
+                        "type": "string"
+                      },
+                      "orderNumber": {
+                        "type": "string"
+                      },
+                      "orderDate": {
+                        "type": "date"
+                      },
+                      "description": {
+                        "type": "string"
+                      },
+                      "notes": {
+                        "type": "string"
+                      },
+                      "status": {
+                        "type": "string"
+                      },
+                      "tagId": {
+                        "type": "string"
+                      },
+                      "tagProductId": {
+                        "type": "string"
+                      },
+                      "tagReference": {
+                        "type": "string"
+                      },
+                      "tagProductName": {
+                        "type": "string"
+                      },
+                      "tagTissueName": {
+                        "type": "string"
+                      },
+                      "tagSellerName": {
+                        "type": "string"
+                      },
+                      "tagStatus": {
+                        "type": "string"
+                      },
+                      "createdAt": {
+                        "type": "date"
+                      },
+                      "updatedAt": {
+                        "type": "date"
+                      },
+                      "OrderItemsPhases": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string"
+                            },
+                            "orderItemId": {
+                              "type": "string"
+                            },
+                            "employeeId": {
+                              "type": "string"
+                            },
+                            "phaseDate": {
+                              "type": "string"
+                            },
+                            "phaseId": {
+                              "type": "string"
+                            },
+                            "notes": {
+                              "type": "string"
+                            },
+                            "createdAt": {
+                              "type": "date"
+                            },
+                            "updatedAt": {
+                              "type": "date"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete":{
+        "tags": [
+          "order"
+        ],
+        "summary": "Delete order",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/order/tagId": {
+      "get":{
+        "tags": [
+          "order"
+        ],
+        "summary": "Get order by tagId",
+        "parameters": [
+          {
+            "name": "customerId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "tagId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "customerId": {
+                      "type": "string"
+                    },
+                    "orderId": {
+                      "type": "string"
+                    },
+                    "orderNumber": {
+                      "type": "string"
+                    },
+                    "orderDate": {
+                      "type": "date"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "notes": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "string"
+                    },
+                    "tagId": {
+                      "type": "string"
+                    },
+                    "tagProductId": {
+                      "type": "string"
+                    },
+                    "tagReference": {
+                      "type": "string"
+                    },
+                    "tagProductName": {
+                      "type": "string"
+                    },
+                    "tagTissueName": {
+                      "type": "string"
+                    },
+                    "tagSellerName": {
+                      "type": "string"
+                    },
+                    "tagStatus": {
+                      "type": "string"
+                    },
+                    "createdAt": {
+                      "type": "date"
+                    },
+                    "updatedAt": {
+                      "type": "date"
+                    },
+                    "OrderItemsPhases": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "orderItemId": {
+                            "type": "string"
+                          },
+                          "employeeId": {
+                            "type": "string"
+                          },
+                          "phaseDate": {
+                            "type": "string"
+                          },
+                          "phaseId": {
+                            "type": "string"
+                          },
+                          "notes": {
+                            "type": "string"
+                          },
+                          "createdAt": {
+                            "type": "date"
+                          },
+                          "updatedAt": {
+                            "type": "date"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/order/employeeId": {
+      "get":{
+        "tags": [
+          "order"
+        ],
+        "summary": "Get order by employeeId",
+        "parameters": [
+          {
+            "name": "customerId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "employeeId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "initialDate",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "date"
+            }
+          },
+          {
+            "name": "finalDate",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "date"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "customerId": {
+                        "type": "string"
+                      },
+                      "orderId": {
+                        "type": "string"
+                      },
+                      "orderNumber": {
+                        "type": "string"
+                      },
+                      "orderDate": {
+                        "type": "date"
+                      },
+                      "description": {
+                        "type": "string"
+                      },
+                      "notes": {
+                        "type": "string"
+                      },
+                      "status": {
+                        "type": "string"
+                      },
+                      "tagId": {
+                        "type": "string"
+                      },
+                      "tagProductId": {
+                        "type": "string"
+                      },
+                      "tagReference": {
+                        "type": "string"
+                      },
+                      "tagProductName": {
+                        "type": "string"
+                      },
+                      "tagTissueName": {
+                        "type": "string"
+                      },
+                      "tagSellerName": {
+                        "type": "string"
+                      },
+                      "tagStatus": {
+                        "type": "string"
+                      },
+                      "createdAt": {
+                        "type": "date"
+                      },
+                      "updatedAt": {
+                        "type": "date"
+                      },
+                      "OrderItemsPhases": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string"
+                            },
+                            "orderItemId": {
+                              "type": "string"
+                            },
+                            "employeeId": {
+                              "type": "string"
+                            },
+                            "phaseDate": {
+                              "type": "string"
+                            },
+                            "phaseId": {
+                              "type": "string"
+                            },
+                            "notes": {
+                              "type": "string"
+                            },
+                            "createdAt": {
+                              "type": "date"
+                            },
+                            "updatedAt": {
+                              "type": "date"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/order/period": {
+      "get":{
+        "tags": [
+          "order"
+        ],
+        "summary": "Get order by period",
+        "parameters": [
+          {
+            "name": "customerId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "initialDate",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "date"
+            }
+          },
+          {
+            "name": "finalDate",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "date"
+            }
+          }
+        ],
+        "responses":{
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "customerId": {
+                        "type": "string"
+                      },
+                      "orderId": {
+                        "type": "string"
+                      },
+                      "orderNumber": {
+                        "type": "string"
+                      },
+                      "orderDate": {
+                        "type": "date"
+                      },
+                      "description": {
+                        "type": "string"
+                      },
+                      "notes": {
+                        "type": "string"
+                      },
+                      "status": {
+                        "type": "string"
+                      },
+                      "tagId": {
+                        "type": "string"
+                      },
+                      "tagProductId": {
+                        "type": "string"
+                      },
+                      "tagReference": {
+                        "type": "string"
+                      },
+                      "tagProductName": {
+                        "type": "string"
+                      },
+                      "tagTissueName": {
+                        "type": "string"
+                      },
+                      "tagSellerName": {
+                        "type": "string"
+                      },
+                      "tagStatus": {
+                        "type": "string"
+                      },
+                      "createdAt": {
+                        "type": "date"
+                      },
+                      "updatedAt": {
+                        "type": "date"
+                      },
+                      "OrderItemsPhases": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string"
+                            },
+                            "orderItemId": {
+                              "type": "string"
+                            },
+                            "employeeId": {
+                              "type": "string"
+                            },
+                            "phaseDate": {
+                              "type": "string"
+                            },
+                            "phaseId": {
+                              "type": "string"
+                            },
+                            "notes": {
+                              "type": "string"
+                            },
+                            "createdAt": {
+                              "type": "date"
+                            },
+                            "updatedAt": {
+                              "type": "date"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/order/finalize": {
+      "patch":{
+        "tags": [
+          "order"
+        ],
+        "summary": "Finalize order",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses":{
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "customerId": {
+                        "type": "string"
+                      },
+                      "orderId": {
+                        "type": "string"
+                      },
+                      "orderNumber": {
+                        "type": "string"
+                      },
+                      "orderDate": {
+                        "type": "date"
+                      },
+                      "description": {
+                        "type": "string"
+                      },
+                      "notes": {
+                        "type": "string"
+                      },
+                      "status": {
+                        "type": "string"
+                      },
+                      "tagId": {
+                        "type": "string"
+                      },
+                      "tagProductId": {
+                        "type": "string"
+                      },
+                      "tagReference": {
+                        "type": "string"
+                      },
+                      "tagProductName": {
+                        "type": "string"
+                      },
+                      "tagTissueName": {
+                        "type": "string"
+                      },
+                      "tagSellerName": {
+                        "type": "string"
+                      },
+                      "tagStatus": {
+                        "type": "string"
+                      },
+                      "createdAt": {
+                        "type": "date"
+                      },
+                      "updatedAt": {
+                        "type": "date"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "orderItemsPhases": {
+      "post":{
+        "tags": [
+          "orderItemPhase"
+        ],
+        "summary": "Create a new order item phase",
+        "requestBody":{
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "orderId": {
+                    "type": "string"
+                  },
+                  "employeeId": {
+                    "type": "string"
+                  },
+                  "employeeName": {
+                    "type": "string"
+                  },
+                  "phaseDate": {
+                    "type": "date"
+                  },
+                  "phaseId": {
+                    "type": "string"
+                  },
+                  "phaseName": {
+                    "type": "string"
+                  },
+                  "notes": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "orderId": {
+                        "type": "string"
+                      },
+                      "employeeId": {
+                        "type": "string"
+                      },
+                      "employeeName": {
+                        "type": "string"
+                      },
+                      "phaseDate": {
+                        "type": "date"
+                      },
+                      "phaseId": {
+                        "type": "string"
+                      },
+                      "phaseName": {
+                        "type": "string"
+                      },
+                      "notes": {
+                        "type": "string"
+                      },
+                      "createdAt": {
+                        "type": "date"
+                      },
+                      "updatedAt": {
+                        "type": "date"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch":{
+        "tags": [
+          "orderItemPhase"
+        ],
+        "summary": "Update order item phase",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "orderId": {
+                    "type": "string"
+                  },
+                  "employeeId": {
+                    "type": "string"
+                  },
+                  "employeeName": {
+                    "type": "string"
+                  },
+                  "phaseDate": {
+                    "type": "date"
+                  },
+                  "phaseId": {
+                    "type": "string"
+                  },
+                  "phaseName": {
+                    "type": "string"
+                  },
+                  "notes": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "orderId": {
+                        "type": "string"
+                      },
+                      "employeeId": {
+                        "type": "string"
+                      },
+                      "employeeName": {
+                        "type": "string"
+                      },
+                      "phaseDate": {
+                        "type": "date"
+                      },
+                      "phaseId": {
+                        "type": "string"
+                      },
+                      "phaseName": {
+                        "type": "string"
+                      },
+                      "notes": {
+                        "type": "string"
+                      },
+                      "createdAt": {
+                        "type": "date"
+                      },
+                      "updatedAt": {
+                        "type": "date"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get":{
+        "tags": [
+          "orderItemPhase"
+        ],
+        "summary": "Get order item phase by orderId",
+        "parameters": [
+          {
+            "name": "orderId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "orderId": {
+                        "type": "string"
+                      },
+                      "employeeId": {
+                        "type": "string"
+                      },
+                      "employeeName": {
+                        "type": "string"
+                      },
+                      "phaseDate": {
+                        "type": "date"
+                      },
+                      "phaseId": {
+                        "type": "string"
+                      },
+                      "phaseName": {
+                        "type": "string"
+                      },
+                      "notes": {
+                        "type": "string"
+                      },
+                      "createdAt": {
+                        "type": "date"
+                      },
+                      "updatedAt": {
+                        "type": "date"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete":{
+        "tags": [
+          "orderItemPhase"
+        ],
+        "summary": "Delete order item phase",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/orderItemsPhases/today": {
+      "get":{
+        "tags": [
+          "orderItemPhase"
+        ],
+        "summary": "Get order item phase by today",
+        "parameters": [
+          {
+            "name": "dateCapture",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "date"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "orderId": {
+                        "type": "string"
+                      },
+                      "employeeId": {
+                        "type": "string"
+                      },
+                      "employeeName": {
+                        "type": "string"
+                      },
+                      "phaseDate": {
+                        "type": "date"
+                      },
+                      "phaseId": {
+                        "type": "string"
+                      },
+                      "phaseName": {
+                        "type": "string"
+                      },
+                      "notes": {
+                        "type": "string"
+                      },
+                      "createdAt": {
+                        "type": "date"
+                      },
+                      "updatedAt": {
+                        "type": "date"
+                      }
                     }
                   }
                 }
