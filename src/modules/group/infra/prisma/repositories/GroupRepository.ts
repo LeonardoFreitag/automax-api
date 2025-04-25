@@ -31,6 +31,9 @@ class GroupRepository implements IGroupRepository {
       where: {
         customerId,
       },
+      orderBy: {
+        group: 'asc',
+      },
     });
     return Groups;
   }
