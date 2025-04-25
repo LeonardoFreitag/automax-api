@@ -46,5 +46,6 @@ jobs:
           script: |
             cd ~/app/automax-api
             yarn
+            npx prisma generate
             npx prisma migrate deploy
             pm2 restart automax-api
