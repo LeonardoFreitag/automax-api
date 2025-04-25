@@ -5,6 +5,7 @@ import UpdateOrderItemsPhasesService from '@modules/order/services/UdpateOrderIt
 import ListOrderItemsPhasesService from '@modules/order/services/ListOrderItemsPhasesService';
 import DeleteOrderItemsPhasesService from '@modules/order/services/DeleteOrderItemsPhasesService';
 import ListItemsPhasesTodayService from '@modules/order/services/ListItemsPhasesTodayService';
+import ListItemsPhasesTodayByCustomerIdService from '@modules/order/services/ListItemsPhasesTodayByCustomerIdService';
 
 export default class OrderItemPhaseControllers {
   public async create(request: Request, response: Response): Promise<Response> {
@@ -76,6 +77,25 @@ export default class OrderItemPhaseControllers {
     const orderItemsPhase = await listItemsPhasesTodayService.execute(
       String(dateCapture),
     );
+
+    return response.json(orderItemsPhase);
+  }
+
+  public async listTodayByCustomerId(
+    request: Request,
+    response: Response,
+  ): Promise<Response> {
+    const { customerId, dateCapture } = request.query;
+
+    const listItemsPhasesTodayByCustomerIdService = container.resolve(
+      ListItemsPhasesTodayByCustomerIdService,
+    );
+
+    const orderItemsPhase =
+      await listItemsPhasesTodayByCustomerIdService.execute(
+        String(customerId),
+        String(dateCapture),
+      );
 
     return response.json(orderItemsPhase);
   }

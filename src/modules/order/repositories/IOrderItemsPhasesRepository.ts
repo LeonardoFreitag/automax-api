@@ -13,5 +13,9 @@ export default interface IOrderItemsPhasesRepository {
   list(orderId: string): Promise<OrderItemsPhases[]>;
   listToday(dateCapture: string): Promise<OrderItemsPhases[]>;
   listAllCaptureToday(dateCapture: string): Promise<Order[]>;
+  listAllCaptureTodayByIdCustomer(
+    dateCapture: string,
+    customerId: string,
+  ): Promise<Order[]>;
   delete(id: string): Promise<void>;
 }

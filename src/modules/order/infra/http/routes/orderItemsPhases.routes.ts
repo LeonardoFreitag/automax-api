@@ -64,6 +64,18 @@ orderItemPhaseRouter.get(
   orderItemPhaseController.listToday,
 );
 
+orderItemPhaseRouter.get(
+  '/todayByCustomerId',
+  ensureAuthenticated,
+  celebrate({
+    [Segments.QUERY]: {
+      dateCapture: Joi.string().required(),
+      customerId: Joi.string().required(),
+    },
+  }),
+  orderItemPhaseController.listTodayByCustomerId,
+);
+
 orderItemPhaseRouter.delete(
   '/',
   ensureAuthenticated,

@@ -4,6 +4,47 @@ import AppError from '@shared/errors/AppError';
 import { prisma } from '@shared/infra/prisma/prisma';
 
 class OrderItemsPhasesRepository implements IOrderItemsPhasesRepository {
+  public async listAllCaptureTodayByIdCustomer(
+    dateCapture: string,
+    customerId: string,
+  ): Promise<Order[]> {
+    const todayStart = new Date(dateCapture);
+    todayStart.setHours(0, 0, 0, 0);
+
+    const todayEnd = new Date();
+    todayEnd.setHours(23, 59, 59, 999);
+
+    const orderItemsPhases = await prisma.orderItemsPhases.findMany({
+      include: {
+        order: true,
+      },
+      where: {
+        phaseDate: {
+          gte: todayStart,
+          lte: todayEnd,
+        },
+        order: {
+          customerId,
+        },
+      },
+    });
+
+    const orderIds = orderItemsPhases.map(oip => oip.orderId);
+
+    const orders = await prisma.order.findMany({
+      include: {
+        OrderItemsPhases: true,
+      },
+      where: {
+        id: {
+          in: orderIds,
+        },
+      },
+    });
+
+    return orders;
+  }
+
   public async listAllCaptureToday(dateCapture: string): Promise<Order[]> {
     const todayStart = new Date(dateCapture);
     todayStart.setHours(0, 0, 0, 0);

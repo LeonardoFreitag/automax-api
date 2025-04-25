@@ -71,7 +71,7 @@ class ClientRepository implements IClientRepository {
         ClientPaymentForm: true,
       },
       orderBy: {
-        comercialName: 'asc',
+        companyName: 'asc',
       },
     });
     return listClient;
