@@ -10,10 +10,12 @@ class ListProductTissueByProductPriceIdService {
   ) {}
 
   public async execute(
+    customerId: string,
     productPriceId: string,
   ): Promise<ProductTissue[] | undefined> {
     const allProductTissueByidCustomer =
       await this.productTissueRepository.listTissuesByProductPrice(
+        customerId,
         productPriceId,
       );
 

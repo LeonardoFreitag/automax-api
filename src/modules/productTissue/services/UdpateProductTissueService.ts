@@ -11,8 +11,10 @@ class UpdateProductTissueService {
   ) {}
 
   public async execute(data: ProductTissue): Promise<ProductTissue> {
-    const { id } = data;
-    const productTissue = await this.productTissueRepository.findTissueById(id);
+    const productTissue = await this.productTissueRepository.findTissueByCode(
+      data.code,
+      data.customerId,
+    );
 
     if (!productTissue) {
       const newProductTissue = await this.productTissueRepository.createTissue({

@@ -123,13 +123,14 @@ export default class ProductTissueController {
     request: Request,
     response: Response,
   ): Promise<Response> {
-    const { productPriceId } = request.query;
+    const { customerId, productPriceId } = request.query;
 
     const listProductsTissueByProductPriceId = container.resolve(
       ListProductTissueByProductPriceIdService,
     );
 
     const Product = await listProductsTissueByProductPriceId.execute(
+      String(customerId),
       String(productPriceId),
     );
 
