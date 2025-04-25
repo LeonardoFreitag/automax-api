@@ -5,8 +5,8 @@ import { prisma } from '@shared/infra/prisma/prisma';
 
 class OrderItemsPhasesRepository implements IOrderItemsPhasesRepository {
   public async listAllCaptureTodayByIdCustomer(
-    dateCapture: string,
     customerId: string,
+    dateCapture: string,
   ): Promise<Order[]> {
     const todayStart = new Date(dateCapture);
     todayStart.setHours(0, 0, 0, 0);

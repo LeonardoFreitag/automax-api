@@ -69,8 +69,8 @@ orderItemPhaseRouter.get(
   ensureAuthenticated,
   celebrate({
     [Segments.QUERY]: {
-      dateCapture: Joi.string().required(),
       customerId: Joi.string().required(),
+      dateCapture: Joi.string().required(),
     },
   }),
   orderItemPhaseController.listTodayByCustomerId,
