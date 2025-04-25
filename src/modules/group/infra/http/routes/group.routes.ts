@@ -54,4 +54,15 @@ groupRouter.delete(
   groupController.delete,
 );
 
+groupRouter.delete(
+  '/all',
+  ensureAuthenticated,
+  celebrate({
+    [Segments.QUERY]: {
+      customerId: Joi.string().uuid().required(),
+    },
+  }),
+  groupController.deleteAll,
+);
+
 export default groupRouter;

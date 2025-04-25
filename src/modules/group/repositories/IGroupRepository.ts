@@ -7,4 +7,5 @@ export default interface IGroupRepository {
   save(group: Group): Promise<Group>;
   list(customerId: string): Promise<Group[]>;
   delete(id: string): Promise<void>;
+  deleteAllGroups(customerId: string): Promise<void>;
 }

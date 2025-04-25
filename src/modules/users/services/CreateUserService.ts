@@ -3,7 +3,7 @@ import { injectable, inject } from 'tsyringe';
 import IUserRepository from '@modules/users/repositories/IUserRepository';
 import IHashProvider from '@modules/users/providers/HashProvider/models/IHashProvider';
 
-import { Prisma, User } from '@prisma/client';
+import { User } from '@prisma/client';
 import AppError from '@shared/errors/AppError';
 import { ICreateUserDTO } from '../dtos/ICreateUserDTO';
 
@@ -30,7 +30,6 @@ class CreateUserService {
     const checkUserExists = await this.userRepository.findByEmail(email);
 
     if (checkUserExists) {
-      // this.userRepository.delete(checkUserExists.id);
       throw new AppError(
         'Já existe um usuário regitrado com este e-mail.',
         409,

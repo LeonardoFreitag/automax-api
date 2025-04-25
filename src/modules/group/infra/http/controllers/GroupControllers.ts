@@ -4,6 +4,7 @@ import CreateGroupService from '@modules/group/services/CreateGroupService';
 import UpdateGroupService from '@modules/group/services/UdpateGroupService';
 import ListGroupService from '@modules/group/services/ListGroupService';
 import DeleteGroupService from '@modules/group/services/DeleteGroupService';
+import DeleteAllGroupsService from '@modules/group/services/DeleteAllGroupsService';
 
 export default class GroupController {
   public async create(request: Request, response: Response): Promise<Response> {
@@ -45,6 +46,19 @@ export default class GroupController {
     const deleteGroupService = container.resolve(DeleteGroupService);
 
     await deleteGroupService.execute(String(id));
+
+    return response.status(204).json();
+  }
+
+  public async deleteAll(
+    request: Request,
+    response: Response,
+  ): Promise<Response> {
+    const { customerId } = request.query;
+
+    const deleteAllGroupsService = container.resolve(DeleteAllGroupsService);
+
+    await deleteAllGroupsService.execute(String(customerId));
 
     return response.status(204).json();
   }

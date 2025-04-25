@@ -4,6 +4,14 @@ import AppError from '@shared/errors/AppError';
 import { prisma } from '@shared/infra/prisma/prisma';
 
 class GroupRepository implements IGroupRepository {
+  public async deleteAllGroups(customerId: string): Promise<void> {
+    await prisma.group.deleteMany({
+      where: {
+        customerId,
+      },
+    });
+  }
+
   public async findByGroup(customerId: string, group: string): Promise<Group> {
     const foundGroup = await prisma.group.findFirst({
       where: { customerId, group },

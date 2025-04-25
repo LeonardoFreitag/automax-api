@@ -11,8 +11,10 @@ class UpdateGroupService {
   ) {}
 
   public async execute(data: Group): Promise<Group> {
-    const { id } = data;
-    const foundGroup = await this.groupRepository.findById(id);
+    const foundGroup = await this.groupRepository.findByGroup(
+      data.customerId,
+      data.group,
+    );
 
     if (!foundGroup) {
       const newGroup: Prisma.GroupUncheckedCreateInput = {
