@@ -15,6 +15,9 @@ import UserRefreshTokensRepository from '@modules/users/infra/prisma/repositorie
 import IClientRepository from '@modules/client/repositories/IClientRepository';
 import ClientRepository from '@modules/client/infra/prisma/repositories/ClientRepository';
 
+import IClientTempRepository from '@modules/clientTemp/repositories/IClientTempRepository';
+import ClientTempRepository from '@modules/clientTemp/infra/prisma/repositories/ClientTempRepository';
+
 import IProductRepository from '@modules/product/repositories/IProductRepository';
 import ProductRepository from '@modules/product/infra/prisma/repositories/ProductRepository';
 
@@ -42,6 +45,9 @@ import PhasesRepository from '@modules/phases/infra/prisma/repositories/PhasesRe
 import IRegistroRepository from '@modules/registro/repositories/IRegistroRepository';
 import RegistroRepository from '@modules/registro/infra/prisma/repositories/RegistroRepository';
 
+import IBudgetRepository from '@modules/budget/repositories/IBudgetRepository';
+import BudgetRepository from '@modules/budget/infra/prisma/respositories/BudgetRepository';
+
 container.registerSingleton<IUserRepository>('UserRepository', UserRepository);
 
 container.registerSingleton<IUserTokensRepository>(
@@ -57,6 +63,11 @@ container.registerSingleton<IUserRefreshTokensRepository>(
 container.registerSingleton<IClientRepository>(
   'ClientRepository',
   ClientRepository,
+);
+
+container.registerSingleton<IClientTempRepository>(
+  'ClientTempRepository',
+  ClientTempRepository,
 );
 
 container.registerSingleton<IGroupRepository>(
@@ -99,4 +110,9 @@ container.registerSingleton<IPhasesRepository>(
 container.registerSingleton<IRegistroRepository>(
   'RegistroRepository',
   RegistroRepository,
+);
+
+container.registerSingleton<IBudgetRepository>(
+  'BudgetRepository',
+  BudgetRepository,
 );

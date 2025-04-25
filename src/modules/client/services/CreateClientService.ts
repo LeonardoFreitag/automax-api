@@ -28,6 +28,9 @@ class CreateClientService {
     financialPendency,
     isNew,
     sellerId,
+    phone,
+    cellphone,
+    email,
     ClientContact,
     ClientPaymentForm,
   }: Prisma.ClientUncheckedCreateInput): Promise<Client> {
@@ -56,6 +59,9 @@ class CreateClientService {
       financialPendency,
       isNew,
       sellerId,
+      phone,
+      cellphone,
+      email,
       ClientContact,
       ClientPaymentForm,
     });

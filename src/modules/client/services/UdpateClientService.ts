@@ -73,6 +73,9 @@ class UpdateClientService {
         financialPendency: data.financialPendency,
         isNew: data.isNew,
         sellerId: data.sellerId,
+        phone: data.phone,
+        cellphone: data.cellphone,
+        email: data.email,
         ClientContact:
           ContactList as Prisma.ClientContactUncheckedCreateNestedManyWithoutClientInput,
         ClientPaymentForm:
@@ -106,6 +109,9 @@ class UpdateClientService {
     client.financialPendency = data.financialPendency;
     client.isNew = data.isNew;
     client.sellerId = data.sellerId;
+    client.phone = data.phone;
+    client.cellphone = data.cellphone;
+    client.email = data.email;
 
     return this.clientRepository.save(client);
   }

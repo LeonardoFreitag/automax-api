@@ -5,6 +5,7 @@ import IHashProvider from '@modules/users/providers/HashProvider/models/IHashPro
 
 import { Prisma, User } from '@prisma/client';
 import AppError from '@shared/errors/AppError';
+import { ICreateUserDTO } from '../dtos/ICreateUserDTO';
 
 @injectable()
 class CreateUserService {
@@ -25,7 +26,7 @@ class CreateUserService {
     password,
     regionId,
     UserRules,
-  }: Prisma.UserUncheckedCreateInput): Promise<User> {
+  }: ICreateUserDTO): Promise<User> {
     const checkUserExists = await this.userRepository.findByEmail(email);
 
     if (checkUserExists) {

@@ -38,6 +38,7 @@ model User {
 
   customer   Customer @relation(fields: [customerId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   customerId String
+  Budget     Budget[]
 
   @@map("user")
 }
@@ -99,11 +100,15 @@ model Client {
   isNew             Boolean
   isActivated       Boolean             @default(true)
   sellerId          String
+  phone             String?
+  cellphone         String?
+  email             String?
   createdAt         DateTime            @default(now())
   updatedAt         DateTime            @updatedAt
   ClientContact     ClientContact[]
   ClientPaymentForm ClientPaymentForm[]
   Sale              Sale[]
+  Budget            Budget[]
 
   @@map("client")
 }
@@ -137,6 +142,51 @@ model ClientPaymentForm {
   clientId String
 
   @@map("clientPaymentForm")
+}
+
+model ClientTemp {
+  id                String              @id @default(uuid())
+  customerId        String
+  companyName       String
+  comercialName     String
+  zipCode           String
+  streetName        String
+  streetNumber      String
+  neighborhood      String
+  complement        String
+  cnpj              String
+  ie                String
+  cityCode          String
+  city              String
+  stateCode         String
+  state             String
+  sellerId          String
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  downloaded        Boolean             @default(false)
+  phone             String?
+  cellphone         String?
+  email             String?
+  ClientContactTemp ClientContactTemp[]
+
+  @@map("clientTemp")
+}
+
+model ClientContactTemp {
+  id         String   @id @default(uuid())
+  name       String
+  fone       String
+  foneType   String
+  isWhatsApp Boolean
+  email      String
+  job        String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  clientTemp   ClientTemp @relation(fields: [clientTempId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  clientTempId String
+
+  @@map("clientContactTemp")
 }
 
 model Group {
@@ -287,6 +337,83 @@ model SalePaymentForm {
   saleId String
 
   @@map("salePaymentForm")
+}
+
+model Budget {
+  id                String              @id @default(uuid())
+  customerId        String
+  sellerId          String
+  Seller            User?               @relation(fields: [sellerId], references: [id])
+  budgetNumber      String
+  budgetDate        DateTime
+  budgetExpiration  DateTime
+  clientId          String
+  Client            Client?             @relation(fields: [clientId], references: [id])
+  amount            Decimal
+  discount          Decimal
+  increment         Decimal
+  total             Decimal
+  notes             String?
+  budgetStatus      String // "open", "effected", "expired", "canceled"
+  refusedNotes      String
+  returnedNotes     String
+  budgetFileName    String?
+  budgetFileUrl     String?
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  BudgetItems       BudgetItems[]
+  BudgetPaymentForm BudgetPaymentForm[]
+
+  @@map("budget")
+}
+
+model BudgetItems {
+  id          String  @id @default(uuid())
+  productId   String
+  code        String
+  reference   String
+  description String
+  unity       String
+  tableId     String
+  tableCode   String?
+  tableName   String?
+  price       Decimal
+  quantity    Decimal
+  amount      Decimal
+  notes       String?
+
+  originalPrice Decimal
+  groupId       String
+  groupName     String?
+  tissueId      String
+  tissueCode    String
+  tissueName    String?
+  underMeasure  Boolean
+  widthSale     Decimal
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  budget   Budget @relation(fields: [budgetId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  budgetId String
+
+  @@map("budgetItems")
+}
+
+model BudgetPaymentForm {
+  id            String  @id @default(uuid())
+  paymentFormId String
+  description   String
+  amount        Decimal
+  installments  Decimal
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  budget   Budget @relation(fields: [budgetId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  budgetId String
+
+  @@map("budgetPaymentForm")
 }
 
 model Order {

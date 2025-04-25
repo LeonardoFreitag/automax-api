@@ -11,6 +11,9 @@ import UpdateSalePaymentFormService from '@modules/sale/services/UdpateSalePayme
 import ListSaleService from '@modules/sale/services/ListSaleService';
 import ListSaleByIdService from '@modules/sale/services/ListSaleByIdService';
 import ListSaleBySellerIdService from '@modules/sale/services/ListSaleBySellerIdService';
+import ListSaleBySellerIdAndMonthService from '@modules/sale/services/ListSaleBySellerIdAndMonthService';
+import ListSalesPaginetedService from '@modules/sale/services/ListSalesPaginetedService';
+import ListSalesPaginetedByCompanyNameService from '@modules/sale/services/ListSalesPaginetedByCompanyNameService';
 import DeleteSaleService from '@modules/sale/services/DeleteSaleService';
 import DeleteSaleItemService from '@modules/sale/services/DeleteSaleItemService';
 import DeleteSalePaymentFormService from '@modules/sale/services/DeleteSalePaymentFormService';
@@ -237,6 +240,55 @@ export default class SaleControllers {
     const listSales = container.resolve(ListSaleBySellerIdService);
 
     const sale = await listSales.execute(String(sellerId));
+
+    return response.json(sale);
+  }
+
+  public async listSaleBySellerIdAndMonth(
+    request: Request,
+    response: Response,
+  ): Promise<Response> {
+    const { sellerId, month, year } = request.query;
+
+    const listSales = container.resolve(ListSaleBySellerIdAndMonthService);
+
+    const sale = await listSales.execute(
+      String(sellerId),
+      Number(month),
+      Number(year),
+    );
+
+    return response.json(sale);
+  }
+
+  public async listSalesPaginated(
+    request: Request,
+    response: Response,
+  ): Promise<Response> {
+    const { sellerId, page, rows } = request.query;
+    const listSales = container.resolve(ListSalesPaginetedService);
+    const sale = await listSales.execute(
+      String(sellerId),
+      Number(page),
+      Number(rows),
+    );
+    return response.json(sale);
+  }
+
+  public async listSalesPaginatedByCompanyName(
+    request: Request,
+    response: Response,
+  ): Promise<Response> {
+    const { sellerId, companyName, page, rows } = request.query;
+
+    const listSales = container.resolve(ListSalesPaginetedByCompanyNameService);
+
+    const sale = await listSales.execute(
+      String(sellerId),
+      String(companyName),
+      Number(page),
+      Number(rows),
+    );
 
     return response.json(sale);
   }

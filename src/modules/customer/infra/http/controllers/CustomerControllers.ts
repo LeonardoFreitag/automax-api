@@ -5,6 +5,8 @@ import UpdateCustomerService from '@modules/customer/services/UdpateCustomerServ
 import ListCustomerService from '@modules/customer/services/ListCustomerService';
 import ListAllCustomerService from '@modules/customer/services/ListAllCustomerService';
 import DeleteCustomerService from '@modules/customer/services/DeleteCustomerService';
+import FindAdminByCustomerIdService from '@modules/users/services/FindAdminByCustomerIdService';
+import CreateUserService from '@modules/users/services/CreateUserService';
 
 export default class CustomerControllers {
   public async create(request: Request, response: Response): Promise<Response> {
@@ -12,7 +14,7 @@ export default class CustomerControllers {
 
     const createCustomer = container.resolve(CreateCustomerService);
 
-    const customer = await createCustomer.execute({
+    const newCustomer = await createCustomer.execute({
       cnpj,
       companyName,
       cellphone,
@@ -20,7 +22,41 @@ export default class CustomerControllers {
       password,
     });
 
-    return response.json(customer);
+    const findAdminByCustomerId = container.resolve(
+      FindAdminByCustomerIdService,
+    );
+    const admin = await findAdminByCustomerId.execute(newCustomer.id);
+    if (admin) {
+      const customerWithAdmin = {
+        ...newCustomer,
+        // Users: [admin],
+      };
+
+      return response.json(customerWithAdmin);
+    }
+
+    const createUser = container.resolve(CreateUserService);
+
+    const adminUser = await createUser.execute({
+      customerId: newCustomer.id,
+      isAdmin: true,
+      name: companyName,
+      cellphone,
+      email,
+      password,
+      UserRules: [
+        {
+          rule: 'admin',
+        },
+      ],
+    });
+
+    const customerWithAdmin = {
+      ...newCustomer,
+      User: [adminUser],
+    };
+
+    return response.json(customerWithAdmin);
   }
 
   public async update(request: Request, response: Response): Promise<Response> {

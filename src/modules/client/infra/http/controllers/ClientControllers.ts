@@ -52,6 +52,9 @@ export default class ClientController {
       financialPendency,
       isNew,
       sellerId,
+      phone,
+      cellphone,
+      email,
       ClientContact,
       ClientPaymentForm,
     } = request.body;
@@ -77,6 +80,9 @@ export default class ClientController {
       financialPendency,
       isNew,
       sellerId,
+      phone,
+      cellphone,
+      email,
       ClientContact,
       ClientPaymentForm,
     });

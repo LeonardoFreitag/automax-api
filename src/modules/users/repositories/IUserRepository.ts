@@ -1,10 +1,12 @@
 import { Prisma, User, UserRules } from '@prisma/client';
+import { ICreateUserDTO } from '../dtos/ICreateUserDTO';
 
 export default interface IUserRepository {
   findById(id: string): Promise<User | undefined>;
   findByEmail(email: string): Promise<User | undefined>;
+  findAdminByCustomerId(customerId: string): Promise<User | undefined>;
   listByRule(customerId: string, rule: string): Promise<User[]>;
-  create(data: Prisma.UserUncheckedCreateInput): Promise<User>;
+  create(data: ICreateUserDTO): Promise<User>;
   updateEmailUserAdmin(
     customerId: string,
     old_email: string,

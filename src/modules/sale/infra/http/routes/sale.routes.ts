@@ -216,6 +216,46 @@ saleRouter.get(
   saleController.listSaleBySellerId,
 );
 
+saleRouter.get(
+  '/saleBySellerIdAndMonth',
+  ensureAuthenticated,
+  celebrate({
+    [Segments.QUERY]: {
+      sellerId: Joi.string().uuid().required(),
+      month: Joi.number().required(),
+      year: Joi.number().required(),
+    },
+  }),
+  saleController.listSaleBySellerIdAndMonth,
+);
+
+saleRouter.get(
+  '/listSalesPagineted',
+  ensureAuthenticated,
+  celebrate({
+    [Segments.QUERY]: {
+      sellerId: Joi.string().uuid().required(),
+      page: Joi.number().required(),
+      rows: Joi.number().required(),
+    },
+  }),
+  saleController.listSalesPaginated,
+);
+
+saleRouter.get(
+  '/listSalesPaginetedByCompanyName',
+  ensureAuthenticated,
+  celebrate({
+    [Segments.QUERY]: {
+      sellerId: Joi.string().uuid().required(),
+      companyName: Joi.string().required(),
+      page: Joi.number().required(),
+      rows: Joi.number().required(),
+    },
+  }),
+  saleController.listSalesPaginatedByCompanyName,
+);
+
 saleRouter.delete(
   '/',
   ensureAuthenticated,

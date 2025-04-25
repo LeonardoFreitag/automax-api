@@ -28,16 +28,19 @@ class UpdateProfileService {
         };
       });
 
+      const hashedPassword = await this.hashProvider.generateHash(
+        user.password,
+      );
+
       const newUser = await this.userRepository.create({
         customerId: user.customerId,
         isAdmin: user.isAdmin,
         name: user.name,
         email: user.email,
         cellphone: user.cellphone,
-        password: user.password,
+        password: hashedPassword,
         regionId: user.regionId,
-        UserRules:
-          rulesList as Prisma.UserRulesUncheckedCreateNestedManyWithoutUserInput,
+        UserRules: rulesList,
       });
 
       return newUser;

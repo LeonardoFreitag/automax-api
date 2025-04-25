@@ -27,46 +27,19 @@ class CreateCustomerService {
   public async execute({
     cnpj,
     companyName,
-    cellphone,
-    email,
-    password,
   }: ICreateCustomerDTO): Promise<Customer> {
-    const hashedPassword = await this.hashProvider.generateHash(password);
-
-    const checkEmailExists = await this.userRepository.findByEmail(email);
-
-    // console.log(checkEmailExists);
-
     const checkCnpjExists = await this.customerRepository.findByCnpj(cnpj);
 
-    // console.log(checkCnpjExists);
-
-    if (checkCnpjExists && checkEmailExists) {
-      if (checkEmailExists.customerId === checkCnpjExists.id) {
-        return checkCnpjExists;
-      }
-      throw new AppError('Verifique a configuração da conta', 400);
+    if (checkCnpjExists) {
+      return checkCnpjExists;
     }
 
-    const customer = await this.customerRepository.create({
+    const newCustomer = await this.customerRepository.create({
       cnpj,
       companyName,
     });
 
-    const newUser = await this.userRepository.create({
-      customerId: customer.id,
-      isAdmin: true,
-      name: customer.companyName,
-      email,
-      cellphone,
-      password: hashedPassword,
-      UserRules:
-        [] as Prisma.UserRulesUncheckedCreateNestedManyWithoutUserInput,
-    });
-
-    await this.userRepository.createRule(newUser.id, 'admin');
-
-    const dataCustomer = this.customerRepository.findById(customer.id);
+    const dataCustomer = this.customerRepository.findById(newCustomer.id);
 
     return dataCustomer;
   }

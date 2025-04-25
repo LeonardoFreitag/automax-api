@@ -4,6 +4,83 @@ import AppError from '@shared/errors/AppError';
 import { prisma } from '@shared/infra/prisma/prisma';
 
 class SaleRepository implements ISaleRepository {
+  listSalesPaginatedByCompanyName(
+    sellerId: string,
+    companyName: string,
+    page: number,
+    rows: number,
+  ): Promise<Sale[]> {
+    const sales = prisma.sale.findMany({
+      where: {
+        sellerId,
+        Client: {
+          companyName: {
+            contains: companyName,
+          },
+        },
+      },
+      include: {
+        SaleItems: true,
+        SalePaymentForm: true,
+        Client: true,
+      },
+      orderBy: {
+        createdAt: 'desc',
+      },
+      take: rows,
+      skip: (page - 1) * 10,
+    });
+
+    return sales;
+  }
+
+  public async listSalesPaginated(
+    sellerId: string,
+    page: number,
+    rows: number,
+  ): Promise<Sale[]> {
+    const sales = await prisma.sale.findMany({
+      where: {
+        sellerId,
+      },
+      include: {
+        SaleItems: true,
+        SalePaymentForm: true,
+        Client: true,
+      },
+      orderBy: {
+        createdAt: 'desc',
+      },
+      take: rows,
+      skip: (page - 1) * 10,
+    });
+
+    return sales;
+  }
+
+  public async listBySellerIdAndMonth(
+    sellerId: string,
+    month: number,
+    year: number,
+  ): Promise<Sale[]> {
+    const sales = await prisma.sale.findMany({
+      where: {
+        sellerId,
+        saleDate: {
+          gte: new Date(year, month - 1, 1),
+          lt: new Date(year, month, 1),
+        },
+      },
+      include: {
+        SaleItems: true,
+        SalePaymentForm: true,
+        Client: true,
+      },
+    });
+
+    return sales;
+  }
+
   public async findItemById(id: string): Promise<SaleItems> {
     const foundItem = await prisma.saleItems.findUnique({
       where: {
@@ -181,6 +258,7 @@ class SaleRepository implements ISaleRepository {
   public async create(
     saleData: Prisma.SaleUncheckedCreateInput,
   ): Promise<Sale> {
+    // console.log(saleData);
     const sale = await prisma.sale.create({
       data: {
         ...saleData,

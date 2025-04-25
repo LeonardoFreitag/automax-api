@@ -1,9 +1,23 @@
+import { ICreateUserDTO } from '@modules/users/dtos/ICreateUserDTO';
 import IUserRepository from '@modules/users/repositories/IUserRepository';
 import { Prisma, User, UserRules } from '@prisma/client';
 import AppError from '@shared/errors/AppError';
 import { prisma } from '@shared/infra/prisma/prisma';
 
 class UserRepository implements IUserRepository {
+  public async findAdminByCustomerId(
+    customerId: string,
+  ): Promise<User | undefined> {
+    const user = await prisma.user.findFirst({
+      where: {
+        customerId,
+        isAdmin: true,
+      },
+    });
+
+    return user;
+  }
+
   public async updateEmailUserAdmin(
     customerId: string,
     old_email: string,
@@ -125,9 +139,7 @@ class UserRepository implements IUserRepository {
     return user;
   }
 
-  public async create(
-    userData: Prisma.UserUncheckedCreateInput,
-  ): Promise<User | undefined> {
+  public async create(userData: ICreateUserDTO): Promise<User | undefined> {
     const newUser = await prisma.user.create({
       data: {
         customerId: userData.customerId,
@@ -138,13 +150,20 @@ class UserRepository implements IUserRepository {
         password: userData.password,
         UserRules: {
           createMany: {
-            data: userData.UserRules as Prisma.UserRulesUncheckedCreateInput,
+            data: userData.UserRules.map(rule => ({
+              rule: rule.rule,
+            })),
           },
         },
       },
     });
 
-    return newUser;
+    const createdUser = await prisma.user.findUnique({
+      where: { id: newUser.id },
+      include: { UserRules: true },
+    });
+
+    return createdUser;
   }
 
   public async save(user: User): Promise<User> {
