@@ -258,7 +258,6 @@ class SaleRepository implements ISaleRepository {
   public async create(
     saleData: Prisma.SaleUncheckedCreateInput,
   ): Promise<Sale> {
-    // console.log(saleData);
     const sale = await prisma.sale.create({
       data: {
         ...saleData,
