@@ -9,6 +9,11 @@ export default interface IProductTissueRepository {
     code: string,
     customerId: string,
   ): Promise<ProductTissue | undefined>;
+  findTissueByProductPriceId(
+    code: string,
+    customerId: string,
+    productPriceId: string,
+  ): Promise<ProductTissue | undefined>;
   listTissuesByProductPrice(
     productPriceId: string,
     customerId: string,

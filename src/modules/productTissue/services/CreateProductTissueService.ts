@@ -20,7 +20,11 @@ class CreateProductTissueService {
     productPriceId,
   }: Prisma.ProductTissueUncheckedCreateInput): Promise<ProductTissue> {
     const productTissueExists =
-      await this.productTissueRepository.findTissueByCode(code, customerId);
+      await this.productTissueRepository.findTissueByProductPriceId(
+        code,
+        customerId,
+        productPriceId,
+      );
 
     if (productTissueExists) {
       return productTissueExists;

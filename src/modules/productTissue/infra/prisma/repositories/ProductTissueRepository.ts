@@ -3,6 +3,21 @@ import { Prisma, ProductTissue } from '@prisma/client';
 import { prisma } from '@shared/infra/prisma/prisma';
 
 class ProductTissueRepository implements IProductTissueRepository {
+  public async findTissueByProductPriceId(
+    code: string,
+    customerId: string,
+    productPriceId: string,
+  ): Promise<ProductTissue | undefined> {
+    const foundProductTissue = await prisma.productTissue.findFirst({
+      where: {
+        code,
+        customerId,
+        productPriceId,
+      },
+    });
+    return foundProductTissue;
+  }
+
   public async findTissueByCode(
     code: string,
     customerId: string,
