@@ -114,6 +114,7 @@ class UserRepository implements IUserRepository {
   public async findById(id: string): Promise<User | undefined> {
     const user = await prisma.user.findUnique({
       where: { id },
+      include: { UserRules: true },
     });
 
     return user;
@@ -169,7 +170,16 @@ class UserRepository implements IUserRepository {
   public async save(user: User): Promise<User> {
     const userUpdated = await prisma.user.update({
       where: { id: user.id },
-      data: user,
+      data: {
+        customerId: user.customerId,
+        isAdmin: user.isAdmin,
+        name: user.name,
+        cellphone: user.cellphone,
+        email: user.email,
+        password: user.password,
+        regionId:
+          user.regionId && user.regionId.trim() !== '' ? user.regionId : null,
+      },
     });
     return userUpdated;
   }

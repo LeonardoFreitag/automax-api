@@ -343,12 +343,12 @@ model Budget {
   id                String              @id @default(uuid())
   customerId        String
   sellerId          String
-  Seller            User?               @relation(fields: [sellerId], references: [id])
+  Seller            User?               @relation(fields: [sellerId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   budgetNumber      String
   budgetDate        DateTime
   budgetExpiration  DateTime
   clientId          String
-  Client            Client?             @relation(fields: [clientId], references: [id])
+  Client            Client?             @relation(fields: [clientId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   amount            Decimal
   discount          Decimal
   increment         Decimal

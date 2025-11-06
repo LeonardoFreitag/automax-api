@@ -11,6 +11,7 @@ usersRouter.post(
   '/',
   celebrate({
     [Segments.BODY]: {
+      id: Joi.string().uuid().allow(null),
       customerId: Joi.string().required(),
       isAdmin: Joi.boolean().required(),
       name: Joi.string().required(),
@@ -18,6 +19,7 @@ usersRouter.post(
       cellphone: Joi.string().empty('').default(''),
       password: Joi.string().empty('').default('123456'),
       regionId: Joi.string().empty('').default(''),
+      routeId: Joi.string().empty('').default(''),
       UserRules: Joi.array().required(),
     },
   }),
@@ -48,6 +50,7 @@ usersRouter.patch(
       cellphone: Joi.string().empty('').default(''),
       password: Joi.string().empty('').default('123456'),
       regionId: Joi.string().empty('').default(''),
+      routeId: Joi.string().empty('').default(''),
       rules: Joi.array().required(),
     },
   }),

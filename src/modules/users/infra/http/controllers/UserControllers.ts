@@ -12,6 +12,7 @@ import DeleteUserRuleService from '@modules/users/services/DeleteUserRuleService
 export default class UserController {
   public async create(request: Request, response: Response): Promise<Response> {
     const {
+      id,
       customerId,
       isAdmin,
       name,
@@ -25,6 +26,7 @@ export default class UserController {
     const createUser = container.resolve(CreateUserService);
 
     const user = await createUser.execute({
+      id,
       customerId,
       isAdmin,
       name,
