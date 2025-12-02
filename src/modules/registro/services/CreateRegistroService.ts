@@ -13,6 +13,8 @@ class CreateRegistroService {
     const checkRegistroExists = await this.RegistroRepository.findById(id);
 
     if (checkRegistroExists) {
+      checkRegistroExists.validade = validade;
+      await this.RegistroRepository.save(checkRegistroExists);
       return checkRegistroExists;
     }
 
