@@ -24,8 +24,8 @@ jobs:
       - name: Build App on GitHub
         run: yarn build
         
-      # Copiar a pasta dist para dentro da AWS
-      - name: Copy dist to AWS
+      # Copiar a pasta dist para dentro da Digital Ocean
+      - name: Copy dist to Digital Ocean
         uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.SSH_HOST }}
@@ -33,10 +33,10 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           key: ${{ secrets.SSH_KEY }}
           source: ".,!node_modules"
-          target: "~/app/automax-api"
+          target: "~/automax-api"
 
-      # Instalar as dependências no servidor da AWS
-      - name: Install dependencias on AWS
+      # Instalar as dependências no servidor da Digital Ocean
+      - name: Install dependencias on Digital Ocean
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.SSH_HOST }}
@@ -44,8 +44,8 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           key: ${{ secrets.SSH_KEY }}
           script: |
-            cd ~/app/automax-api
+            cd ~/automax-api
             yarn
             npx prisma generate
             npx prisma migrate deploy
-            pm2 restart automax-api
+            pm2 restart automax
