@@ -36,7 +36,7 @@ class UploadPhotoService {
     const updatedProduct = await this.productRepository.save({
       ...product,
       photoFileName: fileName,
-      photoUrl: `https://automax.s3.amazonaws.com/${fileName}`,
+      photoUrl: `${process.env.STORAGE_URL}/${fileName}`,
       photoSize,
     });
 

@@ -55,6 +55,7 @@ class UpdateClientService {
       });
 
       const newClient = await this.clientRepository.create({
+        id: data.id,
         customerId: data.customerId,
         code: data.code,
         companyName: data.companyName,
@@ -92,6 +93,7 @@ class UpdateClientService {
 
     await this.clientRepository.createManyPaymentForm(paymentForm);
 
+    client.customerId = data.customerId;
     client.code = data.code as string;
     client.companyName = data.companyName;
     client.comercialName = data.comercialName;

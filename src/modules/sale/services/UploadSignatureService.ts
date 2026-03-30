@@ -32,7 +32,7 @@ class UploadSignatureService {
     const updatedSale = await this.saleRepository.save({
       ...sale,
       signatureFileName: fileName,
-      signatureUrl: `https://automax.s3.amazonaws.com/${fileName}`,
+      signatureUrl: `${process.env.STORAGE_URL}/${fileName}`,
     });
 
     return updatedSale;

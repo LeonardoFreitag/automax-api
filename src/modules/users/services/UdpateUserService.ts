@@ -22,28 +22,34 @@ class UpdateProfileService {
     const foundUser = await this.userRepository.findById(user.id);
 
     if (!foundUser) {
-      const rulesList = rules.map(item => {
-        return {
-          rule: item.rule,
-        };
-      });
+      try {
+        const rulesList = rules.map(item => {
+          return {
+            rule: item.rule,
+          };
+        });
 
-      const hashedPassword = await this.hashProvider.generateHash(
-        user.password,
-      );
+        const hashedPassword = await this.hashProvider.generateHash(
+          user.password,
+        );
 
-      const newUser = await this.userRepository.create({
-        customerId: user.customerId,
-        isAdmin: user.isAdmin,
-        name: user.name,
-        email: user.email,
-        cellphone: user.cellphone,
-        password: hashedPassword,
-        regionId: user.regionId,
-        UserRules: rulesList,
-      });
+        const newUser = await this.userRepository.create({
+          id: user.id,
+          customerId: user.customerId,
+          isAdmin: user.isAdmin,
+          name: user.name,
+          email: user.email,
+          cellphone: user.cellphone,
+          password: hashedPassword,
+          regionId: user.regionId,
+          UserRules: rulesList,
+        });
 
-      return newUser;
+        return newUser;
+      } catch (error) {
+        console.log(error);
+        throw new AppError('Error creating user', 500);
+      }
     }
 
     const userWithUpdatedEmail = await this.userRepository.findByEmail(
@@ -66,6 +72,7 @@ class UpdateProfileService {
 
     const hashedPassword = await this.hashProvider.generateHash(user.password);
 
+    foundUser.customerId = user.customerId;
     foundUser.isAdmin = user.isAdmin;
     foundUser.name = user.name;
     foundUser.cellphone = user.cellphone;

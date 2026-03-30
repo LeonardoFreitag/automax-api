@@ -261,7 +261,7 @@ class CreateBudgetPDFService {
     const updatedBudget = await this.budgetRepository.save({
       ...budget,
       budgetFileName: fileName,
-      budgetFileUrl: `https://automax.s3.amazonaws.com/${fileUrl}`,
+      budgetFileUrl: `${process.env.STORAGE_URL}/${fileUrl}`,
     });
     if (!updatedBudget) {
       // Handle the case where the budget update fails

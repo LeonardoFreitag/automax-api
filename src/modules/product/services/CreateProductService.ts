@@ -10,6 +10,7 @@ class CreateProductService {
   ) {}
 
   public async execute({
+    id,
     customerId,
     code,
     reference,
@@ -28,6 +29,7 @@ class CreateProductService {
     }
 
     const product = await this.productRepository.create({
+      ...(id && { id }),
       customerId,
       code,
       reference,

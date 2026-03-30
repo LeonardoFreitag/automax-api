@@ -143,6 +143,7 @@ class UserRepository implements IUserRepository {
   public async create(userData: ICreateUserDTO): Promise<User | undefined> {
     const newUser = await prisma.user.create({
       data: {
+        ...(userData.id && { id: userData.id }),
         customerId: userData.customerId,
         isAdmin: userData.isAdmin,
         name: userData.name,

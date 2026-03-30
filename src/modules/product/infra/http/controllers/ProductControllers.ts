@@ -98,6 +98,7 @@ export default class ProductController {
       const createProductService = container.resolve(CreateProductService);
 
       const newProduct = {
+        ...(data.id && { id: data.id }),
         customerId: data.customerId,
         code: data.code,
         reference: data.reference,

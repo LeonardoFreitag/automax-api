@@ -8,7 +8,7 @@ const tmpFolder = path.resolve(__dirname, '..', '..', 'tmp');
 interface IUploadConfig {
   tmpFolder: string;
   uploadsFolder: string;
-  driver: 's3' | 'disk';
+  driver: 's3' | 'disk' | 'do';
 
   multer: {
     storage: StorageEngine;
@@ -20,6 +20,10 @@ interface IUploadConfig {
     };
     aws: {
       bucket: string;
+    };
+    do: {
+      key: string;
+      endpoint: string;
     };
   };
 }
@@ -45,6 +49,10 @@ export default {
     disk: {},
     aws: {
       bucket: 'automax',
+    },
+    do: {
+      key: process.env.DO_ACCESS_KEY_ID,
+      endpoint: process.env.DO_SPACES_ENDPOINT,
     },
   },
 } as IUploadConfig;
