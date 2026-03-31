@@ -48,7 +48,7 @@ export default {
   config: {
     disk: {},
     aws: {
-      bucket: 'automax',
+      bucket: process.env.AWS_BUCKET,
     },
     do: {
       key: process.env.DO_ACCESS_KEY_ID,
