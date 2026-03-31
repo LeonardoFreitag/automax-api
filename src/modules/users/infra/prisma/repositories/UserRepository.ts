@@ -7,7 +7,6 @@ import { prisma } from '@shared/infra/prisma/prisma';
 class UserRepository implements IUserRepository {
   public async deduplicateUserByEmail(
     id: string,
-    customerId: string,
     email: string,
   ): Promise<void> {
     await prisma.user.deleteMany({
@@ -15,7 +14,6 @@ class UserRepository implements IUserRepository {
         email,
         NOT: {
           id,
-          customerId,
         },
       },
     });

@@ -149,15 +149,11 @@ export default class UserController {
     request: Request,
     response: Response,
   ): Promise<Response> {
-    const { id, email, customerId } = request.query;
+    const { id, email } = request.query;
 
     const deduplicateUserService = container.resolve(DeduplicateUserService);
 
-    await deduplicateUserService.execute(
-      String(id),
-      String(email),
-      String(customerId),
-    );
+    await deduplicateUserService.execute(String(id), String(email));
 
     return response.status(204).json();
   }

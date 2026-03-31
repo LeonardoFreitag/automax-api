@@ -126,7 +126,6 @@ usersRouter.post(
     [Segments.QUERY]: {
       id: Joi.string().uuid().required(),
       email: Joi.string().email().required(),
-      customerId: Joi.string().uuid().required(),
     },
   }),
   usersController.deduplicateUser,

@@ -8,12 +8,8 @@ class DeduplicateUserService {
     private userRepository: IUserRepository,
   ) {}
 
-  public async execute(
-    id: string,
-    email: string,
-    customerId: string,
-  ): Promise<void> {
-    await this.userRepository.deduplicateUserByEmail(id, customerId, email);
+  public async execute(id: string, email: string): Promise<void> {
+    await this.userRepository.deduplicateUserByEmail(id, email);
   }
 }
 
