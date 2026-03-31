@@ -8,6 +8,7 @@ import ListUserService from '@modules/users/services/ListUsersService';
 import ListUsersByRuleService from '@modules/users/services/ListUsersByRuleService';
 import DeleteUserService from '@modules/users/services/DeleteUserService';
 import DeleteUserRuleService from '@modules/users/services/DeleteUserRuleService';
+import ListUsersByEmailService from '@modules/users/services/ListUsersByEmailService';
 
 export default class UserController {
   public async create(request: Request, response: Response): Promise<Response> {
@@ -128,5 +129,18 @@ export default class UserController {
     await deleteUserRuleService.execute(String(id));
 
     return response.status(204).json();
+  }
+
+  public async listByEmail(
+    request: Request,
+    response: Response,
+  ): Promise<Response> {
+    const { email } = request.query;
+
+    const listUsersByEmailService = container.resolve(ListUsersByEmailService);
+
+    const userList = await listUsersByEmailService.execute(String(email));
+
+    return response.json(userList);
   }
 }

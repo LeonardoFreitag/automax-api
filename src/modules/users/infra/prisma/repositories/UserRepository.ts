@@ -5,6 +5,15 @@ import AppError from '@shared/errors/AppError';
 import { prisma } from '@shared/infra/prisma/prisma';
 
 class UserRepository implements IUserRepository {
+  public async listByEmail(email: string): Promise<User[]> {
+    const users = await prisma.user.findMany({
+      where: { email },
+      include: { UserRules: true },
+    });
+
+    return users;
+  }
+
   public async findAdminByCustomerId(
     customerId: string,
   ): Promise<User | undefined> {

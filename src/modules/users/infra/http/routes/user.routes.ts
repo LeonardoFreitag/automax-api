@@ -110,4 +110,14 @@ usersRouter.delete(
   usersController.deleteRule,
 );
 
+usersRouter.get(
+  '/email',
+  celebrate({
+    [Segments.QUERY]: {
+      email: Joi.string().email().required(),
+    },
+  }),
+  usersController.listByEmail,
+);
+
 export default usersRouter;

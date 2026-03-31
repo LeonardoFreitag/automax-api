@@ -243,6 +243,7 @@ class ClientRepository implements IClientRepository {
   }
 
   public async create(clientData: Prisma.ClientCreateInput): Promise<Client> {
+    console.log('ClientRepository - create - clientData:', clientData);
     const client = await prisma.client.create({
       data: {
         ...clientData,

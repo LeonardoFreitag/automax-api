@@ -115,6 +115,8 @@ class UpdateClientService {
     client.cellphone = data.cellphone;
     client.email = data.email;
 
+    // console.log('Client updated successfully:', client);
+
     return this.clientRepository.save(client);
   }
 }
