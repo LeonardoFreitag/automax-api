@@ -3,6 +3,7 @@ import IUserRepository from '@modules/users/repositories/IUserRepository';
 import IHashProvider from '@modules/users/providers/HashProvider/models/IHashProvider';
 import { injectable, inject } from 'tsyringe';
 import { Prisma, User } from '@prisma/client';
+import { IUpdateUserDTO } from '../dtos/IUpdateUserDTO';
 
 interface RulesModel {
   rule: string;
@@ -18,7 +19,10 @@ class UpdateProfileService {
     private hashProvider: IHashProvider,
   ) {}
 
-  public async execute(user: User, rules: RulesModel[]): Promise<User> {
+  public async execute(
+    user: IUpdateUserDTO,
+    rules: RulesModel[],
+  ): Promise<User> {
     // Prioridade 1: busca pelo id exato enviado pelo cliente
     let foundUser = await this.userRepository.findById(user.id);
 
@@ -80,11 +84,6 @@ class UpdateProfileService {
     foundUser.regionId = user.regionId;
 
     const updatedUser = await this.userRepository.save(foundUser);
-
-    await this.userRepository.deduplicateUserByEmail(
-      user.customerId,
-      user.email,
-    );
 
     return updatedUser;
   }
