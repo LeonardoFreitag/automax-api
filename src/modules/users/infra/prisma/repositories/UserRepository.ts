@@ -9,22 +9,14 @@ class UserRepository implements IUserRepository {
     customerId: string,
     email: string,
   ): Promise<void> {
-    const usersWithSameEmail = await prisma.user.findMany({
+    await prisma.user.deleteMany({
       where: {
         email,
+        NOT: {
+          customerId,
+        },
       },
     });
-
-    if (usersWithSameEmail.length > 1) {
-      await prisma.user.deleteMany({
-        where: {
-          email,
-          NOT: {
-            customerId,
-          },
-        },
-      });
-    }
   }
 
   public async listByEmail(email: string): Promise<User[]> {
