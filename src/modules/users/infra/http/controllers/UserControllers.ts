@@ -9,6 +9,7 @@ import ListUsersByRuleService from '@modules/users/services/ListUsersByRuleServi
 import DeleteUserService from '@modules/users/services/DeleteUserService';
 import DeleteUserRuleService from '@modules/users/services/DeleteUserRuleService';
 import ListUsersByEmailService from '@modules/users/services/ListUsersByEmailService';
+import DeduplicateUserService from '@modules/users/services/DeduplicateUserService';
 
 export default class UserController {
   public async create(request: Request, response: Response): Promise<Response> {
@@ -142,5 +143,18 @@ export default class UserController {
     const userList = await listUsersByEmailService.execute(String(email));
 
     return response.json(userList);
+  }
+
+  public async deduplicateUser(
+    request: Request,
+    response: Response,
+  ): Promise<Response> {
+    const { email, customerId } = request.query;
+
+    const deduplicateUserService = container.resolve(DeduplicateUserService);
+
+    await deduplicateUserService.execute(String(email), String(customerId));
+
+    return response.status(204).json();
   }
 }

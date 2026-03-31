@@ -120,4 +120,15 @@ usersRouter.get(
   usersController.listByEmail,
 );
 
+usersRouter.post(
+  '/deduplicate',
+  celebrate({
+    [Segments.QUERY]: {
+      email: Joi.string().email().required(),
+      customerId: Joi.string().uuid().required(),
+    },
+  }),
+  usersController.deduplicateUser,
+);
+
 export default usersRouter;

@@ -5,6 +5,31 @@ import AppError from '@shared/errors/AppError';
 import { prisma } from '@shared/infra/prisma/prisma';
 
 class UserRepository implements IUserRepository {
+  public async deduplicateUserByEmail(
+    customerId: string,
+    email: string,
+  ): Promise<void> {
+    const usersWithSameEmail = await prisma.user.findMany({
+      where: {
+        email,
+      },
+    });
+
+    const usersToDelete = usersWithSameEmail.filter(
+      user => user.customerId !== customerId,
+    );
+
+    if (usersToDelete.length > 0) {
+      await prisma.user.deleteMany({
+        where: {
+          id: {
+            in: usersToDelete.map(user => user.id),
+          },
+        },
+      });
+    }
+  }
+
   public async listByEmail(email: string): Promise<User[]> {
     const users = await prisma.user.findMany({
       where: { email },
