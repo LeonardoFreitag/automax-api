@@ -6,6 +6,7 @@ import { prisma } from '@shared/infra/prisma/prisma';
 
 class UserRepository implements IUserRepository {
   public async deduplicateUserByEmail(
+    id: string,
     customerId: string,
     email: string,
   ): Promise<void> {
@@ -13,6 +14,7 @@ class UserRepository implements IUserRepository {
       where: {
         email,
         NOT: {
+          id,
           customerId,
         },
       },

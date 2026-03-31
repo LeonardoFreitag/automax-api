@@ -124,6 +124,7 @@ usersRouter.post(
   '/deduplicate',
   celebrate({
     [Segments.QUERY]: {
+      id: Joi.string().uuid().required(),
       email: Joi.string().email().required(),
       customerId: Joi.string().uuid().required(),
     },
