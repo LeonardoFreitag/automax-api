@@ -19,15 +19,18 @@ class UpdateProfileService {
   ) {}
 
   public async execute(user: User, rules: RulesModel[]): Promise<User> {
-    const foundUser = await this.userRepository.findById(user.id);
+    // Prioridade 1: busca pelo id exato enviado pelo cliente
+    let foundUser = await this.userRepository.findById(user.id);
+
+    // Prioridade 2: busca por e-mail dentro do mesmo customerId
+    if (!foundUser) {
+      const usersWithEmail = await this.userRepository.listByEmail(user.email);
+      foundUser = usersWithEmail.find(u => u.customerId === user.customerId);
+    }
 
     if (!foundUser) {
       try {
-        const rulesList = rules.map(item => {
-          return {
-            rule: item.rule,
-          };
-        });
+        const rulesList = rules.map(item => ({ rule: item.rule }));
 
         const hashedPassword = await this.hashProvider.generateHash(
           user.password,
@@ -45,19 +48,20 @@ class UpdateProfileService {
           UserRules: rulesList,
         });
 
+        if (!newUser) {
+          throw new AppError('Error creating user', 500);
+        }
+
+        await this.userRepository.deduplicateUserByEmail(
+          user.customerId,
+          user.email,
+        );
+
         return newUser;
       } catch (error) {
         console.log(error);
         throw new AppError('Error creating user', 500);
       }
-    }
-
-    const userWithUpdatedEmail = await this.userRepository.findByEmail(
-      user.email,
-    );
-
-    if (userWithUpdatedEmail && userWithUpdatedEmail.id !== user.id) {
-      throw new AppError('E-mail already in use.', 409);
     }
 
     const newRules: Prisma.UserRulesUncheckedCreateInput[] = rules.map(item => {
@@ -67,7 +71,7 @@ class UpdateProfileService {
       };
     });
 
-    await this.userRepository.deleteRules(user.id);
+    await this.userRepository.deleteRules(foundUser.id);
     await this.userRepository.createManyRules(newRules);
 
     const hashedPassword = await this.hashProvider.generateHash(user.password);
@@ -80,7 +84,14 @@ class UpdateProfileService {
     foundUser.password = hashedPassword;
     foundUser.regionId = user.regionId;
 
-    return this.userRepository.save(foundUser);
+    const updatedUser = await this.userRepository.save(foundUser);
+
+    await this.userRepository.deduplicateUserByEmail(
+      user.customerId,
+      user.email,
+    );
+
+    return updatedUser;
   }
 }
 
