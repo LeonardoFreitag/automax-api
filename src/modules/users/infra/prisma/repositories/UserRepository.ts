@@ -15,15 +15,12 @@ class UserRepository implements IUserRepository {
       },
     });
 
-    const usersToDelete = usersWithSameEmail.filter(
-      user => user.customerId !== customerId,
-    );
-
-    if (usersToDelete.length > 0) {
+    if (usersWithSameEmail.length > 1) {
       await prisma.user.deleteMany({
         where: {
-          id: {
-            in: usersToDelete.map(user => user.id),
+          email,
+          NOT: {
+            customerId,
           },
         },
       });
