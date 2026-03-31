@@ -52,11 +52,6 @@ class UpdateProfileService {
           throw new AppError('Error creating user', 500);
         }
 
-        await this.userRepository.deduplicateUserByEmail(
-          user.customerId,
-          user.email,
-        );
-
         return newUser;
       } catch (error) {
         console.log(error);
