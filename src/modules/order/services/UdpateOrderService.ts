@@ -15,7 +15,9 @@ class UpdateOrderService {
     const order = await this.orderRepository.findById(id);
 
     if (!order) {
-      throw new AppError('Order not found', 404);
+      // aqui eu preciso criar a order caso não exista
+      const newOrder = await this.orderRepository.create(data);
+      return newOrder;
     }
 
     order.orderDate = data.orderDate;
