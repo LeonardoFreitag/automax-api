@@ -14,7 +14,7 @@ jobs:
       - name: Setup Nodejs environment
         uses: actions/setup-node@v2.4.1
         with:
-          node-version: 18.x
+          node-version: 22.x
           
       # Instalar as dependências Yarn (no github)
       - name: Install Dependencies on GitHub
