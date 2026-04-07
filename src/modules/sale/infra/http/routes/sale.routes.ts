@@ -11,6 +11,7 @@ const saleController = new SaleControllers();
 
 const upload = multer(multerConfig.multer);
 
+// cadastra um pedido
 saleRouter.post(
   '/',
   ensureAuthenticated,
@@ -38,6 +39,7 @@ saleRouter.post(
   saleController.create,
 );
 
+// cadastra um item do pedido
 saleRouter.post(
   '/item',
   ensureAuthenticated,
@@ -69,6 +71,7 @@ saleRouter.post(
   saleController.createItem,
 );
 
+// cadastra a forma de pagamento do pedido
 saleRouter.post(
   '/paymentForm',
   ensureAuthenticated,
@@ -84,6 +87,7 @@ saleRouter.post(
   saleController.createPaymentForm,
 );
 
+// altera os dados do pedido
 saleRouter.patch(
   '/',
   ensureAuthenticated,
@@ -110,6 +114,7 @@ saleRouter.patch(
   saleController.update,
 );
 
+// altera o status do pedido
 saleRouter.patch(
   '/status',
   ensureAuthenticated,
@@ -124,6 +129,7 @@ saleRouter.patch(
   saleController.updateStatus,
 );
 
+// altera os dados do item do pedido
 saleRouter.patch(
   '/saleNumber',
   ensureAuthenticated,
@@ -136,6 +142,7 @@ saleRouter.patch(
   saleController.updateSaleNumber,
 );
 
+// altera os dados do item do pedido
 saleRouter.patch(
   '/item',
   ensureAuthenticated,
@@ -168,6 +175,7 @@ saleRouter.patch(
   saleController.updateItem,
 );
 
+// altera os dados da forma de pagamento do pedido
 saleRouter.patch(
   '/paymentForm',
   ensureAuthenticated,
@@ -184,6 +192,7 @@ saleRouter.patch(
   saleController.updatePaymentForm,
 );
 
+// lista os pedidos
 saleRouter.get(
   '/',
   ensureAuthenticated,
@@ -196,6 +205,7 @@ saleRouter.get(
   saleController.list,
 );
 
+// lista os pedidos por id
 saleRouter.get(
   '/saleById',
   ensureAuthenticated,
@@ -207,6 +217,7 @@ saleRouter.get(
   saleController.listSaleById,
 );
 
+// lista os pedidos por vendedor
 saleRouter.get(
   '/saleBySellerId',
   ensureAuthenticated,
@@ -218,6 +229,7 @@ saleRouter.get(
   saleController.listSaleBySellerId,
 );
 
+// lista os pedidos por vendedor, mês e ano
 saleRouter.get(
   '/saleBySellerIdAndMonth',
   ensureAuthenticated,
@@ -231,6 +243,7 @@ saleRouter.get(
   saleController.listSaleBySellerIdAndMonth,
 );
 
+// lista os pedidos paginados
 saleRouter.get(
   '/listSalesPagineted',
   ensureAuthenticated,
@@ -244,6 +257,7 @@ saleRouter.get(
   saleController.listSalesPaginated,
 );
 
+// lista os pedidos paginados por nome da empresa
 saleRouter.get(
   '/listSalesPaginetedByCompanyName',
   ensureAuthenticated,
@@ -258,6 +272,7 @@ saleRouter.get(
   saleController.listSalesPaginatedByCompanyName,
 );
 
+// exclui um pedido
 saleRouter.delete(
   '/',
   ensureAuthenticated,
@@ -269,6 +284,7 @@ saleRouter.delete(
   saleController.delete,
 );
 
+// exclui um item do pedido
 saleRouter.delete(
   '/item',
   ensureAuthenticated,
@@ -280,6 +296,7 @@ saleRouter.delete(
   saleController.deleteItem,
 );
 
+// exclui uma forma de pagamento do pedido
 saleRouter.delete(
   '/paymentForm',
   ensureAuthenticated,
@@ -291,6 +308,7 @@ saleRouter.delete(
   saleController.deletePaymentForm,
 );
 
+// upload da assinatura do pedido
 saleRouter.post(
   '/uploadSignature',
   ensureAuthenticated,

@@ -1,6 +1,6 @@
 import { injectable, inject } from 'tsyringe';
 import ISaleRepository from '@modules/sale/repositories/ISaleRepository';
-import { Sale } from '@prisma/client';
+import { SaleWithRelations } from '../infra/prisma/repositories/SaleRepository';
 
 @injectable()
 class ListSaleBySellerIdService {
@@ -9,7 +9,7 @@ class ListSaleBySellerIdService {
     private saleRepository: ISaleRepository,
   ) {}
 
-  public async execute(sellerId: string): Promise<Sale[] | undefined> {
+  public async execute(sellerId: string): Promise<SaleWithRelations[]> {
     const allSaleByidCustomer = await this.saleRepository.listBySellerId(
       sellerId,
     );

@@ -3,6 +3,11 @@ import { Prisma, Sale, SaleItems, SalePaymentForm } from '@prisma/client';
 import AppError from '@shared/errors/AppError';
 import { prisma } from '@shared/infra/prisma/prisma';
 
+const saleWithRelations = Prisma.validator<Prisma.SaleDefaultArgs>()({
+  include: { SaleItems: true, SalePaymentForm: true, Client: true },
+});
+export type SaleWithRelations = Prisma.SaleGetPayload<typeof saleWithRelations>;
+
 class SaleRepository implements ISaleRepository {
   listSalesPaginatedByCompanyName(
     sellerId: string,
@@ -226,7 +231,7 @@ class SaleRepository implements ISaleRepository {
     return sale;
   }
 
-  public async listBySellerId(sellerId: string): Promise<Sale[]> {
+  public async listBySellerId(sellerId: string): Promise<SaleWithRelations[]> {
     const sale = await prisma.sale.findMany({
       where: { sellerId },
       include: {

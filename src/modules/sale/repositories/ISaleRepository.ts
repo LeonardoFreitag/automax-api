@@ -1,8 +1,9 @@
 import { Prisma, Sale, SaleItems, SalePaymentForm } from '@prisma/client';
+import { SaleWithRelations } from '../infra/prisma/repositories/SaleRepository';
 
 export default interface ISaleRepository {
   findById(id: string): Promise<Sale | undefined>;
-  listBySellerId(sellerId: string): Promise<Sale[]>;
+  listBySellerId(sellerId: string): Promise<SaleWithRelations[]>;
   listBySellerIdAndMonth(
     sellerId: string,
     month: number,
