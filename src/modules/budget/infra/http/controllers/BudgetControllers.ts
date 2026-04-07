@@ -4,7 +4,7 @@ import CreateBudgetService from '@modules/budget/services/CreateBudgetService';
 import CreateBudgetPDFService from '@modules/budget/services/CreateBudgetPDFService';
 import CreateBudgetItemService from '@modules/budget/services/CreateBudgetItemService';
 import CreateBudgetPaymentFormService from '@modules/budget/services/CreateBudgetPaymentFormService';
-import UpdateBudgetService from '@modules/budget/services/UdpateBudgetService';
+// import UpdateBudgetService from '@modules/budget/services/UdpateBudgetService';
 import UpdateBudgetNumberService from '@modules/budget/services/UdpateBudgetNumberService';
 import UpdateBudgetStatusService from '@modules/budget/services/UdpateBudgetStatusService';
 import UpdateBudgetItemService from '@modules/budget/services/UdpateBudgetItemService';
@@ -28,6 +28,7 @@ export default class BudgetControllers {
       budgetDate,
       budgetExpiration,
       clientId,
+      clientCode,
       amount,
       discount,
       increment,
@@ -49,6 +50,7 @@ export default class BudgetControllers {
       budgetDate,
       budgetExpiration,
       clientId,
+      clientCode,
       amount,
       discount,
       increment,

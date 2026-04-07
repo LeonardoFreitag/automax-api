@@ -41,6 +41,19 @@ clientRouter.post(
 );
 
 clientRouter.post(
+  '/deduplicate',
+  ensureAuthenticated,
+  celebrate({
+    [Segments.BODY]: {
+      customerId: Joi.string().required(),
+      clientId: Joi.string().required(),
+      code: Joi.string().required(),
+    },
+  }),
+  clientController.deduplicate,
+);
+
+clientRouter.post(
   '/contact',
   ensureAuthenticated,
   celebrate({

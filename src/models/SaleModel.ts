@@ -8,6 +8,7 @@ export interface SaleModel {
   saleNumber: string;
   saleDate: Date;
   clientId: string;
+  clientCode: string;
   items: SaleItemsModel[];
   amount: number;
   discount: number;

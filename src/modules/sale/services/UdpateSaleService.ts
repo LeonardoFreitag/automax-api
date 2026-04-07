@@ -20,6 +20,7 @@ class UpdateSaleService {
 
     sale.saleNumber = data.saleNumber;
     sale.clientId = data.clientId;
+    sale.clientCode = data.clientCode;
     sale.amount = data.amount;
     sale.discount = data.discount;
     sale.total = data.total;

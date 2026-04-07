@@ -258,9 +258,17 @@ class SaleRepository implements ISaleRepository {
   public async create(
     saleData: Prisma.SaleUncheckedCreateInput,
   ): Promise<Sale> {
+    // preciso pegar o code do client para criar a venda, pois ele não vai vir do front
+    const client = await prisma.client.findUnique({
+      where: {
+        id: saleData.clientId,
+      },
+    });
+
     const sale = await prisma.sale.create({
       data: {
         ...saleData,
+        clientCode: client?.code,
         SaleItems: {
           createMany: {
             data: saleData.SaleItems as Prisma.SaleItemsUncheckedCreateInput,
@@ -295,6 +303,7 @@ class SaleRepository implements ISaleRepository {
       data: {
         saleNumber: sale.saleNumber,
         clientId: sale.clientId,
+        clientCode: sale.clientCode,
         amount: sale.amount,
         discount: sale.discount,
         increment: sale.increment,

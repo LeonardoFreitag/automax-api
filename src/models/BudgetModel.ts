@@ -12,6 +12,7 @@ export interface BudgetModel {
   budgetDate: Date;
   budgetExpiration: Date;
   clientId: string;
+  clientCode?: string;
   Client?: ClientModel | null;
   amount: number;
   discount: number;

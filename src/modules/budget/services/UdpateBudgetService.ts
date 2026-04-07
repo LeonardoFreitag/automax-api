@@ -20,6 +20,7 @@ class UpdateBudgetService {
 
     budget.budgetNumber = data.budgetNumber;
     budget.clientId = data.clientId;
+    budget.clientCode = data.clientCode;
     budget.amount = data.amount;
     budget.discount = data.discount;
     budget.total = data.total;

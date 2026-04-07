@@ -13,6 +13,7 @@ import DeleteClientService from '@modules/client/services/DeleteClientService';
 import DeleteClientContactService from '@modules/client/services/DeleteClientContactService';
 import DeleteClientPaymentFormService from '@modules/client/services/DeleteClientPaymentFormService';
 import ChangeStatusClienteService from '@modules/client/services/ChangeStatusClienteService';
+import DeduplicateClientService from '@modules/client/services/DeduplicateClientService';
 
 interface PaymentFormUpdateModel {
   paymentFormId: string;
@@ -32,6 +33,19 @@ interface ContactUpdateModel {
 }
 
 export default class ClientController {
+  public async deduplicate(
+    request: Request,
+    response: Response,
+  ): Promise<Response> {
+    const { customerId, clientId, code } = request.body;
+
+    const deduplicateClient = container.resolve(DeduplicateClientService);
+
+    const result = await deduplicateClient.execute(customerId, clientId, code);
+
+    return response.status(200).json(result);
+  }
+
   public async create(request: Request, response: Response): Promise<Response> {
     const {
       customerId,

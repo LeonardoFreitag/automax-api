@@ -265,9 +265,17 @@ class BudgetRepository implements IBudgetRepository {
     BudgetData: Prisma.BudgetUncheckedCreateInput,
   ): Promise<Budget> {
     // console.log(BudgetData);
+    // preciso pegar o code do client para criar o orçamento, pois ele não vai vir do front
+    const client = await prisma.client.findUnique({
+      where: {
+        id: BudgetData.clientId,
+      },
+    });
+
     const budget = await prisma.budget.create({
       data: {
         ...BudgetData,
+        clientCode: client?.code,
         budgetStatus: 'waiting',
         BudgetItems: {
           createMany: {
@@ -303,6 +311,7 @@ class BudgetRepository implements IBudgetRepository {
       data: {
         budgetNumber: budget.budgetNumber,
         clientId: budget.clientId,
+        clientCode: budget.clientCode,
         amount: budget.amount,
         discount: budget.discount,
         increment: budget.increment,

@@ -9,6 +9,24 @@ import AppError from '@shared/errors/AppError';
 import { prisma } from '@shared/infra/prisma/prisma';
 
 class ClientRepository implements IClientRepository {
+  public async deduplicateClient(
+    customerId: string,
+    clientId: string,
+    code: string,
+  ): Promise<string> {
+    const result = await prisma.client.deleteMany({
+      where: {
+        customerId,
+        code,
+        id: {
+          not: clientId,
+        },
+      },
+    });
+
+    return `DeduplicateClientService - deduplicateClient - result: ${result.count}`;
+  }
+
   public async changeActivation(
     id: string,
     isActivated: boolean,
