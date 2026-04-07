@@ -146,9 +146,9 @@ export default class SaleControllers {
   public async update(request: Request, response: Response): Promise<Response> {
     const data = request.body;
 
-    const updateSaleStatus = container.resolve(UpdateSaleStatusService);
+    const updateSale = container.resolve(UpdateSaleService);
 
-    const sale = await updateSaleStatus.execute(data);
+    const sale = await updateSale.execute(data);
 
     return response.json(sale);
   }
