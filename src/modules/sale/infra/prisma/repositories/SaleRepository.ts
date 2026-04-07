@@ -207,24 +207,28 @@ class SaleRepository implements ISaleRepository {
     });
   }
 
-  public async findById(id: string): Promise<Sale | undefined> {
+  public async findById(id: string): Promise<SaleWithRelations | undefined> {
     const sale = await prisma.sale.findUnique({
       where: { id },
       include: {
         SaleItems: true,
         SalePaymentForm: true,
+        Client: true,
       },
     });
 
     return sale;
   }
 
-  public async findBySaleNumber(saleNumber: string): Promise<Sale | undefined> {
+  public async findBySaleNumber(
+    saleNumber: string,
+  ): Promise<SaleWithRelations | undefined> {
     const sale = await prisma.sale.findFirst({
       where: { saleNumber },
       include: {
         SaleItems: true,
         SalePaymentForm: true,
+        Client: true,
       },
     });
 
@@ -244,7 +248,10 @@ class SaleRepository implements ISaleRepository {
     return sale;
   }
 
-  public async list(customerId: string, status: string): Promise<Sale[]> {
+  public async list(
+    customerId: string,
+    status: string,
+  ): Promise<SaleWithRelations[]> {
     const sales = await prisma.sale.findMany({
       where: {
         customerId,
