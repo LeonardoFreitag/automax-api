@@ -50,7 +50,8 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           script: |
             cd ~/automax-api
-            npm install -g pnpm
+            corepack enable
+            corepack prepare pnpm@latest --activate
             pnpm install --frozen-lockfile
             npx prisma generate
             npx prisma migrate deploy
