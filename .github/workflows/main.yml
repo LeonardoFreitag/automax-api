@@ -24,6 +24,10 @@ jobs:
       # Instalar as dependências pnpm (no github)
       - name: Install Dependencies on GitHub
         run: pnpm install --frozen-lockfile
+
+      # Gerar o Prisma Client (no github)
+      - name: Generate Prisma Client on GitHub
+        run: npx prisma generate
         
       # Executar a build (no github)
       - name: Build App on GitHub

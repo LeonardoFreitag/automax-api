@@ -11,7 +11,7 @@ module.exports = {
           '@modules': './src/modules',
           '@config': './src/config',
           '@shared': './src/shared',
-          '@prisma/client': './src/generated/prisma/client',
+          '^@prisma/client$': './src/generated/prisma/client',
         },
       },
     ],
