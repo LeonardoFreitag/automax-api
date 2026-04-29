@@ -5,6 +5,20 @@ import AppError from '@shared/errors/AppError';
 import { prisma } from '@shared/infra/prisma/prisma';
 
 class PhasesRepository implements IPhasesRepository {
+  public async deleteDuplicates(
+    customerId: string,
+    phase: string,
+    excludeId: string,
+  ): Promise<void> {
+    await prisma.phases.deleteMany({
+      where: {
+        customerId,
+        phase,
+        id: { not: excludeId },
+      },
+    });
+  }
+
   public async findById(id: string): Promise<Phases | undefined> {
     const phases = await prisma.phases.findUnique({
       where: { id },
@@ -13,7 +27,11 @@ class PhasesRepository implements IPhasesRepository {
     return phases;
   }
 
-  public async findDuplicates(customerId: string, phase: string, excludeId: string): Promise<Phases[]> {
+  public async findDuplicates(
+    customerId: string,
+    phase: string,
+    excludeId: string,
+  ): Promise<Phases[]> {
     const duplicates = await prisma.phases.findMany({
       where: {
         customerId,

@@ -15,22 +15,29 @@ class CreatePhasesService {
     phase,
     orderPhase,
   }: Prisma.PhasesUncheckedCreateInput): Promise<Phases> {
+    if (id) {
+      await this.phasesRepository.deleteDuplicates(
+        String(customerId),
+        String(phase),
+        String(id),
+      );
+
+      const existsPhase = await this.phasesRepository.findById(String(id));
+
+      if (existsPhase) {
+        existsPhase.customerId = customerId;
+        existsPhase.phase = phase;
+        existsPhase.orderPhase = orderPhase;
+
+        return this.phasesRepository.save(existsPhase);
+      }
+    }
     const newPhase = await this.phasesRepository.create({
       ...(id && { id }),
       customerId,
       phase,
       orderPhase,
     });
-
-    const duplicates = await this.phasesRepository.findDuplicates(
-      String(customerId),
-      String(phase),
-      newPhase.id,
-    );
-
-    for (const duplicate of duplicates) {
-      await this.phasesRepository.delete(duplicate.id);
-    }
 
     return newPhase;
   }

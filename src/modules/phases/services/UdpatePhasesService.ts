@@ -10,27 +10,25 @@ class UpdatePhasesService {
   ) {}
 
   public async execute(data: Phases): Promise<Phases> {
-    const { id } = data;
+    const { id, customerId, phase } = data;
+
+    await this.phasesRepository.deleteDuplicates(
+      String(customerId),
+      String(phase),
+      id,
+    );
+
     const phaseUpdate = await this.phasesRepository.findById(id);
 
     if (!phaseUpdate) {
       const newPhase = await this.phasesRepository.create({
+        id,
         customerId: data.customerId,
         phase: data.phase,
         orderPhase: data.orderPhase,
       });
 
       return newPhase;
-    }
-
-    const duplicates = await this.phasesRepository.findDuplicates(
-      data.customerId,
-      data.phase,
-      id,
-    );
-
-    for (const duplicate of duplicates) {
-      await this.phasesRepository.delete(duplicate.id);
     }
 
     phaseUpdate.customerId = data.customerId;
