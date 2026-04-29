@@ -28,6 +28,8 @@ jobs:
       # Gerar o Prisma Client (no github)
       - name: Generate Prisma Client on GitHub
         run: npx prisma generate
+        env:
+          DATABASE_URL: "postgresql://dummy:dummy@localhost:5432/dummy"
         
       # Executar a build (no github)
       - name: Build App on GitHub
