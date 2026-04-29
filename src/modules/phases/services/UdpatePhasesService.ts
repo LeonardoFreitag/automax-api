@@ -23,6 +23,16 @@ class UpdatePhasesService {
       return newPhase;
     }
 
+    const duplicates = await this.phasesRepository.findDuplicates(
+      data.customerId,
+      data.phase,
+      id,
+    );
+
+    for (const duplicate of duplicates) {
+      await this.phasesRepository.delete(duplicate.id);
+    }
+
     phaseUpdate.customerId = data.customerId;
     phaseUpdate.phase = data.phase;
     phaseUpdate.orderPhase = data.orderPhase;

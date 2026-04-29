@@ -10,15 +10,27 @@ class CreatePhasesService {
   ) {}
 
   public async execute({
+    id,
     customerId,
     phase,
     orderPhase,
   }: Prisma.PhasesUncheckedCreateInput): Promise<Phases> {
     const newPhase = await this.phasesRepository.create({
+      ...(id && { id }),
       customerId,
       phase,
       orderPhase,
     });
+
+    const duplicates = await this.phasesRepository.findDuplicates(
+      String(customerId),
+      String(phase),
+      newPhase.id,
+    );
+
+    for (const duplicate of duplicates) {
+      await this.phasesRepository.delete(duplicate.id);
+    }
 
     return newPhase;
   }

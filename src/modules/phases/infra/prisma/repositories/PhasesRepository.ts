@@ -13,6 +13,18 @@ class PhasesRepository implements IPhasesRepository {
     return phases;
   }
 
+  public async findDuplicates(customerId: string, phase: string, excludeId: string): Promise<Phases[]> {
+    const duplicates = await prisma.phases.findMany({
+      where: {
+        customerId,
+        phase,
+        id: { not: excludeId },
+      },
+    });
+
+    return duplicates;
+  }
+
   public async list(customerId: string): Promise<Phases[]> {
     const phasess = await prisma.phases.findMany({
       where: {

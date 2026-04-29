@@ -1,7 +1,8 @@
 {
   "compilerOptions": {
+    "ignoreDeprecations": "6.0",
     "resolveJsonModule": true,
-    "target": "es5",
+    "target": "ES2020",
     "module": "commonjs",
     "outDir": "./dist",
     "rootDir": "./src",
@@ -15,10 +16,13 @@
       "@shared/*": ["shared/*"],
       "@models/*": ["models/*"],
       "@utils/*": ["utils/*"],
+      "@prisma/client": ["generated/prisma/client"]
     },
     "esModuleInterop": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "forceConsistentCasingInFileNames": true
-  }
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist", "babel.config.js", "prettier.config.js", "prisma.config.ts"]
 }

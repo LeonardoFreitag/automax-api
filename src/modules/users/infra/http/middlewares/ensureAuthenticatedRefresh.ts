@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import { verify } from 'jsonwebtoken';
 import authConfig from '@config/auth';
 import AppError from '@shared/errors/AppError';
-import UserRefreshTokensRepository from '../../typeorm/repositories/UserRefreshTokensRepository';
+import UserRefreshTokensRepository from '../../prisma/repositories/UserRefreshTokensRepository';
 
 interface IPayload {
   sub: string;

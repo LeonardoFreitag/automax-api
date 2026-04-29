@@ -12,6 +12,7 @@ phasesRouter.post(
   ensureAuthenticated,
   celebrate({
     [Segments.BODY]: {
+      id: Joi.string().uuid().optional(),
       customerId: Joi.string().required(),
       phase: Joi.string().required(),
       orderPhase: Joi.number().required(),

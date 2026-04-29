@@ -2,7 +2,7 @@ import path from 'path';
 import dotenv from 'dotenv';
 import { Pool } from 'pg';
 import { PrismaPg } from '@prisma/adapter-pg';
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from '../../../generated/prisma/client';
 
 // Carrega .env a partir da raiz do projeto independentemente do cwd (dist ou src)
 dotenv.config({ path: path.resolve(__dirname, '../../../../.env') });

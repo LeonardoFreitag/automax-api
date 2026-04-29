@@ -1,7 +1,6 @@
-import AppError from '@shared/errors/AppError';
 import IRegistroRepository from '@modules/registro/repositories/IRegistroRepository';
 import { injectable, inject } from 'tsyringe';
-import { Registro, Prisma } from '@prisma/client';
+import { Registro } from '@prisma/client';
 
 @injectable()
 class UpdateRegistroService {
@@ -15,13 +14,7 @@ class UpdateRegistroService {
     const foundRegistro = await this.registroRepository.findById(id);
 
     if (!foundRegistro) {
-      const newRegistro: Prisma.RegistroUncheckedCreateInput = {
-        validade: data.validade,
-      };
-
-      const registro = await this.registroRepository.create(newRegistro);
-
-      return registro;
+      return this.registroRepository.create(id, data.validade);
     }
 
     foundRegistro.validade = data.validade;

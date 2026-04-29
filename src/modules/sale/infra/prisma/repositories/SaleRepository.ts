@@ -3,9 +3,9 @@ import { Prisma, Sale, SaleItems, SalePaymentForm } from '@prisma/client';
 import AppError from '@shared/errors/AppError';
 import { prisma } from '@shared/infra/prisma/prisma';
 
-const saleWithRelations = Prisma.validator<Prisma.SaleDefaultArgs>()({
+const saleWithRelations = {
   include: { SaleItems: true, SalePaymentForm: true, Client: true },
-});
+} satisfies Prisma.SaleDefaultArgs;
 export type SaleWithRelations = Prisma.SaleGetPayload<typeof saleWithRelations>;
 
 class SaleRepository implements ISaleRepository {

@@ -7,11 +7,12 @@ import DeletePhasesService from '@modules/phases/services/DeletePhasesService';
 
 export default class PhasesControllers {
   public async create(request: Request, response: Response): Promise<Response> {
-    const { customerId, phase, orderPhase } = request.body;
+    const { id, customerId, phase, orderPhase } = request.body;
 
     const createPhasesService = container.resolve(CreatePhasesService);
 
     const newPhase = await createPhasesService.execute({
+      id,
       customerId,
       phase,
       orderPhase,
