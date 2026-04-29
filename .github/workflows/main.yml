@@ -15,14 +15,19 @@ jobs:
         uses: actions/setup-node@v2.4.1
         with:
           node-version: 22.x
-          
-      # Instalar as dependências Yarn (no github)
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: latest
+
+      # Instalar as dependências pnpm (no github)
       - name: Install Dependencies on GitHub
-        run: yarn
+        run: pnpm install --frozen-lockfile
         
       # Executar a build (no github)
       - name: Build App on GitHub
-        run: yarn build
+        run: pnpm build
         
       # Copiar a pasta dist para dentro da Digital Ocean
       - name: Copy dist to Digital Ocean
@@ -45,7 +50,8 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           script: |
             cd ~/automax-api
-            yarn
+            npm install -g pnpm
+            pnpm install --frozen-lockfile
             npx prisma generate
             npx prisma migrate deploy
             pm2 restart automax
