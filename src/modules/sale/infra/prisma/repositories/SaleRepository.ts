@@ -5,7 +5,7 @@ import { prisma } from '@shared/infra/prisma/prisma';
 
 const saleWithRelations = {
   include: { SaleItems: true, SalePaymentForm: true, Client: true },
-} satisfies Prisma.SaleDefaultArgs;
+} as Prisma.SaleDefaultArgs;
 export type SaleWithRelations = Prisma.SaleGetPayload<typeof saleWithRelations>;
 
 class SaleRepository implements ISaleRepository {
