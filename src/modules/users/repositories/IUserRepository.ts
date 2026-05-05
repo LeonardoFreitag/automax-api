@@ -23,4 +23,9 @@ export default interface IUserRepository {
   deleteRules(userId: string): Promise<void>;
   saveRule(rule: UserRules): Promise<UserRules>;
   deduplicateUserByEmail(id: string, email: string): Promise<void>;
+  deduplicateUserByCustomerIdAndName(
+    id: string,
+    customerId: string,
+    name: string,
+  ): Promise<void>;
 }

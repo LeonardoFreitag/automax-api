@@ -19,6 +19,22 @@ class UserRepository implements IUserRepository {
     });
   }
 
+  public async deduplicateUserByCustomerIdAndName(
+    id: string,
+    customerId: string,
+    name: string,
+  ): Promise<void> {
+    await prisma.user.deleteMany({
+      where: {
+        customerId,
+        name,
+        NOT: {
+          id,
+        },
+      },
+    });
+  }
+
   public async listByEmail(email: string): Promise<User[]> {
     const users = await prisma.user.findMany({
       where: { email },
@@ -149,6 +165,9 @@ class UserRepository implements IUserRepository {
         customerId,
       },
       include: { UserRules: true },
+      orderBy: {
+        name: 'asc',
+      },
     });
 
     return users;

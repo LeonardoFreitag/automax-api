@@ -23,6 +23,12 @@ class UpdateProfileService {
     user: IUpdateUserDTO,
     rules: RulesModel[],
   ): Promise<User> {
+    await this.userRepository.deduplicateUserByCustomerIdAndName(
+      user.id,
+      user.customerId,
+      user.name,
+    );
+
     // Prioridade 1: busca pelo id exato enviado pelo cliente
     let foundUser = await this.userRepository.findById(user.id);
 
