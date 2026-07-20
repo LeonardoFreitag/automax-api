@@ -1,0 +1,6 @@
+allowBuilds:
+  "@prisma/engines": true
+  prisma: true
+  esbuild: true
+  aws-sdk: false
+  core-js: false

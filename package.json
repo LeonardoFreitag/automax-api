@@ -74,16 +74,5 @@
     "swagger-ui-express": "^5.0.1",
     "tsyringe": "4.4.0",
     "uuidv4": "^6.2.8"
-  },
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "@prisma/engines",
-      "prisma",
-      "esbuild"
-    ],
-    "ignoredBuiltDependencies": [
-      "aws-sdk",
-      "core-js"
-    ]
   }
 }
