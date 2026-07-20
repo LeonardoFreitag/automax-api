@@ -15,6 +15,9 @@ import budgetRouter from '@modules/budget/infra/http/routes/budget.routes';
 import orderRouter from '@modules/order/infra/http/routes/order.routes';
 import orderItemsPhasesRouter from '@modules/order/infra/http/routes/orderItemsPhases.routes';
 import registroRouter from '@modules/registro/infra/http/routes/registro.routes';
+import stockProductRouter from '@modules/stockProduct/infra/http/routes/stockProduct.routes';
+import inventoryRouter from '@modules/inventory/infra/http/routes/inventory.routes';
+import stockWithdrawalRouter from '@modules/stockWithdrawal/infra/http/routes/stockWithdrawal.routes';
 
 const routes = Router();
 
@@ -51,5 +54,10 @@ routes.use('/order', orderRouter);
 routes.use('/orderItemsPhases', orderItemsPhasesRouter);
 
 routes.use('/registro', registroRouter);
+
+// estoque (controle de matéria-prima do chão de fábrica)
+routes.use('/stockProduct', stockProductRouter);
+routes.use('/inventory', inventoryRouter);
+routes.use('/stockWithdrawal', stockWithdrawalRouter);
 
 export default routes;

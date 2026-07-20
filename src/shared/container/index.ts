@@ -48,6 +48,15 @@ import RegistroRepository from '@modules/registro/infra/prisma/repositories/Regi
 import IBudgetRepository from '@modules/budget/repositories/IBudgetRepository';
 import BudgetRepository from '@modules/budget/infra/prisma/respositories/BudgetRepository';
 
+import IStockProductRepository from '@modules/stockProduct/repositories/IStockProductRepository';
+import StockProductRepository from '@modules/stockProduct/infra/prisma/repositories/StockProductRepository';
+
+import IInventoryRepository from '@modules/inventory/repositories/IInventoryRepository';
+import InventoryRepository from '@modules/inventory/infra/prisma/repositories/InventoryRepository';
+
+import IStockWithdrawalRepository from '@modules/stockWithdrawal/repositories/IStockWithdrawalRepository';
+import StockWithdrawalRepository from '@modules/stockWithdrawal/infra/prisma/repositories/StockWithdrawalRepository';
+
 container.registerSingleton<IUserRepository>('UserRepository', UserRepository);
 
 container.registerSingleton<IUserTokensRepository>(
@@ -115,4 +124,19 @@ container.registerSingleton<IRegistroRepository>(
 container.registerSingleton<IBudgetRepository>(
   'BudgetRepository',
   BudgetRepository,
+);
+
+container.registerSingleton<IStockProductRepository>(
+  'StockProductRepository',
+  StockProductRepository,
+);
+
+container.registerSingleton<IInventoryRepository>(
+  'InventoryRepository',
+  InventoryRepository,
+);
+
+container.registerSingleton<IStockWithdrawalRepository>(
+  'StockWithdrawalRepository',
+  StockWithdrawalRepository,
 );

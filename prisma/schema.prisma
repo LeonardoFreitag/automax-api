@@ -479,3 +479,100 @@ model Registro {
 
   @@map("registro")
 }
+
+// ---------------------------------------------------------------------------
+// Controle de estoque (matéria-prima do chão de fábrica)
+// ---------------------------------------------------------------------------
+
+// Catálogo de matéria-prima sincronizado a partir do ERP AutoMax (Firebird).
+// "reference" é o campo em que o ERP grava o código de barras (ou repete
+// "code" quando o item não tem código de barras) — é por esse campo que o
+// QR code do produto é lido no app.
+model StockProduct {
+  id          String   @id @default(uuid())
+  customerId  String
+  code        String
+  reference   String
+  description String
+  unity       String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("stockProduct")
+}
+
+// Cabeçalho de um inventário de matéria-prima feito no almoxarifado.
+model Inventory {
+  id         String   @id @default(uuid())
+  customerId String
+  userId     String
+  userName   String
+  status     String   @default("em_andamento") // "em_andamento", "finalizado"
+  downloaded Boolean  @default(false) // true depois que o ERP processa e grava no Firebird
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  InventoryItems InventoryItems[]
+
+  @@map("inventory")
+}
+
+// Itens contados em um inventário. Campos do produto ficam desnormalizados
+// (mesmo padrão de SaleItems/BudgetItems), preservando o que foi lido no
+// momento da contagem mesmo que o cadastro em StockProduct mude depois.
+model InventoryItems {
+  id             String   @id @default(uuid())
+  stockProductId String
+  code           String
+  reference      String
+  description    String
+  unity          String
+  quantity       Decimal
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  inventory   Inventory @relation(fields: [inventoryId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  inventoryId String
+
+  @@map("inventoryItems")
+}
+
+// Cabeçalho de uma baixa de estoque (retirada de matéria-prima para produção).
+model StockWithdrawal {
+  id         String   @id @default(uuid())
+  customerId String
+  userId     String
+  userName   String
+  notes      String?
+  status     String   @default("em_andamento") // "em_andamento", "finalizado"
+  downloaded Boolean  @default(false) // true depois que o ERP processa e grava no Firebird
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  StockWithdrawalItems StockWithdrawalItems[]
+
+  @@map("stockWithdrawal")
+}
+
+// Itens retirados do estoque em uma baixa. Mesmo padrão de desnormalização
+// de InventoryItems.
+model StockWithdrawalItems {
+  id             String   @id @default(uuid())
+  stockProductId String
+  code           String
+  reference      String
+  description    String
+  unity          String
+  quantity       Decimal
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  stockWithdrawal   StockWithdrawal @relation(fields: [stockWithdrawalId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  stockWithdrawalId String
+
+  @@map("stockWithdrawalItems")
+}

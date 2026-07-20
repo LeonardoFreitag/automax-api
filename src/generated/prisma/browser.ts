@@ -137,3 +137,28 @@ export type Phases = Prisma.PhasesModel
  * 
  */
 export type Registro = Prisma.RegistroModel
+/**
+ * Model StockProduct
+ * 
+ */
+export type StockProduct = Prisma.StockProductModel
+/**
+ * Model Inventory
+ * 
+ */
+export type Inventory = Prisma.InventoryModel
+/**
+ * Model InventoryItems
+ * 
+ */
+export type InventoryItems = Prisma.InventoryItemsModel
+/**
+ * Model StockWithdrawal
+ * 
+ */
+export type StockWithdrawal = Prisma.StockWithdrawalModel
+/**
+ * Model StockWithdrawalItems
+ * 
+ */
+export type StockWithdrawalItems = Prisma.StockWithdrawalItemsModel
