@@ -4,6 +4,12 @@
 > ERP AutoMax. Ele descreve tudo que precisa ser implementado no ERP para
 > integrar com o novo controle de estoque de matéria-prima do app mobile
 > (AutoMaxPro).
+>
+> **Escopo:** só estoque de matéria-prima. A sincronização de cadastros do lado
+> de vendas — cliente, produto de venda, tabela de preço e vendedor — está em
+> [`PROMPT_ERP_DELPHI_CADASTROS.md`](PROMPT_ERP_DELPHI_CADASTROS.md), que também
+> lista as mudanças de contrato de agosto/2026 (rotas de `/user` passaram a
+> exigir token, desativação de cadastros, idempotência de pedido/orçamento).
 
 ## Contexto
 
@@ -89,11 +95,18 @@ SELECT
   CODIGO,
   REFERENCIA,
   DESCRICAO,
-  MEDIDA
+  MEDIDA,
+  ATIVO
 FROM ESTOQUE
-WHERE ATIVO = 1
+WHERE 1 = 1
   -- AND <critério que identifica matéria-prima> -- TODO: confirmar
 ```
+
+> **Não filtre por `ATIVO = 1` neste SELECT.** Item que saiu de linha precisa
+> ser **desativado** na API (ver "Desativar item que saiu de linha", abaixo), e
+> não simplesmente deixado de fora da carga — se você parar de enviá-lo, ele
+> continua ativo na API para sempre, aparecendo na busca e na leitura de QR do
+> almoxarife.
 
 ### Mapeamento de campos (ESTOQUE → API)
 
@@ -103,6 +116,7 @@ WHERE ATIVO = 1
 | `REFERENCIA` (VARCHAR 20) | `reference` | **É o campo usado para gerar o QR code impresso na etiqueta do item.** Se o item não tiver código de barras, repita o valor de `CODIGO` aqui (mesma regra que já é seguida hoje). |
 | `DESCRICAO` (VARCHAR 60) | `description` | |
 | `MEDIDA` (VARCHAR 30) | `unity` | |
+| `ATIVO` | — (não vai no POST) | A situação **não** é enviada no `POST`/`PATCH` de propósito. Use a rota dedicada `PATCH /stockProduct/status` (abaixo). Assim a carga diária não reativa sozinha um item que a retaguarda desativou. |
 
 ### Requisição
 
@@ -126,6 +140,51 @@ Content-Type: application/json
 Resposta: o objeto criado/atualizado, com um `id` (uuid) — não precisa
 guardar esse `id` no Firebird, a API já resolve o item pelo `code` nas
 próximas chamadas.
+
+### Desativar item que saiu de linha
+
+Matéria-prima **não deve ser apagada** da API: inventários e baixas já lançados
+guardam `code`, `reference` e `description` copiados, mas apagar o cadastro tira
+a rastreabilidade e nada impede a próxima carga de recriá-lo. Em vez disso,
+desative:
+
+```
+PATCH https://automax.htcode.net/stockProduct/status
+Authorization: Bearer <token>
+Content-Type: application/json
+
+{
+  "id": "<id (uuid) do item na API>",
+  "customerId": "<customerId do usuário logado>",
+  "isActive": false
+}
+```
+
+Este é o **único** caminho para mudar a situação — `isActive` é ignorado no
+corpo do `POST` e do `PATCH /stockProduct`. Para reativar, mande a mesma
+requisição com `"isActive": true`.
+
+O `id` (uuid) vem na resposta do `POST /stockProduct` ou de
+`GET /stockProduct?customerId=...&includeInactive=true`. Se o ERP não guarda o
+uuid, o caminho é listar com `includeInactive=true`, casar pelo `code` e usar o
+`id` devolvido.
+
+**Rotina sugerida:** na mesma varredura que envia o catálogo, para cada linha
+com `ATIVO = 0` (ou o equivalente no seu cadastro) mande o `PATCH
+/stockProduct/status` com `isActive: false`; para as com `ATIVO = 1` que estavam
+desativadas, mande `true`.
+
+**O que muda no app depois de desativar:**
+
+- o item some de `GET /stockProduct` e de `GET /stockProduct/search`;
+- a leitura do QR (`GET /stockProduct/reference`) devolve **409** com a
+  mensagem `"<code> - <descrição> foi inativado pela retaguarda e não pode ser
+  movimentado."` — de propósito, e não 404: um "não encontrado" faria o
+  almoxarife procurar um problema de etiqueta que não existe.
+
+Para conferência da retaguarda, `GET /stockProduct?customerId=...` e
+`GET /stockProduct/search?...` aceitam `includeInactive=true`, que traz o
+catálogo inteiro, ativos e inativos. O app nunca envia esse parâmetro.
 
 ## Parte 2 — Baixar inventários lançados no app e atualizar o estoque
 
@@ -283,6 +342,8 @@ Base URL: `https://automax.htcode.net`. Todas exigem
 | POST | `/users/sessions` | Login (obter token). |
 | POST | `/users/sessions/refreshToken` | Renovar token expirado. |
 | POST | `/stockProduct` | Enviar/atualizar um item de matéria-prima. |
+| PATCH | `/stockProduct/status` | Ativar/desativar um item (`id`, `customerId`, `isActive`). |
+| GET | `/stockProduct?customerId=&includeInactive=true` | Listar o catálogo inteiro (para casar `code` → `id`). |
 | GET | `/inventory?customerId=&downloaded=false` | Listar inventários pendentes. |
 | GET | `/inventory/item?inventoryId=` | Itens contados de um inventário. |
 | PATCH | `/inventory/downloaded?id=&downloaded=true` | Marcar inventário como processado. |

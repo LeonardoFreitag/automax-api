@@ -144,9 +144,10 @@ models — eles desaparecem assim que `prisma generate` rodar.
 | --- | --- | --- |
 | POST | `/stockProduct` | Cria/sincroniza um item. Se já existir um `StockProduct` com o mesmo `code` para o `customerId`, ele é apagado e recriado (mesmo padrão de "upsert por substituição" já usado no cadastro de produtos de venda). |
 | PATCH | `/stockProduct` | Atualiza por `id`; se o `id` não existir ainda, cai para criar. |
-| GET | `/stockProduct?customerId=` | Lista todo o catálogo do cliente. |
-| GET | `/stockProduct/search?customerId=&search=` | Busca por código, referência ou descrição (`contains`, até 50 resultados) — usada pela tela de busca do app. |
-| GET | `/stockProduct/reference?customerId=&reference=` | Busca exata pelo campo `reference` — usada pela leitura de QR code do app. |
+| PATCH | `/stockProduct/status` | Ativa/desativa o item. Body: `id`, `customerId`, `isActive`. **Único caminho** para mudar a situação — ver "Situação do item (`isActive`)" abaixo. |
+| GET | `/stockProduct?customerId=&includeInactive=` | Lista o catálogo do cliente. Só ativos por padrão; `includeInactive=true` traz também os inativos. |
+| GET | `/stockProduct/search?customerId=&search=&includeInactive=` | Busca por código, referência ou descrição (`contains`, até 50 resultados) — usada pela tela de busca do app. Só ativos por padrão. |
+| GET | `/stockProduct/reference?customerId=&reference=` | Busca exata pelo campo `reference` — usada pela leitura de QR code do app. **Não filtra inativo na consulta**: item inativado devolve `409` com o motivo, em vez de `404`. |
 | DELETE | `/stockProduct?id=` | Remove um item. |
 
 Body de criação/atualização:
@@ -159,6 +160,28 @@ Body de criação/atualização:
   "unity": "string"
 }
 ```
+
+#### Situação do item (`isActive`)
+
+Matéria-prima que sai de linha é **desativada, não apagada**: inventários e
+baixas já lançados guardam `code`/`reference`/`description` desnormalizados, mas
+apagar o cadastro tira a rastreabilidade e a próxima carga do ERP recria o item.
+
+`isActive` fica **fora** do corpo de `POST` e `PATCH /stockProduct` de propósito
+— se estivesse lá, a carga diária do ERP reativaria sozinha um item que a
+retaguarda tinha desativado. `PATCH /stockProduct/status` é o único caminho:
+
+```json
+{ "id": "uuid", "customerId": "uuid", "isActive": false }
+```
+
+Efeito no app: o item some da listagem e da busca, e a leitura do QR passa a
+devolver `409` com `"<code> - <descrição> foi inativado pela retaguarda e não
+pode ser movimentado."`. O `409` (em vez de `404`) é deliberado — um "não
+encontrado" mandaria o almoxarife procurar um problema de etiqueta inexistente.
+
+`includeInactive=true` é o escape para conferência da retaguarda e para o ERP
+casar `code` → `id`. O app nunca envia esse parâmetro.
 
 ### `inventory` — inventário de almoxarifado
 
