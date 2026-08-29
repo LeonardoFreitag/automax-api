@@ -117,6 +117,7 @@ export const UserScalarFieldEnum = {
   email: 'email',
   password: 'password',
   regionId: 'regionId',
+  isActivated: 'isActivated',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   customerId: 'customerId'
@@ -178,6 +179,11 @@ export const ClientScalarFieldEnum = {
   financialPendency: 'financialPendency',
   isNew: 'isNew',
   isActivated: 'isActivated',
+  creditLimit: 'creditLimit',
+  discountRate: 'discountRate',
+  initialDiscountLimit: 'initialDiscountLimit',
+  blocked: 'blocked',
+  blockReason: 'blockReason',
   sellerId: 'sellerId',
   phone: 'phone',
   cellphone: 'cellphone',
@@ -283,6 +289,7 @@ export const ProductScalarFieldEnum = {
   photoFileName: 'photoFileName',
   photoUrl: 'photoUrl',
   photoSize: 'photoSize',
+  isActive: 'isActive',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   groupId: 'groupId'
@@ -539,7 +546,8 @@ export const StockProductScalarFieldEnum = {
   description: 'description',
   unity: 'unity',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  isActive: 'isActive'
 } as const
 
 export type StockProductScalarFieldEnum = (typeof StockProductScalarFieldEnum)[keyof typeof StockProductScalarFieldEnum]

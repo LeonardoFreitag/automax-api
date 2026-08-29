@@ -31,6 +31,12 @@ model User {
   email             String
   password          String
   regionId          String?
+  /// Desativação do vendedor. Bloqueia login, invalida o token em uso, corta a
+  /// renovação e recusa novos lançamentos — sem apagar cadastro nem histórico.
+  /// Fica fora do corpo de POST /user e PATCH /user de propósito, para que a
+  /// carga do ERP não ressuscite vendedor desativado; PATCH /user/status é o
+  /// único caminho.
+  isActivated       Boolean             @default(true)
   createdAt         DateTime            @default(now())
   updatedAt         DateTime            @updatedAt
   UserRules         UserRules[]
@@ -97,9 +103,23 @@ model Client {
   city              String
   stateCode         String
   state             String
+  /// Calculada: vem do contas a receber e muda sozinha quando o cliente paga.
+  /// Não confundir com `blocked`, que é decisão manual da retaguarda.
   financialPendency Boolean
   isNew             Boolean
   isActivated       Boolean             @default(true)
+
+  /// Limite de crédito (CLIENTES.CREDITO no ERP).
+  creditLimit          Decimal @default(0)
+  /// Teto de desconto do cliente (CLIENTES.TAXA_DESCONTO).
+  discountRate         Decimal @default(0)
+  /// Faixa a partir da qual o desconto vale (CLIENTES.LIMITE_INICIAL_DESCONTO).
+  initialDiscountLimit Int     @default(0)
+  /// Bloqueio manual da retaguarda (CLIENTES.BLOQUEADO).
+  blocked              Boolean @default(false)
+  /// Motivo do bloqueio manual (CLIENTES.MOTIVO_BLOQUEIO).
+  blockReason          String  @default("")
+
   sellerId          String
   phone             String?
   cellphone         String?
@@ -212,6 +232,12 @@ model Product {
   photoUrl      String?
   photoSize     String?
 
+  /// Situação do produto no cadastro do ERP. Produto inativo continua no banco
+  /// — o histórico de SaleItems/BudgetItems referencia productId sem FK e os
+  /// campos estão desnormalizados lá — mas some das telas de escolha de
+  /// produto e é recusado em POST /sale e POST /budget.
+  isActive Boolean @default(true)
+
   createdAt    DateTime       @default(now())
   updatedAt    DateTime       @updatedAt
   ProductPrice ProductPrice[]
@@ -219,6 +245,7 @@ model Product {
   group   Group  @relation(fields: [groupId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   groupId String
 
+  @@index([customerId, isActive])
   @@map("product")
 }
 
@@ -345,7 +372,10 @@ model Budget {
   id                String              @id @default(uuid())
   customerId        String
   sellerId          String
-  Seller            User?               @relation(fields: [sellerId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  /// RESTRICT, não CASCADE: com CASCADE, apagar um vendedor levava junto todos
+  /// os orçamentos dele, com itens e formas de pagamento. Como vendedor agora
+  /// se desativa em vez de apagar, o banco volta a proteger o histórico.
+  Seller            User?               @relation(fields: [sellerId], references: [id], onDelete: Restrict, onUpdate: Cascade)
   budgetNumber      String
   budgetDate        DateTime
   budgetExpiration  DateTime
@@ -498,6 +528,12 @@ model StockProduct {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
+  /// Mesma semântica do isActive de Product. InventoryItems e
+  /// StockWithdrawalItems guardam code/reference/description desnormalizados,
+  /// então inventário e baixa antigos continuam legíveis.
+  isActive Boolean @default(true)
+
+  @@index([customerId, isActive])
   @@map("stockProduct")
 }
 

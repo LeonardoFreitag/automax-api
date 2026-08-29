@@ -7,7 +7,11 @@ import {
 
 export default interface IClientRepository {
   findById(id: string): Promise<Client | undefined>;
-  findByCnpj(cnpj: string): Promise<Client | undefined>;
+  /**
+   * Busca por documento **dentro do customer**. Devolve undefined quando o
+   * documento vem vazio — ver comentário na implementação.
+   */
+  findByCnpj(customerId: string, cnpj: string): Promise<Client | undefined>;
   create(data: Prisma.ClientUncheckedCreateInput): Promise<Client>;
   save(client: Client): Promise<Client>;
   list(customerId: string): Promise<Client[]>;

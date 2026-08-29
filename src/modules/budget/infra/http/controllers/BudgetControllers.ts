@@ -22,6 +22,7 @@ import DeleteBudgetPaymentFormService from '@modules/budget/services/DeleteBudge
 export default class BudgetControllers {
   public async create(request: Request, response: Response): Promise<Response> {
     const {
+      id,
       customerId,
       sellerId,
       budgetNumber,
@@ -43,7 +44,8 @@ export default class BudgetControllers {
 
     const createBudgetService = container.resolve(CreateBudgetService);
 
-    const newBudget = await createBudgetService.execute({
+    const { budget: newBudget, replayed } = await createBudgetService.execute({
+      ...(id ? { id } : {}),
       customerId,
       sellerId,
       budgetNumber,
@@ -62,6 +64,15 @@ export default class BudgetControllers {
       BudgetItems,
       BudgetPaymentForm,
     });
+
+    response.setHeader('X-Idempotent-Replay', String(replayed));
+
+    // Numa repetição o PDF já foi gerado e enviado ao storage na primeira
+    // tentativa; regerar custaria um upload à toa e trocaria a URL de um
+    // orçamento que talvez já tenha sido compartilhado com o cliente.
+    if (replayed) {
+      return response.json(newBudget);
+    }
 
     const createBudgetPDF = container.resolve(CreateBudgetPDFService);
 

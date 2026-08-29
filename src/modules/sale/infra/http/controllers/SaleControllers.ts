@@ -22,6 +22,7 @@ import UploadSignatureService from '@modules/sale/services/UploadSignatureServic
 export default class SaleControllers {
   public async create(request: Request, response: Response): Promise<Response> {
     const {
+      id,
       customerId,
       sellerId,
       saleNumber,
@@ -43,7 +44,8 @@ export default class SaleControllers {
 
     const createSale = container.resolve(CreateSaleService);
 
-    const sale = await createSale.execute({
+    const { sale, replayed } = await createSale.execute({
+      ...(id ? { id } : {}),
       customerId,
       sellerId,
       saleNumber,
@@ -62,6 +64,11 @@ export default class SaleControllers {
       SaleItems,
       SalePaymentForm,
     });
+
+    // O corpo da resposta é o mesmo em qualquer caso — o app não precisa saber.
+    // O header existe para diagnóstico: permite ver nos logs quantas
+    // retentativas estão acontecendo em campo.
+    response.setHeader('X-Idempotent-Replay', String(replayed));
 
     return response.json(sale);
   }

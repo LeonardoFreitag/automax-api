@@ -9,11 +9,33 @@ import AppError from '@shared/errors/AppError';
 import { prisma } from '@shared/infra/prisma/prisma';
 
 class ClientRepository implements IClientRepository {
+  /**
+   * Apaga as duplicatas de um `code`, preservando o cadastro indicado.
+   *
+   * A versão anterior confiava cegamente no `clientId`: com ele vazio, o
+   * `id: { not: '' }` casava com **todos** os cadastros daquele code — inclusive
+   * o que deveria ser preservado. A rota já exige o campo, mas a operação é
+   * destrutiva demais para depender só da validação de entrada.
+   *
+   * Agora o cadastro a preservar precisa existir e pertencer ao mesmo
+   * `(customerId, code)`. Se não pertencer, nada é apagado.
+   */
   public async deduplicateClient(
     customerId: string,
     clientId: string,
     code: string,
   ): Promise<string> {
+    const clientToKeep = await prisma.client.findFirst({
+      where: { id: clientId, customerId, code },
+    });
+
+    if (!clientToKeep) {
+      throw new AppError(
+        `O cliente informado não pertence ao código ${code} deste customer. Nenhum cadastro foi removido.`,
+        409,
+      );
+    }
+
     const result = await prisma.client.deleteMany({
       where: {
         customerId,
@@ -238,9 +260,29 @@ class ClientRepository implements IClientRepository {
     return client;
   }
 
-  public async findByCnpj(cnpj: string): Promise<Client | undefined> {
+  /**
+   * Localiza cliente pelo documento, **escopado pelo customer**.
+   *
+   * Duas correções em relação à versão anterior, que fazia
+   * `findFirst({ where: { cnpj } })`:
+   *
+   * - sem `customerId`, duas lojas com o mesmo CNPJ na base se atropelavam —
+   *   era a única consulta de cliente da aplicação sem escopo;
+   * - com `cnpj` vazio (o Joi da rota aplica `.empty('').default('')`), a
+   *   consulta casava com o **primeiro cliente sem documento da base inteira**,
+   *   de qualquer loja. Documento em branco não identifica ninguém, então aqui
+   *   ele simplesmente não busca.
+   */
+  public async findByCnpj(
+    customerId: string,
+    cnpj: string,
+  ): Promise<Client | undefined> {
+    if (!cnpj || cnpj.trim() === '') {
+      return undefined;
+    }
+
     const client = await prisma.client.findFirst({
-      where: { cnpj },
+      where: { customerId, cnpj },
     });
 
     return client;

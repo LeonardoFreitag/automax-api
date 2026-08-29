@@ -52,6 +52,13 @@ class AuthenticateUserServide {
       throw new AppError('Incorrect email/password combination.', 401);
     }
 
+    // 403, e não 401, de propósito: o app precisa distinguir "senha errada" de
+    // "acesso revogado" para dar a mensagem certa e não oferecer o
+    // "lembrar credenciais" a quem foi desligado.
+    if (user.isActivated === false) {
+      throw new AppError('Acesso desativado. Procure a retaguarda.', 403);
+    }
+
     const {
       secret,
       expiresIn,

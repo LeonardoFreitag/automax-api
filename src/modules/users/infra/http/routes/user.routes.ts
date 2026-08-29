@@ -9,6 +9,7 @@ const usersController = new UsersController();
 
 usersRouter.post(
   '/',
+  ensureAuthenticated,
   celebrate({
     [Segments.BODY]: {
       id: Joi.string().uuid().allow(null),
@@ -40,6 +41,7 @@ usersRouter.post(
 
 usersRouter.patch(
   '/',
+  ensureAuthenticated,
   celebrate({
     [Segments.BODY]: {
       id: Joi.string().required(),
@@ -57,8 +59,27 @@ usersRouter.patch(
   usersController.update,
 );
 
+/**
+ * Ativa/desativa o vendedor. Mesmo contrato de PATCH /client/status.
+ *
+ * Desativar bloqueia o login, invalida o token em uso e recusa novos pedidos,
+ * sem apagar cadastro nem histórico.
+ */
+usersRouter.patch(
+  '/status',
+  ensureAuthenticated,
+  celebrate({
+    [Segments.BODY]: {
+      id: Joi.string().uuid().required(),
+      isActivated: Joi.boolean().required(),
+    },
+  }),
+  usersController.changeStatus,
+);
+
 usersRouter.patch(
   '/updaterUserAdmin',
+  ensureAuthenticated,
   celebrate({
     [Segments.QUERY]: {
       customerId: Joi.string().required(),
@@ -71,6 +92,7 @@ usersRouter.patch(
 
 usersRouter.get(
   '/',
+  ensureAuthenticated,
   celebrate({
     [Segments.QUERY]: {
       customerId: Joi.string().uuid().required(),
@@ -81,6 +103,7 @@ usersRouter.get(
 
 usersRouter.get(
   '/rule',
+  ensureAuthenticated,
   celebrate({
     [Segments.QUERY]: {
       customerId: Joi.string().uuid().required(),
@@ -92,6 +115,7 @@ usersRouter.get(
 
 usersRouter.delete(
   '/',
+  ensureAuthenticated,
   celebrate({
     [Segments.QUERY]: {
       id: Joi.string().uuid().required(),
@@ -102,6 +126,7 @@ usersRouter.delete(
 
 usersRouter.delete(
   '/rule',
+  ensureAuthenticated,
   celebrate({
     [Segments.QUERY]: {
       id: Joi.string().uuid().required(),
@@ -112,6 +137,7 @@ usersRouter.delete(
 
 usersRouter.get(
   '/email',
+  ensureAuthenticated,
   celebrate({
     [Segments.QUERY]: {
       email: Joi.string().email().required(),
@@ -122,6 +148,7 @@ usersRouter.get(
 
 usersRouter.post(
   '/deduplicate',
+  ensureAuthenticated,
   celebrate({
     [Segments.QUERY]: {
       id: Joi.string().uuid().required(),

@@ -42,12 +42,36 @@ stockProductRouter.patch(
   stockProductController.update,
 );
 
+/**
+ * Ativa/desativa a matéria-prima. Mesmo contrato de PATCH /product/status.
+ *
+ * `isActive` fica fora do corpo do POST e do PATCH de propósito: assim a carga
+ * do ERP não ressuscita item inativado. Esta rota é o único caminho.
+ */
+stockProductRouter.patch(
+  '/status',
+  ensureAuthenticated,
+  celebrate({
+    [Segments.BODY]: {
+      id: Joi.string().uuid().required(),
+      customerId: Joi.string().uuid().required(),
+      isActive: Joi.boolean().required(),
+    },
+  }),
+  stockProductController.changeStatus,
+);
+
+// Listagem e busca devolvem apenas ativos; includeInactive=true é o escape para
+// consumidores de conferência. A leitura de QR (/reference) não filtra na
+// consulta — devolve 409 explicando que o item foi inativado, em vez de um 404
+// que parece problema de etiqueta.
 stockProductRouter.get(
   '/',
   ensureAuthenticated,
   celebrate({
     [Segments.QUERY]: {
       customerId: Joi.string().uuid().required(),
+      includeInactive: Joi.boolean(),
     },
   }),
   stockProductController.list,
@@ -61,6 +85,7 @@ stockProductRouter.get(
     [Segments.QUERY]: {
       customerId: Joi.string().uuid().required(),
       search: Joi.string().allow('').required(),
+      includeInactive: Joi.boolean(),
     },
   }),
   stockProductController.search,

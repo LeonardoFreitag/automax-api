@@ -7,6 +7,15 @@ import ListStockProductService from '@modules/stockProduct/services/ListStockPro
 import SearchStockProductService from '@modules/stockProduct/services/SearchStockProductService';
 import FindStockProductByReferenceService from '@modules/stockProduct/services/FindStockProductByReferenceService';
 import DeleteStockProductService from '@modules/stockProduct/services/DeleteStockProductService';
+import ChangeStatusStockProductService from '@modules/stockProduct/services/ChangeStatusStockProductService';
+
+/**
+ * `?includeInactive=true` chega como string na query. Sem esta conversão,
+ * `includeInactive=false` seria uma string não-vazia e portanto verdadeira.
+ */
+function resolveIncludeInactive(value: unknown): boolean {
+  return value === 'true' || value === true;
+}
 
 export default class StockProductController {
   // usado pelo ERP AutoMax para enviar/atualizar o cadastro de matéria-prima
@@ -59,27 +68,49 @@ export default class StockProductController {
     return response.json(stockProduct);
   }
 
-  public async list(request: Request, response: Response): Promise<Response> {
-    const { customerId } = request.query;
+  // usado pelo ERP AutoMax ao inativar/reativar a matéria-prima no estoque
+  public async changeStatus(
+    request: Request,
+    response: Response,
+  ): Promise<Response> {
+    const { id, customerId, isActive } = request.body;
 
-    // console.log('customerId', customerId);
+    const changeStatusStockProduct = container.resolve(
+      ChangeStatusStockProductService,
+    );
+
+    const stockProduct = await changeStatusStockProduct.execute(
+      String(id),
+      String(customerId),
+      isActive,
+    );
+
+    return response.json(stockProduct);
+  }
+
+  public async list(request: Request, response: Response): Promise<Response> {
+    const { customerId, includeInactive } = request.query;
 
     const listStockProducts = container.resolve(ListStockProductService);
 
-    const stockProduct = await listStockProducts.execute(String(customerId));
+    const stockProduct = await listStockProducts.execute(
+      String(customerId),
+      resolveIncludeInactive(includeInactive),
+    );
 
     return response.json(stockProduct);
   }
 
   // busca usada pela tela de seleção do app (código, referência ou descrição)
   public async search(request: Request, response: Response): Promise<Response> {
-    const { customerId, search } = request.query;
+    const { customerId, search, includeInactive } = request.query;
 
     const searchStockProducts = container.resolve(SearchStockProductService);
 
     const stockProduct = await searchStockProducts.execute(
       String(customerId),
       String(search),
+      resolveIncludeInactive(includeInactive),
     );
 
     return response.json(stockProduct);

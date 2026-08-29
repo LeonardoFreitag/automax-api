@@ -10,6 +10,7 @@ import DeleteUserService from '@modules/users/services/DeleteUserService';
 import DeleteUserRuleService from '@modules/users/services/DeleteUserRuleService';
 import ListUsersByEmailService from '@modules/users/services/ListUsersByEmailService';
 import DeduplicateUserService from '@modules/users/services/DeduplicateUserService';
+import ChangeStatusUserService from '@modules/users/services/ChangeStatusUserService';
 
 export default class UserController {
   public async create(request: Request, response: Response): Promise<Response> {
@@ -88,6 +89,24 @@ export default class UserController {
     );
 
     return response.json(user);
+  }
+
+  public async changeStatus(
+    request: Request,
+    response: Response,
+  ): Promise<Response> {
+    const { id, isActivated } = request.body;
+
+    const changeStatusUser = container.resolve(ChangeStatusUserService);
+
+    const user = await changeStatusUser.execute(String(id), isActivated);
+
+    // O registro do Prisma traz o hash da senha. Endpoint novo não deve
+    // enshrinar esse vazamento no contrato com o ERP.
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { password, ...safeUser } = user;
+
+    return response.json(safeUser);
   }
 
   public async updateEmailUserAdmin(

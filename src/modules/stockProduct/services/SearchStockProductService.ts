@@ -13,10 +13,12 @@ class SearchStockProductService {
   public async execute(
     customerId: string,
     search: string,
+    includeInactive = false,
   ): Promise<StockProduct[]> {
     const stockProducts = await this.stockProductRepository.search(
       customerId,
       search,
+      includeInactive,
     );
 
     return stockProducts;

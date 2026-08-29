@@ -9,9 +9,13 @@ class ListStockProductService {
     private stockProductRepository: IStockProductRepository,
   ) {}
 
-  public async execute(customerId: string): Promise<StockProduct[]> {
+  public async execute(
+    customerId: string,
+    includeInactive = false,
+  ): Promise<StockProduct[]> {
     const allStockProductByCustomer = await this.stockProductRepository.list(
       customerId,
+      includeInactive,
     );
 
     return allStockProductByCustomer;

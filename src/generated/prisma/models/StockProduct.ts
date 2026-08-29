@@ -33,6 +33,7 @@ export type StockProductMinAggregateOutputType = {
   unity: string | null
   createdAt: Date | null
   updatedAt: Date | null
+  isActive: boolean | null
 }
 
 export type StockProductMaxAggregateOutputType = {
@@ -44,6 +45,7 @@ export type StockProductMaxAggregateOutputType = {
   unity: string | null
   createdAt: Date | null
   updatedAt: Date | null
+  isActive: boolean | null
 }
 
 export type StockProductCountAggregateOutputType = {
@@ -55,6 +57,7 @@ export type StockProductCountAggregateOutputType = {
   unity: number
   createdAt: number
   updatedAt: number
+  isActive: number
   _all: number
 }
 
@@ -68,6 +71,7 @@ export type StockProductMinAggregateInputType = {
   unity?: true
   createdAt?: true
   updatedAt?: true
+  isActive?: true
 }
 
 export type StockProductMaxAggregateInputType = {
@@ -79,6 +83,7 @@ export type StockProductMaxAggregateInputType = {
   unity?: true
   createdAt?: true
   updatedAt?: true
+  isActive?: true
 }
 
 export type StockProductCountAggregateInputType = {
@@ -90,6 +95,7 @@ export type StockProductCountAggregateInputType = {
   unity?: true
   createdAt?: true
   updatedAt?: true
+  isActive?: true
   _all?: true
 }
 
@@ -174,6 +180,7 @@ export type StockProductGroupByOutputType = {
   unity: string
   createdAt: Date
   updatedAt: Date
+  isActive: boolean
   _count: StockProductCountAggregateOutputType | null
   _min: StockProductMinAggregateOutputType | null
   _max: StockProductMaxAggregateOutputType | null
@@ -206,6 +213,7 @@ export type StockProductWhereInput = {
   unity?: Prisma.StringFilter<"StockProduct"> | string
   createdAt?: Prisma.DateTimeFilter<"StockProduct"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"StockProduct"> | Date | string
+  isActive?: Prisma.BoolFilter<"StockProduct"> | boolean
 }
 
 export type StockProductOrderByWithRelationInput = {
@@ -217,6 +225,7 @@ export type StockProductOrderByWithRelationInput = {
   unity?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  isActive?: Prisma.SortOrder
 }
 
 export type StockProductWhereUniqueInput = Prisma.AtLeast<{
@@ -231,6 +240,7 @@ export type StockProductWhereUniqueInput = Prisma.AtLeast<{
   unity?: Prisma.StringFilter<"StockProduct"> | string
   createdAt?: Prisma.DateTimeFilter<"StockProduct"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"StockProduct"> | Date | string
+  isActive?: Prisma.BoolFilter<"StockProduct"> | boolean
 }, "id">
 
 export type StockProductOrderByWithAggregationInput = {
@@ -242,6 +252,7 @@ export type StockProductOrderByWithAggregationInput = {
   unity?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  isActive?: Prisma.SortOrder
   _count?: Prisma.StockProductCountOrderByAggregateInput
   _max?: Prisma.StockProductMaxOrderByAggregateInput
   _min?: Prisma.StockProductMinOrderByAggregateInput
@@ -259,6 +270,7 @@ export type StockProductScalarWhereWithAggregatesInput = {
   unity?: Prisma.StringWithAggregatesFilter<"StockProduct"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"StockProduct"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"StockProduct"> | Date | string
+  isActive?: Prisma.BoolWithAggregatesFilter<"StockProduct"> | boolean
 }
 
 export type StockProductCreateInput = {
@@ -270,6 +282,7 @@ export type StockProductCreateInput = {
   unity: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  isActive?: boolean
 }
 
 export type StockProductUncheckedCreateInput = {
@@ -281,6 +294,7 @@ export type StockProductUncheckedCreateInput = {
   unity: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  isActive?: boolean
 }
 
 export type StockProductUpdateInput = {
@@ -292,6 +306,7 @@ export type StockProductUpdateInput = {
   unity?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type StockProductUncheckedUpdateInput = {
@@ -303,6 +318,7 @@ export type StockProductUncheckedUpdateInput = {
   unity?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type StockProductCreateManyInput = {
@@ -314,6 +330,7 @@ export type StockProductCreateManyInput = {
   unity: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  isActive?: boolean
 }
 
 export type StockProductUpdateManyMutationInput = {
@@ -325,6 +342,7 @@ export type StockProductUpdateManyMutationInput = {
   unity?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type StockProductUncheckedUpdateManyInput = {
@@ -336,6 +354,7 @@ export type StockProductUncheckedUpdateManyInput = {
   unity?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type StockProductCountOrderByAggregateInput = {
@@ -347,6 +366,7 @@ export type StockProductCountOrderByAggregateInput = {
   unity?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  isActive?: Prisma.SortOrder
 }
 
 export type StockProductMaxOrderByAggregateInput = {
@@ -358,6 +378,7 @@ export type StockProductMaxOrderByAggregateInput = {
   unity?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  isActive?: Prisma.SortOrder
 }
 
 export type StockProductMinOrderByAggregateInput = {
@@ -369,6 +390,7 @@ export type StockProductMinOrderByAggregateInput = {
   unity?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  isActive?: Prisma.SortOrder
 }
 
 
@@ -382,6 +404,7 @@ export type StockProductSelect<ExtArgs extends runtime.Types.Extensions.Internal
   unity?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  isActive?: boolean
 }, ExtArgs["result"]["stockProduct"]>
 
 export type StockProductSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -393,6 +416,7 @@ export type StockProductSelectCreateManyAndReturn<ExtArgs extends runtime.Types.
   unity?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  isActive?: boolean
 }, ExtArgs["result"]["stockProduct"]>
 
 export type StockProductSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -404,6 +428,7 @@ export type StockProductSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.
   unity?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  isActive?: boolean
 }, ExtArgs["result"]["stockProduct"]>
 
 export type StockProductSelectScalar = {
@@ -415,9 +440,10 @@ export type StockProductSelectScalar = {
   unity?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  isActive?: boolean
 }
 
-export type StockProductOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "customerId" | "code" | "reference" | "description" | "unity" | "createdAt" | "updatedAt", ExtArgs["result"]["stockProduct"]>
+export type StockProductOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "customerId" | "code" | "reference" | "description" | "unity" | "createdAt" | "updatedAt" | "isActive", ExtArgs["result"]["stockProduct"]>
 
 export type $StockProductPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "StockProduct"
@@ -431,6 +457,12 @@ export type $StockProductPayload<ExtArgs extends runtime.Types.Extensions.Intern
     unity: string
     createdAt: Date
     updatedAt: Date
+    /**
+     * Mesma semântica do isActive de Product. InventoryItems e
+     * StockWithdrawalItems guardam code/reference/description desnormalizados,
+     * então inventário e baixa antigos continuam legíveis.
+     */
+    isActive: boolean
   }, ExtArgs["result"]["stockProduct"]>
   composites: {}
 }
@@ -862,6 +894,7 @@ export interface StockProductFieldRefs {
   readonly unity: Prisma.FieldRef<"StockProduct", 'String'>
   readonly createdAt: Prisma.FieldRef<"StockProduct", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"StockProduct", 'DateTime'>
+  readonly isActive: Prisma.FieldRef<"StockProduct", 'Boolean'>
 }
     
 

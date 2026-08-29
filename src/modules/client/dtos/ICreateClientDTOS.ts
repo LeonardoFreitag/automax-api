@@ -14,6 +14,15 @@ export interface ClientPaymentForm {
 }
 
 export interface ICreateClientDTO {
+  /** Limite de crédito. `0` significa "sem limite definido". */
+  creditLimit?: number;
+  /** Teto de desconto do cliente. */
+  discountRate?: number;
+  /** Faixa a partir da qual o desconto vale. */
+  initialDiscountLimit?: number;
+  /** Bloqueio manual da retaguarda — distinto de `financialPendency`. */
+  blocked?: boolean;
+  blockReason?: string;
   customerId: string;
   companyName: string;
   comercialName: string;

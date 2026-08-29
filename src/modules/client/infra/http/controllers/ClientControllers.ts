@@ -14,6 +14,7 @@ import DeleteClientContactService from '@modules/client/services/DeleteClientCon
 import DeleteClientPaymentFormService from '@modules/client/services/DeleteClientPaymentFormService';
 import ChangeStatusClienteService from '@modules/client/services/ChangeStatusClienteService';
 import DeduplicateClientService from '@modules/client/services/DeduplicateClientService';
+import FindClientByCnpjService from '@modules/client/services/FindClientByCnpjService';
 
 interface PaymentFormUpdateModel {
   paymentFormId: string;
@@ -71,7 +72,55 @@ export default class ClientController {
       email,
       ClientContact,
       ClientPaymentForm,
+      creditLimit,
+      discountRate,
+      initialDiscountLimit,
+      blocked,
+      blockReason,
     } = request.body;
+
+    // Cliente com este documento já existe neste customer? Então isto é uma
+    // recarga, não um cadastro novo — normalmente porque o ERP perdeu a
+    // API_KEY. Atualiza e devolve o id, para que o vínculo seja restabelecido.
+    //
+    // Antes o caminho era apagar e recriar, o que destruía id, histórico e
+    // orçamentos por cascade.
+    const findClientByCnpj = container.resolve(FindClientByCnpjService);
+
+    const existingClient = await findClientByCnpj.execute(customerId, cnpj);
+
+    if (existingClient) {
+      const updateClient = container.resolve(UpdateClientService);
+
+      const contactList: ContactUpdateModel[] = (ClientContact ?? []).map(
+        (item: ContactUpdateModel) => ({
+          name: item.name,
+          fone: item.fone,
+          foneType: item.foneType,
+          isWhatsApp: item.isWhatsApp,
+          email: item.email,
+          job: item.job,
+          clientId: existingClient.id,
+        }),
+      );
+
+      const paymentFormList: PaymentFormUpdateModel[] = (
+        ClientPaymentForm ?? []
+      ).map((item: PaymentFormUpdateModel) => ({
+        paymentFormId: item.paymentFormId,
+        description: item.description,
+        installmentsLimit: item.installmentsLimit,
+        clientId: existingClient.id,
+      }));
+
+      const updatedClient = await updateClient.execute(
+        { ...existingClient, ...request.body, id: existingClient.id },
+        contactList,
+        paymentFormList,
+      );
+
+      return response.json(updatedClient);
+    }
 
     const createClient = container.resolve(CreateClientService);
 
@@ -99,6 +148,11 @@ export default class ClientController {
       email,
       ClientContact,
       ClientPaymentForm,
+      creditLimit,
+      discountRate,
+      initialDiscountLimit,
+      blocked,
+      blockReason,
     });
 
     return response.json(client);

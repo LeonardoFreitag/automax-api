@@ -3,6 +3,7 @@ import IUserRepository from '@modules/users/repositories/IUserRepository';
 import { Prisma, User, UserRules } from '@prisma/client';
 import AppError from '@shared/errors/AppError';
 import { prisma } from '@shared/infra/prisma/prisma';
+import { isForeignKeyConstraintError } from '@shared/infra/prisma/isUniqueConstraintError';
 
 class UserRepository implements IUserRepository {
   public async deduplicateUserByEmail(
@@ -227,10 +228,50 @@ class UserRepository implements IUserRepository {
     return userUpdated;
   }
 
-  public async delete(id: string): Promise<void> {
-    await prisma.user.delete({
+  public async changeActivation(
+    id: string,
+    isActivated: boolean,
+  ): Promise<User> {
+    const foundUser = await prisma.user.findUnique({ where: { id } });
+
+    if (!foundUser) {
+      throw new AppError('Usuário não encontrado.', 404);
+    }
+
+    const updatedUser = await prisma.user.update({
       where: { id },
+      data: { isActivated },
+      include: { UserRules: true },
     });
+
+    return updatedUser;
+  }
+
+  public async delete(id: string): Promise<void> {
+    // Sem esta checagem, id inexistente virava P2025 e chegava ao ERP como 500
+    // genérico — indistinguível de "a API caiu".
+    const foundUser = await prisma.user.findUnique({ where: { id } });
+
+    if (!foundUser) {
+      throw new AppError('Usuário não encontrado.', 404);
+    }
+
+    try {
+      await prisma.user.delete({
+        where: { id },
+      });
+    } catch (error) {
+      // budget.sellerId voltou a ser RESTRICT: vendedor com orçamento lançado
+      // não pode ser apagado. Desativar é o caminho correto.
+      if (isForeignKeyConstraintError(error)) {
+        throw new AppError(
+          'Este vendedor possui orçamentos vinculados e não pode ser excluído. Use a desativação para bloquear o acesso sem perder o histórico.',
+          409,
+        );
+      }
+
+      throw error;
+    }
   }
 }
 

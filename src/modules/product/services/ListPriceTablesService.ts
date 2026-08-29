@@ -1,9 +1,9 @@
 import { injectable, inject } from 'tsyringe';
 import IProductRepository from '@modules/product/repositories/IProductRepository';
-import { Product } from '@prisma/client';
+import { PriceTableModel } from '@models/PriceTableModel';
 
 @injectable()
-class ListProductService {
+class ListPriceTablesService {
   constructor(
     @inject('ProductRepository')
     private productRepository: IProductRepository,
@@ -11,15 +11,17 @@ class ListProductService {
 
   public async execute(
     customerId: string,
+    regionId: string,
     includeInactive = false,
-  ): Promise<Product[] | undefined> {
-    const allProductByidCustomer = await this.productRepository.list(
+  ): Promise<PriceTableModel[]> {
+    const priceTables = await this.productRepository.listPriceTables(
       customerId,
+      regionId,
       includeInactive,
     );
 
-    return allProductByidCustomer;
+    return priceTables;
   }
 }
 
-export default ListProductService;
+export default ListPriceTablesService;

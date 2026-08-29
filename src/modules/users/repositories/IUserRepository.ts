@@ -15,6 +15,7 @@ export default interface IUserRepository {
     new_email: string,
   ): Promise<User>;
   save(user: User): Promise<User>;
+  changeActivation(id: string, isActivated: boolean): Promise<User>;
   list(customerId: string): Promise<User[]>;
   delete(id: string): Promise<void>;
   createRule(userId: string, rule: string): Promise<UserRules | undefined>;

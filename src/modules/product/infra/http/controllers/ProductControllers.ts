@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
+import { Prisma } from '@prisma/client';
 import CreateProductService from '@modules/product/services/CreateProductService';
 import CreateProductPriceService from '@modules/product/services/CreateProductPriceService';
 import UpdateProductService from '@modules/product/services/UdpateProductService';
@@ -7,33 +8,61 @@ import UpdateProductPriceService from '@modules/product/services/UdpateProductPr
 import ListProductService from '@modules/product/services/ListProductService';
 import ListProductByTablCodeService from '@modules/product/services/ListProductByTableCodeService';
 import ListProductByGroupIdService from '@modules/product/services/ListProductByGroupIdService';
+import ListPriceTablesService from '@modules/product/services/ListPriceTablesService';
+import ListProductByPriceTableService from '@modules/product/services/ListProductByPriceTableService';
 import DeleteProductService from '@modules/product/services/DeleteProductService';
 import DeleteProductPriceService from '@modules/product/services/DeleteProductPriceService';
 import UploadPhotoService from '@modules/product/services/UploadPhotoService';
 import CheckExistsProductService from '@modules/product/services/CheckExistsProductService';
+import ChangeStatusProductService from '@modules/product/services/ChangeStatusProductService';
+
+/**
+ * O ERP envia o array de preços ora como `ProductPrice`, ora como
+ * `productPrice`. As duas rotas aceitam ambas as grafias; esta função escolhe a
+ * que veio preenchida.
+ */
+function resolveProductPrice(body: Record<string, unknown>) {
+  const { productPrice, ProductPrice } = body;
+
+  if (Array.isArray(productPrice)) {
+    return productPrice;
+  }
+
+  if (Array.isArray(ProductPrice)) {
+    return ProductPrice;
+  }
+
+  return [];
+}
+
+/**
+ * `?includeInactive=true` chega como string na query. Sem esta conversão,
+ * `includeInactive=false` seria uma string não-vazia e portanto verdadeira —
+ * exatamente o contrário do pedido.
+ */
+function resolveIncludeInactive(value: unknown): boolean {
+  return value === 'true' || value === true;
+}
 
 export default class ProductController {
   public async create(request: Request, response: Response): Promise<Response> {
-    const {
-      customerId,
-      code,
-      reference,
-      description,
-      unity,
-      groupId,
-      ProductPrice,
-    } = request.body;
+    const { id, customerId, code, reference, description, unity, groupId } =
+      request.body;
+
+    const ProductPrice = resolveProductPrice(request.body);
 
     const createProduct = container.resolve(CreateProductService);
 
     const Product = await createProduct.execute({
+      ...(id && { id }),
       customerId,
       code,
       reference,
       description,
       unity,
       groupId,
-      ProductPrice,
+      ProductPrice:
+        ProductPrice as Prisma.ProductPriceUncheckedCreateNestedManyWithoutProductInput,
     });
 
     return response.json(Product);
@@ -88,7 +117,7 @@ export default class ProductController {
 
   public async update(request: Request, response: Response): Promise<Response> {
     const data = request.body;
-    const { productPrice } = request.body;
+    const productPrice = resolveProductPrice(request.body);
 
     const existsProduct = container.resolve(CheckExistsProductService);
 
@@ -105,7 +134,8 @@ export default class ProductController {
         description: data.description,
         unity: data.unity,
         groupId: data.groupId,
-        ProductPrice: productPrice,
+        ProductPrice:
+          productPrice as Prisma.ProductPriceUncheckedCreateNestedManyWithoutProductInput,
       };
 
       const product = await createProductService.execute(newProduct);
@@ -133,12 +163,32 @@ export default class ProductController {
     return response.json(productPrice);
   }
 
+  public async changeStatus(
+    request: Request,
+    response: Response,
+  ): Promise<Response> {
+    const { id, customerId, isActive } = request.body;
+
+    const changeStatusProduct = container.resolve(ChangeStatusProductService);
+
+    const product = await changeStatusProduct.execute(
+      String(id),
+      String(customerId),
+      isActive,
+    );
+
+    return response.json(product);
+  }
+
   public async list(request: Request, response: Response): Promise<Response> {
-    const { customerId } = request.query;
+    const { customerId, includeInactive } = request.query;
 
     const listProducts = container.resolve(ListProductService);
 
-    const Product = await listProducts.execute(String(customerId));
+    const Product = await listProducts.execute(
+      String(customerId),
+      resolveIncludeInactive(includeInactive),
+    );
 
     return response.json(Product);
   }
@@ -147,7 +197,7 @@ export default class ProductController {
     request: Request,
     response: Response,
   ): Promise<Response> {
-    const { customerId, groupId } = request.query;
+    const { customerId, groupId, includeInactive } = request.query;
 
     const listProductsByGroupId = container.resolve(
       ListProductByGroupIdService,
@@ -156,9 +206,65 @@ export default class ProductController {
     const Product = await listProductsByGroupId.execute(
       String(customerId),
       String(groupId),
+      resolveIncludeInactive(includeInactive),
     );
 
     return response.json(Product);
+  }
+
+  public async listPriceTables(
+    request: Request,
+    response: Response,
+  ): Promise<Response> {
+    const { customerId, regionId, includeInactive } = request.query;
+
+    const listPriceTables = container.resolve(ListPriceTablesService);
+
+    const priceTables = await listPriceTables.execute(
+      String(customerId),
+      String(regionId),
+      resolveIncludeInactive(includeInactive),
+    );
+
+    return response.json(priceTables);
+  }
+
+  public async listByPriceTable(
+    request: Request,
+    response: Response,
+  ): Promise<Response> {
+    const {
+      customerId,
+      tableCode,
+      regionId,
+      groupId,
+      search,
+      page,
+      perPage,
+      includeInactive,
+    } = request.query;
+
+    const listProductByPriceTable = container.resolve(
+      ListProductByPriceTableService,
+    );
+
+    const { products, total } = await listProductByPriceTable.execute({
+      customerId: String(customerId),
+      tableCode: String(tableCode),
+      regionId: String(regionId),
+      includeInactive: resolveIncludeInactive(includeInactive),
+      ...(groupId ? { groupId: String(groupId) } : {}),
+      ...(search ? { search: String(search) } : {}),
+      ...(page ? { page: Number(page) } : {}),
+      ...(perPage ? { perPage: Number(perPage) } : {}),
+    });
+
+    return response.json({
+      products,
+      total,
+      page: page ? Number(page) : null,
+      perPage: perPage ? Number(perPage) : null,
+    });
   }
 
   public async listByTableCode(

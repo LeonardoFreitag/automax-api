@@ -9,6 +9,15 @@ class CreateStockProductService {
     private stockProductRepository: IStockProductRepository,
   ) {}
 
+  /**
+   * Cria ou atualiza a matéria-prima identificada por (customerId, code).
+   *
+   * Antes o registro existente era apagado e recriado a cada carga. Isso
+   * trocava o id — que `InventoryItems.stockProductId` e
+   * `StockWithdrawalItems.stockProductId` referenciam sem FK — e, com o campo
+   * `isActive` recém-criado, desfaria a inativação da retaguarda no próximo
+   * envio do ERP. Atualizar preserva id e status.
+   */
   public async execute({
     id,
     customerId,
@@ -17,13 +26,16 @@ class CreateStockProductService {
     description,
     unity,
   }: Prisma.StockProductUncheckedCreateInput): Promise<StockProduct> {
-    const checkStockProductExists = await this.stockProductRepository.findByCode(
-      customerId,
-      code,
-    );
+    const checkStockProductExists =
+      await this.stockProductRepository.findByCode(customerId, code);
 
     if (checkStockProductExists) {
-      await this.stockProductRepository.delete(checkStockProductExists.id);
+      return this.stockProductRepository.save({
+        ...checkStockProductExists,
+        reference,
+        description,
+        unity,
+      });
     }
 
     const stockProduct = await this.stockProductRepository.create({

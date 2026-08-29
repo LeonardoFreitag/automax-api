@@ -77,6 +77,11 @@ class UpdateClientService {
         phone: data.phone,
         cellphone: data.cellphone,
         email: data.email,
+        creditLimit: data.creditLimit,
+        discountRate: data.discountRate,
+        initialDiscountLimit: data.initialDiscountLimit,
+        blocked: data.blocked,
+        blockReason: data.blockReason,
         ClientContact:
           ContactList as Prisma.ClientContactUncheckedCreateNestedManyWithoutClientInput,
         ClientPaymentForm:
@@ -114,6 +119,11 @@ class UpdateClientService {
     client.phone = data.phone;
     client.cellphone = data.cellphone;
     client.email = data.email;
+    client.creditLimit = data.creditLimit;
+    client.discountRate = data.discountRate;
+    client.initialDiscountLimit = data.initialDiscountLimit;
+    client.blocked = data.blocked;
+    client.blockReason = data.blockReason;
 
     // console.log('Client updated successfully:', client);
 

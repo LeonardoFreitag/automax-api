@@ -42,6 +42,18 @@ class UserRefreshTokensRepository implements IUserRefreshTokensRepository {
       },
     });
   }
+
+  /**
+   * Descarta todos os refresh tokens do usuário. Usado ao desativar: sem isso a
+   * credencial continuaria válida por 30 dias, ainda que inútil.
+   */
+  public async deleteAllByUserId(userId: string): Promise<void> {
+    await prisma.userRefreshTokens.deleteMany({
+      where: {
+        userId,
+      },
+    });
+  }
 }
 
 export default UserRefreshTokensRepository;

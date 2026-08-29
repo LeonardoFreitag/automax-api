@@ -12,10 +12,12 @@ class ListProductByGroupIdService {
   public async execute(
     customerId: string,
     groupId: string,
+    includeInactive = false,
   ): Promise<Product[] | undefined> {
     const allProductByidCustomer = await this.productRepository.listByGroupId(
       customerId,
       groupId,
+      includeInactive,
     );
 
     return allProductByidCustomer;

@@ -12,4 +12,5 @@ export default interface IUserRefreshTokensRepository {
     refreshToken: string,
   ): Promise<UserRefreshTokens | undefined>;
   deleteById(id: string): Promise<void>;
+  deleteAllByUserId(userId: string): Promise<void>;
 }

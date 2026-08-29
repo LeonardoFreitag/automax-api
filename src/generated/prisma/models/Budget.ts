@@ -1585,6 +1585,11 @@ export type BudgetIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
 export type $BudgetPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Budget"
   objects: {
+    /**
+     * RESTRICT, não CASCADE: com CASCADE, apagar um vendedor levava junto todos
+     * os orçamentos dele, com itens e formas de pagamento. Como vendedor agora
+     * se desativa em vez de apagar, o banco volta a proteger o histórico.
+     */
     Seller: Prisma.$UserPayload<ExtArgs> | null
     Client: Prisma.$ClientPayload<ExtArgs> | null
     BudgetItems: Prisma.$BudgetItemsPayload<ExtArgs>[]

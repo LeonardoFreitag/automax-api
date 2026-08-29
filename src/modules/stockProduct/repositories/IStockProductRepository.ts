@@ -12,7 +12,12 @@ export default interface IStockProductRepository {
   ): Promise<StockProduct | undefined>;
   create(data: Prisma.StockProductUncheckedCreateInput): Promise<StockProduct>;
   save(stockProduct: StockProduct): Promise<StockProduct>;
-  list(customerId: string): Promise<StockProduct[]>;
-  search(customerId: string, search: string): Promise<StockProduct[]>;
+  changeActivation(id: string, isActive: boolean): Promise<StockProduct>;
+  list(customerId: string, includeInactive?: boolean): Promise<StockProduct[]>;
+  search(
+    customerId: string,
+    search: string,
+    includeInactive?: boolean,
+  ): Promise<StockProduct[]>;
   delete(id: string): Promise<void>;
 }

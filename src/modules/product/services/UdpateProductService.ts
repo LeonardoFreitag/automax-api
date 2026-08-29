@@ -1,7 +1,8 @@
-import AppError from '@shared/errors/AppError';
 import IProductRepository from '@modules/product/repositories/IProductRepository';
+import IGroupRepository from '@modules/group/repositories/IGroupRepository';
 import { injectable, inject } from 'tsyringe';
 import { Prisma, Product } from '@prisma/client';
+import assertProductGroup from './assertProductGroup';
 
 interface ProductPriceModel {
   code: string;
@@ -27,6 +28,9 @@ class UpdateProductService {
   constructor(
     @inject('ProductRepository')
     private productRepository: IProductRepository,
+
+    @inject('GroupRepository')
+    private groupRepository: IGroupRepository,
   ) {}
 
   public async execute(
@@ -34,6 +38,13 @@ class UpdateProductService {
     productPrice: ProductPriceModel[],
   ): Promise<Product> {
     const { id } = data;
+
+    const group = data.groupId
+      ? await this.groupRepository.findById(data.groupId)
+      : undefined;
+
+    assertProductGroup(group, data.groupId, data.customerId, data.code);
+
     const product = await this.productRepository.findById(id);
 
     if (!product) {

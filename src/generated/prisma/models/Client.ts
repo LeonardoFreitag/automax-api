@@ -20,8 +20,22 @@ export type ClientModel = runtime.Types.Result.DefaultSelection<Prisma.$ClientPa
 
 export type AggregateClient = {
   _count: ClientCountAggregateOutputType | null
+  _avg: ClientAvgAggregateOutputType | null
+  _sum: ClientSumAggregateOutputType | null
   _min: ClientMinAggregateOutputType | null
   _max: ClientMaxAggregateOutputType | null
+}
+
+export type ClientAvgAggregateOutputType = {
+  creditLimit: runtime.Decimal | null
+  discountRate: runtime.Decimal | null
+  initialDiscountLimit: number | null
+}
+
+export type ClientSumAggregateOutputType = {
+  creditLimit: runtime.Decimal | null
+  discountRate: runtime.Decimal | null
+  initialDiscountLimit: number | null
 }
 
 export type ClientMinAggregateOutputType = {
@@ -44,6 +58,11 @@ export type ClientMinAggregateOutputType = {
   financialPendency: boolean | null
   isNew: boolean | null
   isActivated: boolean | null
+  creditLimit: runtime.Decimal | null
+  discountRate: runtime.Decimal | null
+  initialDiscountLimit: number | null
+  blocked: boolean | null
+  blockReason: string | null
   sellerId: string | null
   phone: string | null
   cellphone: string | null
@@ -72,6 +91,11 @@ export type ClientMaxAggregateOutputType = {
   financialPendency: boolean | null
   isNew: boolean | null
   isActivated: boolean | null
+  creditLimit: runtime.Decimal | null
+  discountRate: runtime.Decimal | null
+  initialDiscountLimit: number | null
+  blocked: boolean | null
+  blockReason: string | null
   sellerId: string | null
   phone: string | null
   cellphone: string | null
@@ -100,6 +124,11 @@ export type ClientCountAggregateOutputType = {
   financialPendency: number
   isNew: number
   isActivated: number
+  creditLimit: number
+  discountRate: number
+  initialDiscountLimit: number
+  blocked: number
+  blockReason: number
   sellerId: number
   phone: number
   cellphone: number
@@ -109,6 +138,18 @@ export type ClientCountAggregateOutputType = {
   _all: number
 }
 
+
+export type ClientAvgAggregateInputType = {
+  creditLimit?: true
+  discountRate?: true
+  initialDiscountLimit?: true
+}
+
+export type ClientSumAggregateInputType = {
+  creditLimit?: true
+  discountRate?: true
+  initialDiscountLimit?: true
+}
 
 export type ClientMinAggregateInputType = {
   id?: true
@@ -130,6 +171,11 @@ export type ClientMinAggregateInputType = {
   financialPendency?: true
   isNew?: true
   isActivated?: true
+  creditLimit?: true
+  discountRate?: true
+  initialDiscountLimit?: true
+  blocked?: true
+  blockReason?: true
   sellerId?: true
   phone?: true
   cellphone?: true
@@ -158,6 +204,11 @@ export type ClientMaxAggregateInputType = {
   financialPendency?: true
   isNew?: true
   isActivated?: true
+  creditLimit?: true
+  discountRate?: true
+  initialDiscountLimit?: true
+  blocked?: true
+  blockReason?: true
   sellerId?: true
   phone?: true
   cellphone?: true
@@ -186,6 +237,11 @@ export type ClientCountAggregateInputType = {
   financialPendency?: true
   isNew?: true
   isActivated?: true
+  creditLimit?: true
+  discountRate?: true
+  initialDiscountLimit?: true
+  blocked?: true
+  blockReason?: true
   sellerId?: true
   phone?: true
   cellphone?: true
@@ -233,6 +289,18 @@ export type ClientAggregateArgs<ExtArgs extends runtime.Types.Extensions.Interna
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: ClientAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: ClientSumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: ClientMinAggregateInputType
@@ -263,6 +331,8 @@ export type ClientGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalA
   take?: number
   skip?: number
   _count?: ClientCountAggregateInputType | true
+  _avg?: ClientAvgAggregateInputType
+  _sum?: ClientSumAggregateInputType
   _min?: ClientMinAggregateInputType
   _max?: ClientMaxAggregateInputType
 }
@@ -287,6 +357,11 @@ export type ClientGroupByOutputType = {
   financialPendency: boolean
   isNew: boolean
   isActivated: boolean
+  creditLimit: runtime.Decimal
+  discountRate: runtime.Decimal
+  initialDiscountLimit: number
+  blocked: boolean
+  blockReason: string
   sellerId: string
   phone: string | null
   cellphone: string | null
@@ -294,6 +369,8 @@ export type ClientGroupByOutputType = {
   createdAt: Date
   updatedAt: Date
   _count: ClientCountAggregateOutputType | null
+  _avg: ClientAvgAggregateOutputType | null
+  _sum: ClientSumAggregateOutputType | null
   _min: ClientMinAggregateOutputType | null
   _max: ClientMaxAggregateOutputType | null
 }
@@ -336,6 +413,11 @@ export type ClientWhereInput = {
   financialPendency?: Prisma.BoolFilter<"Client"> | boolean
   isNew?: Prisma.BoolFilter<"Client"> | boolean
   isActivated?: Prisma.BoolFilter<"Client"> | boolean
+  creditLimit?: Prisma.DecimalFilter<"Client"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountRate?: Prisma.DecimalFilter<"Client"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  initialDiscountLimit?: Prisma.IntFilter<"Client"> | number
+  blocked?: Prisma.BoolFilter<"Client"> | boolean
+  blockReason?: Prisma.StringFilter<"Client"> | string
   sellerId?: Prisma.StringFilter<"Client"> | string
   phone?: Prisma.StringNullableFilter<"Client"> | string | null
   cellphone?: Prisma.StringNullableFilter<"Client"> | string | null
@@ -368,6 +450,11 @@ export type ClientOrderByWithRelationInput = {
   financialPendency?: Prisma.SortOrder
   isNew?: Prisma.SortOrder
   isActivated?: Prisma.SortOrder
+  creditLimit?: Prisma.SortOrder
+  discountRate?: Prisma.SortOrder
+  initialDiscountLimit?: Prisma.SortOrder
+  blocked?: Prisma.SortOrder
+  blockReason?: Prisma.SortOrder
   sellerId?: Prisma.SortOrder
   phone?: Prisma.SortOrderInput | Prisma.SortOrder
   cellphone?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -403,6 +490,11 @@ export type ClientWhereUniqueInput = Prisma.AtLeast<{
   financialPendency?: Prisma.BoolFilter<"Client"> | boolean
   isNew?: Prisma.BoolFilter<"Client"> | boolean
   isActivated?: Prisma.BoolFilter<"Client"> | boolean
+  creditLimit?: Prisma.DecimalFilter<"Client"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountRate?: Prisma.DecimalFilter<"Client"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  initialDiscountLimit?: Prisma.IntFilter<"Client"> | number
+  blocked?: Prisma.BoolFilter<"Client"> | boolean
+  blockReason?: Prisma.StringFilter<"Client"> | string
   sellerId?: Prisma.StringFilter<"Client"> | string
   phone?: Prisma.StringNullableFilter<"Client"> | string | null
   cellphone?: Prisma.StringNullableFilter<"Client"> | string | null
@@ -435,6 +527,11 @@ export type ClientOrderByWithAggregationInput = {
   financialPendency?: Prisma.SortOrder
   isNew?: Prisma.SortOrder
   isActivated?: Prisma.SortOrder
+  creditLimit?: Prisma.SortOrder
+  discountRate?: Prisma.SortOrder
+  initialDiscountLimit?: Prisma.SortOrder
+  blocked?: Prisma.SortOrder
+  blockReason?: Prisma.SortOrder
   sellerId?: Prisma.SortOrder
   phone?: Prisma.SortOrderInput | Prisma.SortOrder
   cellphone?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -442,8 +539,10 @@ export type ClientOrderByWithAggregationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.ClientCountOrderByAggregateInput
+  _avg?: Prisma.ClientAvgOrderByAggregateInput
   _max?: Prisma.ClientMaxOrderByAggregateInput
   _min?: Prisma.ClientMinOrderByAggregateInput
+  _sum?: Prisma.ClientSumOrderByAggregateInput
 }
 
 export type ClientScalarWhereWithAggregatesInput = {
@@ -469,6 +568,11 @@ export type ClientScalarWhereWithAggregatesInput = {
   financialPendency?: Prisma.BoolWithAggregatesFilter<"Client"> | boolean
   isNew?: Prisma.BoolWithAggregatesFilter<"Client"> | boolean
   isActivated?: Prisma.BoolWithAggregatesFilter<"Client"> | boolean
+  creditLimit?: Prisma.DecimalWithAggregatesFilter<"Client"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountRate?: Prisma.DecimalWithAggregatesFilter<"Client"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  initialDiscountLimit?: Prisma.IntWithAggregatesFilter<"Client"> | number
+  blocked?: Prisma.BoolWithAggregatesFilter<"Client"> | boolean
+  blockReason?: Prisma.StringWithAggregatesFilter<"Client"> | string
   sellerId?: Prisma.StringWithAggregatesFilter<"Client"> | string
   phone?: Prisma.StringNullableWithAggregatesFilter<"Client"> | string | null
   cellphone?: Prisma.StringNullableWithAggregatesFilter<"Client"> | string | null
@@ -497,6 +601,11 @@ export type ClientCreateInput = {
   financialPendency: boolean
   isNew: boolean
   isActivated?: boolean
+  creditLimit?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountRate?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  initialDiscountLimit?: number
+  blocked?: boolean
+  blockReason?: string
   sellerId: string
   phone?: string | null
   cellphone?: string | null
@@ -529,6 +638,11 @@ export type ClientUncheckedCreateInput = {
   financialPendency: boolean
   isNew: boolean
   isActivated?: boolean
+  creditLimit?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountRate?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  initialDiscountLimit?: number
+  blocked?: boolean
+  blockReason?: string
   sellerId: string
   phone?: string | null
   cellphone?: string | null
@@ -561,6 +675,11 @@ export type ClientUpdateInput = {
   financialPendency?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isNew?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActivated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  creditLimit?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  initialDiscountLimit?: Prisma.IntFieldUpdateOperationsInput | number
+  blocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  blockReason?: Prisma.StringFieldUpdateOperationsInput | string
   sellerId?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cellphone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -593,6 +712,11 @@ export type ClientUncheckedUpdateInput = {
   financialPendency?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isNew?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActivated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  creditLimit?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  initialDiscountLimit?: Prisma.IntFieldUpdateOperationsInput | number
+  blocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  blockReason?: Prisma.StringFieldUpdateOperationsInput | string
   sellerId?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cellphone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -625,6 +749,11 @@ export type ClientCreateManyInput = {
   financialPendency: boolean
   isNew: boolean
   isActivated?: boolean
+  creditLimit?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountRate?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  initialDiscountLimit?: number
+  blocked?: boolean
+  blockReason?: string
   sellerId: string
   phone?: string | null
   cellphone?: string | null
@@ -653,6 +782,11 @@ export type ClientUpdateManyMutationInput = {
   financialPendency?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isNew?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActivated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  creditLimit?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  initialDiscountLimit?: Prisma.IntFieldUpdateOperationsInput | number
+  blocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  blockReason?: Prisma.StringFieldUpdateOperationsInput | string
   sellerId?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cellphone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -681,6 +815,11 @@ export type ClientUncheckedUpdateManyInput = {
   financialPendency?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isNew?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActivated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  creditLimit?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  initialDiscountLimit?: Prisma.IntFieldUpdateOperationsInput | number
+  blocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  blockReason?: Prisma.StringFieldUpdateOperationsInput | string
   sellerId?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cellphone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -709,12 +848,23 @@ export type ClientCountOrderByAggregateInput = {
   financialPendency?: Prisma.SortOrder
   isNew?: Prisma.SortOrder
   isActivated?: Prisma.SortOrder
+  creditLimit?: Prisma.SortOrder
+  discountRate?: Prisma.SortOrder
+  initialDiscountLimit?: Prisma.SortOrder
+  blocked?: Prisma.SortOrder
+  blockReason?: Prisma.SortOrder
   sellerId?: Prisma.SortOrder
   phone?: Prisma.SortOrder
   cellphone?: Prisma.SortOrder
   email?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+}
+
+export type ClientAvgOrderByAggregateInput = {
+  creditLimit?: Prisma.SortOrder
+  discountRate?: Prisma.SortOrder
+  initialDiscountLimit?: Prisma.SortOrder
 }
 
 export type ClientMaxOrderByAggregateInput = {
@@ -737,6 +887,11 @@ export type ClientMaxOrderByAggregateInput = {
   financialPendency?: Prisma.SortOrder
   isNew?: Prisma.SortOrder
   isActivated?: Prisma.SortOrder
+  creditLimit?: Prisma.SortOrder
+  discountRate?: Prisma.SortOrder
+  initialDiscountLimit?: Prisma.SortOrder
+  blocked?: Prisma.SortOrder
+  blockReason?: Prisma.SortOrder
   sellerId?: Prisma.SortOrder
   phone?: Prisma.SortOrder
   cellphone?: Prisma.SortOrder
@@ -765,12 +920,23 @@ export type ClientMinOrderByAggregateInput = {
   financialPendency?: Prisma.SortOrder
   isNew?: Prisma.SortOrder
   isActivated?: Prisma.SortOrder
+  creditLimit?: Prisma.SortOrder
+  discountRate?: Prisma.SortOrder
+  initialDiscountLimit?: Prisma.SortOrder
+  blocked?: Prisma.SortOrder
+  blockReason?: Prisma.SortOrder
   sellerId?: Prisma.SortOrder
   phone?: Prisma.SortOrder
   cellphone?: Prisma.SortOrder
   email?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+}
+
+export type ClientSumOrderByAggregateInput = {
+  creditLimit?: Prisma.SortOrder
+  discountRate?: Prisma.SortOrder
+  initialDiscountLimit?: Prisma.SortOrder
 }
 
 export type ClientScalarRelationFilter = {
@@ -781,6 +947,22 @@ export type ClientScalarRelationFilter = {
 export type ClientNullableScalarRelationFilter = {
   is?: Prisma.ClientWhereInput | null
   isNot?: Prisma.ClientWhereInput | null
+}
+
+export type DecimalFieldUpdateOperationsInput = {
+  set?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  increment?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  decrement?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  multiply?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  divide?: runtime.Decimal | runtime.DecimalJsLike | number | string
+}
+
+export type IntFieldUpdateOperationsInput = {
+  set?: number
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
 }
 
 export type ClientCreateNestedOneWithoutClientContactInput = {
@@ -863,6 +1045,11 @@ export type ClientCreateWithoutClientContactInput = {
   financialPendency: boolean
   isNew: boolean
   isActivated?: boolean
+  creditLimit?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountRate?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  initialDiscountLimit?: number
+  blocked?: boolean
+  blockReason?: string
   sellerId: string
   phone?: string | null
   cellphone?: string | null
@@ -894,6 +1081,11 @@ export type ClientUncheckedCreateWithoutClientContactInput = {
   financialPendency: boolean
   isNew: boolean
   isActivated?: boolean
+  creditLimit?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountRate?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  initialDiscountLimit?: number
+  blocked?: boolean
+  blockReason?: string
   sellerId: string
   phone?: string | null
   cellphone?: string | null
@@ -941,6 +1133,11 @@ export type ClientUpdateWithoutClientContactInput = {
   financialPendency?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isNew?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActivated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  creditLimit?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  initialDiscountLimit?: Prisma.IntFieldUpdateOperationsInput | number
+  blocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  blockReason?: Prisma.StringFieldUpdateOperationsInput | string
   sellerId?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cellphone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -972,6 +1169,11 @@ export type ClientUncheckedUpdateWithoutClientContactInput = {
   financialPendency?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isNew?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActivated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  creditLimit?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  initialDiscountLimit?: Prisma.IntFieldUpdateOperationsInput | number
+  blocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  blockReason?: Prisma.StringFieldUpdateOperationsInput | string
   sellerId?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cellphone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1003,6 +1205,11 @@ export type ClientCreateWithoutClientPaymentFormInput = {
   financialPendency: boolean
   isNew: boolean
   isActivated?: boolean
+  creditLimit?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountRate?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  initialDiscountLimit?: number
+  blocked?: boolean
+  blockReason?: string
   sellerId: string
   phone?: string | null
   cellphone?: string | null
@@ -1034,6 +1241,11 @@ export type ClientUncheckedCreateWithoutClientPaymentFormInput = {
   financialPendency: boolean
   isNew: boolean
   isActivated?: boolean
+  creditLimit?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountRate?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  initialDiscountLimit?: number
+  blocked?: boolean
+  blockReason?: string
   sellerId: string
   phone?: string | null
   cellphone?: string | null
@@ -1081,6 +1293,11 @@ export type ClientUpdateWithoutClientPaymentFormInput = {
   financialPendency?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isNew?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActivated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  creditLimit?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  initialDiscountLimit?: Prisma.IntFieldUpdateOperationsInput | number
+  blocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  blockReason?: Prisma.StringFieldUpdateOperationsInput | string
   sellerId?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cellphone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1112,6 +1329,11 @@ export type ClientUncheckedUpdateWithoutClientPaymentFormInput = {
   financialPendency?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isNew?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActivated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  creditLimit?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  initialDiscountLimit?: Prisma.IntFieldUpdateOperationsInput | number
+  blocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  blockReason?: Prisma.StringFieldUpdateOperationsInput | string
   sellerId?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cellphone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1143,6 +1365,11 @@ export type ClientCreateWithoutSaleInput = {
   financialPendency: boolean
   isNew: boolean
   isActivated?: boolean
+  creditLimit?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountRate?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  initialDiscountLimit?: number
+  blocked?: boolean
+  blockReason?: string
   sellerId: string
   phone?: string | null
   cellphone?: string | null
@@ -1174,6 +1401,11 @@ export type ClientUncheckedCreateWithoutSaleInput = {
   financialPendency: boolean
   isNew: boolean
   isActivated?: boolean
+  creditLimit?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountRate?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  initialDiscountLimit?: number
+  blocked?: boolean
+  blockReason?: string
   sellerId: string
   phone?: string | null
   cellphone?: string | null
@@ -1221,6 +1453,11 @@ export type ClientUpdateWithoutSaleInput = {
   financialPendency?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isNew?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActivated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  creditLimit?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  initialDiscountLimit?: Prisma.IntFieldUpdateOperationsInput | number
+  blocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  blockReason?: Prisma.StringFieldUpdateOperationsInput | string
   sellerId?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cellphone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1252,6 +1489,11 @@ export type ClientUncheckedUpdateWithoutSaleInput = {
   financialPendency?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isNew?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActivated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  creditLimit?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  initialDiscountLimit?: Prisma.IntFieldUpdateOperationsInput | number
+  blocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  blockReason?: Prisma.StringFieldUpdateOperationsInput | string
   sellerId?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cellphone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1283,6 +1525,11 @@ export type ClientCreateWithoutBudgetInput = {
   financialPendency: boolean
   isNew: boolean
   isActivated?: boolean
+  creditLimit?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountRate?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  initialDiscountLimit?: number
+  blocked?: boolean
+  blockReason?: string
   sellerId: string
   phone?: string | null
   cellphone?: string | null
@@ -1314,6 +1561,11 @@ export type ClientUncheckedCreateWithoutBudgetInput = {
   financialPendency: boolean
   isNew: boolean
   isActivated?: boolean
+  creditLimit?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountRate?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  initialDiscountLimit?: number
+  blocked?: boolean
+  blockReason?: string
   sellerId: string
   phone?: string | null
   cellphone?: string | null
@@ -1361,6 +1613,11 @@ export type ClientUpdateWithoutBudgetInput = {
   financialPendency?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isNew?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActivated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  creditLimit?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  initialDiscountLimit?: Prisma.IntFieldUpdateOperationsInput | number
+  blocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  blockReason?: Prisma.StringFieldUpdateOperationsInput | string
   sellerId?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cellphone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1392,6 +1649,11 @@ export type ClientUncheckedUpdateWithoutBudgetInput = {
   financialPendency?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isNew?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActivated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  creditLimit?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  initialDiscountLimit?: Prisma.IntFieldUpdateOperationsInput | number
+  blocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  blockReason?: Prisma.StringFieldUpdateOperationsInput | string
   sellerId?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cellphone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1481,6 +1743,11 @@ export type ClientSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   financialPendency?: boolean
   isNew?: boolean
   isActivated?: boolean
+  creditLimit?: boolean
+  discountRate?: boolean
+  initialDiscountLimit?: boolean
+  blocked?: boolean
+  blockReason?: boolean
   sellerId?: boolean
   phone?: boolean
   cellphone?: boolean
@@ -1514,6 +1781,11 @@ export type ClientSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   financialPendency?: boolean
   isNew?: boolean
   isActivated?: boolean
+  creditLimit?: boolean
+  discountRate?: boolean
+  initialDiscountLimit?: boolean
+  blocked?: boolean
+  blockReason?: boolean
   sellerId?: boolean
   phone?: boolean
   cellphone?: boolean
@@ -1542,6 +1814,11 @@ export type ClientSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   financialPendency?: boolean
   isNew?: boolean
   isActivated?: boolean
+  creditLimit?: boolean
+  discountRate?: boolean
+  initialDiscountLimit?: boolean
+  blocked?: boolean
+  blockReason?: boolean
   sellerId?: boolean
   phone?: boolean
   cellphone?: boolean
@@ -1570,6 +1847,11 @@ export type ClientSelectScalar = {
   financialPendency?: boolean
   isNew?: boolean
   isActivated?: boolean
+  creditLimit?: boolean
+  discountRate?: boolean
+  initialDiscountLimit?: boolean
+  blocked?: boolean
+  blockReason?: boolean
   sellerId?: boolean
   phone?: boolean
   cellphone?: boolean
@@ -1578,7 +1860,7 @@ export type ClientSelectScalar = {
   updatedAt?: boolean
 }
 
-export type ClientOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "customerId" | "code" | "companyName" | "comercialName" | "zipCode" | "streetName" | "streetNumber" | "neighborhood" | "complement" | "cnpj" | "ie" | "cityCode" | "city" | "stateCode" | "state" | "financialPendency" | "isNew" | "isActivated" | "sellerId" | "phone" | "cellphone" | "email" | "createdAt" | "updatedAt", ExtArgs["result"]["client"]>
+export type ClientOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "customerId" | "code" | "companyName" | "comercialName" | "zipCode" | "streetName" | "streetNumber" | "neighborhood" | "complement" | "cnpj" | "ie" | "cityCode" | "city" | "stateCode" | "state" | "financialPendency" | "isNew" | "isActivated" | "creditLimit" | "discountRate" | "initialDiscountLimit" | "blocked" | "blockReason" | "sellerId" | "phone" | "cellphone" | "email" | "createdAt" | "updatedAt", ExtArgs["result"]["client"]>
 export type ClientInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   ClientContact?: boolean | Prisma.Client$ClientContactArgs<ExtArgs>
   ClientPaymentForm?: boolean | Prisma.Client$ClientPaymentFormArgs<ExtArgs>
@@ -1614,9 +1896,33 @@ export type $ClientPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     city: string
     stateCode: string
     state: string
+    /**
+     * Calculada: vem do contas a receber e muda sozinha quando o cliente paga.
+     * Não confundir com `blocked`, que é decisão manual da retaguarda.
+     */
     financialPendency: boolean
     isNew: boolean
     isActivated: boolean
+    /**
+     * Limite de crédito (CLIENTES.CREDITO no ERP).
+     */
+    creditLimit: runtime.Decimal
+    /**
+     * Teto de desconto do cliente (CLIENTES.TAXA_DESCONTO).
+     */
+    discountRate: runtime.Decimal
+    /**
+     * Faixa a partir da qual o desconto vale (CLIENTES.LIMITE_INICIAL_DESCONTO).
+     */
+    initialDiscountLimit: number
+    /**
+     * Bloqueio manual da retaguarda (CLIENTES.BLOQUEADO).
+     */
+    blocked: boolean
+    /**
+     * Motivo do bloqueio manual (CLIENTES.MOTIVO_BLOQUEIO).
+     */
+    blockReason: string
     sellerId: string
     phone: string | null
     cellphone: string | null
@@ -2069,6 +2375,11 @@ export interface ClientFieldRefs {
   readonly financialPendency: Prisma.FieldRef<"Client", 'Boolean'>
   readonly isNew: Prisma.FieldRef<"Client", 'Boolean'>
   readonly isActivated: Prisma.FieldRef<"Client", 'Boolean'>
+  readonly creditLimit: Prisma.FieldRef<"Client", 'Decimal'>
+  readonly discountRate: Prisma.FieldRef<"Client", 'Decimal'>
+  readonly initialDiscountLimit: Prisma.FieldRef<"Client", 'Int'>
+  readonly blocked: Prisma.FieldRef<"Client", 'Boolean'>
+  readonly blockReason: Prisma.FieldRef<"Client", 'String'>
   readonly sellerId: Prisma.FieldRef<"Client", 'String'>
   readonly phone: Prisma.FieldRef<"Client", 'String'>
   readonly cellphone: Prisma.FieldRef<"Client", 'String'>

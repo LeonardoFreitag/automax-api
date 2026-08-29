@@ -40,10 +40,34 @@ class StockProductRepository implements IStockProductRepository {
     return stockProduct;
   }
 
-  public async list(customerId: string): Promise<StockProduct[]> {
+  public async changeActivation(
+    id: string,
+    isActive: boolean,
+  ): Promise<StockProduct> {
+    const foundStockProduct = await prisma.stockProduct.findUnique({
+      where: { id },
+    });
+
+    if (!foundStockProduct) {
+      throw new AppError('Matéria-prima não encontrada.', 404);
+    }
+
+    const updatedStockProduct = await prisma.stockProduct.update({
+      where: { id },
+      data: { isActive },
+    });
+
+    return updatedStockProduct;
+  }
+
+  public async list(
+    customerId: string,
+    includeInactive = false,
+  ): Promise<StockProduct[]> {
     const stockProducts = await prisma.stockProduct.findMany({
       where: {
         customerId,
+        ...(includeInactive ? {} : { isActive: true }),
       },
       orderBy: {
         description: 'asc',
@@ -56,10 +80,12 @@ class StockProductRepository implements IStockProductRepository {
   public async search(
     customerId: string,
     search: string,
+    includeInactive = false,
   ): Promise<StockProduct[]> {
     const stockProducts = await prisma.stockProduct.findMany({
       where: {
         customerId,
+        ...(includeInactive ? {} : { isActive: true }),
         OR: [
           { code: { contains: search } },
           { reference: { contains: search } },

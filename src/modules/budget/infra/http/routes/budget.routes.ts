@@ -12,6 +12,10 @@ budgetRouter.post(
   ensureAuthenticated,
   celebrate({
     [Segments.BODY]: {
+      // Chave de idempotência: id do rascunho local do app. Repetir o POST com o
+      // mesmo id devolve o orçamento já criado em vez de duplicar. Opcional para
+      // não quebrar clientes antigos.
+      id: Joi.string().uuid(),
       customerId: Joi.string().required(),
       sellerId: Joi.string().required(),
       budgetNumber: Joi.string().required(),
