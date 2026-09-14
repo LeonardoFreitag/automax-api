@@ -612,3 +612,82 @@ model StockWithdrawalItems {
 
   @@map("stockWithdrawalItems")
 }
+
+// Fila de pedidos de pagamento com cartão na maquininha Stone SmartPOS.
+//
+// O PDV Delphi e a SmartPOS não se falam diretamente: o PDV cria o pedido aqui
+// e faz polling do status; o app Android instalado no terminal consome a fila
+// do seu `terminalId`, dispara o Deeplink da Stone e grava o resultado de volta.
+// Não há job de expiração — quem lê marca "expired" ao encontrar um pending
+// vencido (expiração preguiçosa).
+model StonePaymentOrder {
+  id         String @id @default(uuid())
+  customerId String
+  /// Identifica a SmartPOS. Configuração fixa no aparelho e no caixa do PDV.
+  terminalId String
+  /// Referência da venda no PDV (não é chave: o PDV pode repetir em retentativa).
+  externalRef String
+
+  amountCents      Int
+  transactionType  String // DEBIT | CREDIT | VOUCHER | INSTANT_PAYMENT
+  installmentType  String? // MERCHANT | ISSUER | NONE
+  installmentCount Int?
+
+  /// payment | cancellation. Um estorno é um pedido como outro qualquer na
+  /// mesma fila: o app dispara o Deeplink de cancelamento da Stone em vez do
+  /// de pagamento, e o fluxo de status é idêntico.
+  operation       String  @default("payment")
+  /// Estorno: uuid do pagamento APROVADO a estornar (vem do PDV).
+  targetPaymentId String?
+  /// Estorno: atk do pagamento alvo, resolvido pela API na criação. É o que o
+  /// app manda no Deeplink de cancelamento.
+  targetAtk       String?
+  /// Pagamento: uuid do estorno que o marcou como estornado (auditoria).
+  /// Preenchido pela API quando o cancellation vira "approved".
+  refundedByOrderId String?
+
+  /// pending | sent_to_terminal | approved | declined | canceled | expired | error
+  status String @default("pending")
+  /// Pedido já entregue ao terminal só pode ser cancelado fisicamente na
+  /// maquineta; a flag é o aviso para o app.
+  cancelRequested Boolean @default(false)
+
+  // Card de cobrança (delivery). "attended" é a cobrança de balcão, que o app
+  // dispara sozinho ao ver na fila do terminal. "detached" é um card: fica
+  // numa lista por customer, em todas as maquininhas, e só cobra no toque do
+  // entregador. Aprovado, o PDV o consome UMA vez no fechamento da venda.
+  mode           String    @default("attended") // attended | detached
+  /// Card: o que o entregador vê na lista (até 120 chars).
+  description    String?
+  consumed       Boolean   @default(false)
+  /// Código da venda que consumiu o card (idempotência do /consume).
+  consumedBySale String?
+  consumedAt     DateTime?
+
+  // Resultado devolvido pela Stone.
+  authorizationCode String?
+  brand             String?
+  atk               String?
+  itk               String?
+  /// NUNCA o PAN completo — no máximo os últimos 4 dígitos.
+  panMasked      String?
+  entryMode      String?
+  cardholderName String?
+  rawResponse    Json?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  expiresAt DateTime
+
+  // A fila do terminal é sempre consultada dentro de um customer: terminalId é
+  // string configurada à mão no aparelho e pode repetir entre clientes.
+  @@index([customerId, terminalId, status, expiresAt])
+  @@index([customerId, status])
+  // "já existe estorno para este pagamento?" — consulta feita a cada POST de
+  // cancellation.
+  @@index([targetPaymentId])
+  // Lista de cards do customer (GET /stonePayment/cards), consultada pelas
+  // maquininhas a cada ~10s enquanto a tela está aberta.
+  @@index([customerId, mode, status, consumed])
+  @@map("stonePaymentOrder")
+}

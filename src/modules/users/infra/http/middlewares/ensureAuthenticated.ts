@@ -12,7 +12,8 @@ interface ITokenPayload {
 }
 
 /**
- * Cache do status de ativação, para não consultar o banco a cada requisição.
+ * Cache do contexto do usuário (status + customer), para não consultar o banco
+ * a cada requisição.
  *
  * A janela é curta de propósito: o requisito é que desativar um vendedor corte
  * o acesso em minutos, não no vencimento do token (que dura 1 dia). 30s atende
@@ -20,30 +21,36 @@ interface ITokenPayload {
  */
 const STATUS_CACHE_TTL_MS = 30_000;
 
-const statusCache = new Map<
-  string,
-  { isActivated: boolean; expiresAt: number }
->();
+interface IUserContext {
+  isActivated: boolean;
+  /** Customer dono do token. Undefined só se o usuário sumiu do banco. */
+  customerId?: string;
+}
 
-async function isUserActivated(userId: string): Promise<boolean> {
+const statusCache = new Map<string, IUserContext & { expiresAt: number }>();
+
+async function loadUserContext(userId: string): Promise<IUserContext> {
   const cached = statusCache.get(userId);
 
   if (cached && cached.expiresAt > Date.now()) {
-    return cached.isActivated;
+    return { isActivated: cached.isActivated, customerId: cached.customerId };
   }
 
   const userRepository = container.resolve<IUserRepository>('UserRepository');
   const user = await userRepository.findById(userId);
 
   // Usuário apagado enquanto o token ainda era válido conta como inativo.
-  const isActivated = Boolean(user) && user.isActivated !== false;
+  const context: IUserContext = {
+    isActivated: Boolean(user) && user.isActivated !== false,
+    customerId: user?.customerId,
+  };
 
   statusCache.set(userId, {
-    isActivated,
+    ...context,
     expiresAt: Date.now() + STATUS_CACHE_TTL_MS,
   });
 
-  return isActivated;
+  return context;
 }
 
 /**
@@ -81,7 +88,9 @@ export default async function ensureAuthenticated(
 
   // Fora do try acima: um AppError lançado aqui não pode ser convertido em
   // "Invalid JWT token", senão o app trataria revogação como token corrompido.
-  if (!(await isUserActivated(userId))) {
+  const { isActivated, customerId } = await loadUserContext(userId);
+
+  if (!isActivated) {
     throw new AppError(
       'Acesso desativado. Sua sessão foi encerrada.',
       401,
@@ -89,8 +98,12 @@ export default async function ensureAuthenticated(
     );
   }
 
+  // O customer vem do token, não do corpo da requisição. Rotas que precisam
+  // isolar dados por cliente (stonePayment, por exemplo) usam isto em vez de
+  // confiar no customerId enviado pelo PDV/app.
   request.user = {
     id: userId,
+    customerId,
   };
 
   next();

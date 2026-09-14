@@ -57,6 +57,9 @@ import InventoryRepository from '@modules/inventory/infra/prisma/repositories/In
 import IStockWithdrawalRepository from '@modules/stockWithdrawal/repositories/IStockWithdrawalRepository';
 import StockWithdrawalRepository from '@modules/stockWithdrawal/infra/prisma/repositories/StockWithdrawalRepository';
 
+import IStonePaymentRepository from '@modules/stonePayment/repositories/IStonePaymentRepository';
+import StonePaymentRepository from '@modules/stonePayment/infra/prisma/repositories/StonePaymentRepository';
+
 container.registerSingleton<IUserRepository>('UserRepository', UserRepository);
 
 container.registerSingleton<IUserTokensRepository>(
@@ -139,4 +142,9 @@ container.registerSingleton<IInventoryRepository>(
 container.registerSingleton<IStockWithdrawalRepository>(
   'StockWithdrawalRepository',
   StockWithdrawalRepository,
+);
+
+container.registerSingleton<IStonePaymentRepository>(
+  'StonePaymentRepository',
+  StonePaymentRepository,
 );

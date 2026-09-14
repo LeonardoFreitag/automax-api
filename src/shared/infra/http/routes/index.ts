@@ -18,6 +18,7 @@ import registroRouter from '@modules/registro/infra/http/routes/registro.routes'
 import stockProductRouter from '@modules/stockProduct/infra/http/routes/stockProduct.routes';
 import inventoryRouter from '@modules/inventory/infra/http/routes/inventory.routes';
 import stockWithdrawalRouter from '@modules/stockWithdrawal/infra/http/routes/stockWithdrawal.routes';
+import stonePaymentRouter from '@modules/stonePayment/infra/http/routes/stonePayment.routes';
 
 const routes = Router();
 
@@ -59,5 +60,8 @@ routes.use('/registro', registroRouter);
 routes.use('/stockProduct', stockProductRouter);
 routes.use('/inventory', inventoryRouter);
 routes.use('/stockWithdrawal', stockWithdrawalRouter);
+
+// pagamento com cartão na maquininha Stone SmartPOS (ponte PDV <-> terminal)
+routes.use('/stonePayment', stonePaymentRouter);
 
 export default routes;

@@ -184,3 +184,8 @@ export type StockWithdrawal = Prisma.StockWithdrawalModel
  * 
  */
 export type StockWithdrawalItems = Prisma.StockWithdrawalItemsModel
+/**
+ * Model StonePaymentOrder
+ * 
+ */
+export type StonePaymentOrder = Prisma.StonePaymentOrderModel

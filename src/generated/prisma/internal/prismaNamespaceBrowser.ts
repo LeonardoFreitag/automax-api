@@ -79,7 +79,8 @@ export const ModelName = {
   Inventory: 'Inventory',
   InventoryItems: 'InventoryItems',
   StockWithdrawal: 'StockWithdrawal',
-  StockWithdrawalItems: 'StockWithdrawalItems'
+  StockWithdrawalItems: 'StockWithdrawalItems',
+  StonePaymentOrder: 'StonePaymentOrder'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -614,12 +615,56 @@ export const StockWithdrawalItemsScalarFieldEnum = {
 export type StockWithdrawalItemsScalarFieldEnum = (typeof StockWithdrawalItemsScalarFieldEnum)[keyof typeof StockWithdrawalItemsScalarFieldEnum]
 
 
+export const StonePaymentOrderScalarFieldEnum = {
+  id: 'id',
+  customerId: 'customerId',
+  terminalId: 'terminalId',
+  externalRef: 'externalRef',
+  amountCents: 'amountCents',
+  transactionType: 'transactionType',
+  installmentType: 'installmentType',
+  installmentCount: 'installmentCount',
+  operation: 'operation',
+  targetPaymentId: 'targetPaymentId',
+  targetAtk: 'targetAtk',
+  refundedByOrderId: 'refundedByOrderId',
+  status: 'status',
+  cancelRequested: 'cancelRequested',
+  mode: 'mode',
+  description: 'description',
+  consumed: 'consumed',
+  consumedBySale: 'consumedBySale',
+  consumedAt: 'consumedAt',
+  authorizationCode: 'authorizationCode',
+  brand: 'brand',
+  atk: 'atk',
+  itk: 'itk',
+  panMasked: 'panMasked',
+  entryMode: 'entryMode',
+  cardholderName: 'cardholderName',
+  rawResponse: 'rawResponse',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  expiresAt: 'expiresAt'
+} as const
+
+export type StonePaymentOrderScalarFieldEnum = (typeof StonePaymentOrderScalarFieldEnum)[keyof typeof StonePaymentOrderScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
 } as const
 
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+export const NullableJsonNullValueInput = {
+  DbNull: DbNull,
+  JsonNull: JsonNull
+} as const
+
+export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
 
 
 export const QueryMode = {
@@ -636,4 +681,13 @@ export const NullsOrder = {
 } as const
 
 export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+export const JsonNullValueFilter = {
+  DbNull: DbNull,
+  JsonNull: JsonNull,
+  AnyNull: AnyNull
+} as const
+
+export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 

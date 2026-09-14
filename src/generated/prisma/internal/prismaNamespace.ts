@@ -412,7 +412,8 @@ export const ModelName = {
   Inventory: 'Inventory',
   InventoryItems: 'InventoryItems',
   StockWithdrawal: 'StockWithdrawal',
-  StockWithdrawalItems: 'StockWithdrawalItems'
+  StockWithdrawalItems: 'StockWithdrawalItems',
+  StonePaymentOrder: 'StonePaymentOrder'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -428,7 +429,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "customer" | "user" | "userRules" | "userTokens" | "userRefreshTokens" | "client" | "clientContact" | "clientPaymentForm" | "clientTemp" | "clientContactTemp" | "group" | "product" | "productPrice" | "productTissue" | "sale" | "saleItems" | "salePaymentForm" | "budget" | "budgetItems" | "budgetPaymentForm" | "order" | "orderItemsPhases" | "phases" | "registro" | "stockProduct" | "inventory" | "inventoryItems" | "stockWithdrawal" | "stockWithdrawalItems"
+    modelProps: "customer" | "user" | "userRules" | "userTokens" | "userRefreshTokens" | "client" | "clientContact" | "clientPaymentForm" | "clientTemp" | "clientContactTemp" | "group" | "product" | "productPrice" | "productTissue" | "sale" | "saleItems" | "salePaymentForm" | "budget" | "budgetItems" | "budgetPaymentForm" | "order" | "orderItemsPhases" | "phases" | "registro" | "stockProduct" | "inventory" | "inventoryItems" | "stockWithdrawal" | "stockWithdrawalItems" | "stonePaymentOrder"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -2578,6 +2579,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    StonePaymentOrder: {
+      payload: Prisma.$StonePaymentOrderPayload<ExtArgs>
+      fields: Prisma.StonePaymentOrderFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.StonePaymentOrderFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StonePaymentOrderPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.StonePaymentOrderFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StonePaymentOrderPayload>
+        }
+        findFirst: {
+          args: Prisma.StonePaymentOrderFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StonePaymentOrderPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.StonePaymentOrderFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StonePaymentOrderPayload>
+        }
+        findMany: {
+          args: Prisma.StonePaymentOrderFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StonePaymentOrderPayload>[]
+        }
+        create: {
+          args: Prisma.StonePaymentOrderCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StonePaymentOrderPayload>
+        }
+        createMany: {
+          args: Prisma.StonePaymentOrderCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.StonePaymentOrderCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StonePaymentOrderPayload>[]
+        }
+        delete: {
+          args: Prisma.StonePaymentOrderDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StonePaymentOrderPayload>
+        }
+        update: {
+          args: Prisma.StonePaymentOrderUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StonePaymentOrderPayload>
+        }
+        deleteMany: {
+          args: Prisma.StonePaymentOrderDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.StonePaymentOrderUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.StonePaymentOrderUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StonePaymentOrderPayload>[]
+        }
+        upsert: {
+          args: Prisma.StonePaymentOrderUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StonePaymentOrderPayload>
+        }
+        aggregate: {
+          args: Prisma.StonePaymentOrderAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateStonePaymentOrder>
+        }
+        groupBy: {
+          args: Prisma.StonePaymentOrderGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.StonePaymentOrderGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.StonePaymentOrderCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.StonePaymentOrderCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -3133,12 +3208,56 @@ export const StockWithdrawalItemsScalarFieldEnum = {
 export type StockWithdrawalItemsScalarFieldEnum = (typeof StockWithdrawalItemsScalarFieldEnum)[keyof typeof StockWithdrawalItemsScalarFieldEnum]
 
 
+export const StonePaymentOrderScalarFieldEnum = {
+  id: 'id',
+  customerId: 'customerId',
+  terminalId: 'terminalId',
+  externalRef: 'externalRef',
+  amountCents: 'amountCents',
+  transactionType: 'transactionType',
+  installmentType: 'installmentType',
+  installmentCount: 'installmentCount',
+  operation: 'operation',
+  targetPaymentId: 'targetPaymentId',
+  targetAtk: 'targetAtk',
+  refundedByOrderId: 'refundedByOrderId',
+  status: 'status',
+  cancelRequested: 'cancelRequested',
+  mode: 'mode',
+  description: 'description',
+  consumed: 'consumed',
+  consumedBySale: 'consumedBySale',
+  consumedAt: 'consumedAt',
+  authorizationCode: 'authorizationCode',
+  brand: 'brand',
+  atk: 'atk',
+  itk: 'itk',
+  panMasked: 'panMasked',
+  entryMode: 'entryMode',
+  cardholderName: 'cardholderName',
+  rawResponse: 'rawResponse',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  expiresAt: 'expiresAt'
+} as const
+
+export type StonePaymentOrderScalarFieldEnum = (typeof StonePaymentOrderScalarFieldEnum)[keyof typeof StonePaymentOrderScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
 } as const
 
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+export const NullableJsonNullValueInput = {
+  DbNull: DbNull,
+  JsonNull: JsonNull
+} as const
+
+export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
 
 
 export const QueryMode = {
@@ -3155,6 +3274,15 @@ export const NullsOrder = {
 } as const
 
 export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+export const JsonNullValueFilter = {
+  DbNull: DbNull,
+  JsonNull: JsonNull,
+  AnyNull: AnyNull
+} as const
+
+export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 
 
 
@@ -3223,6 +3351,20 @@ export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'In
  * Reference to a field of type 'Int[]'
  */
 export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Json'
+ */
+export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
+    
+
+
+/**
+ * Reference to a field of type 'QueryMode'
+ */
+export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
     
 
 
@@ -3363,6 +3505,7 @@ export type GlobalOmitConfig = {
   inventoryItems?: Prisma.InventoryItemsOmit
   stockWithdrawal?: Prisma.StockWithdrawalOmit
   stockWithdrawalItems?: Prisma.StockWithdrawalItemsOmit
+  stonePaymentOrder?: Prisma.StonePaymentOrderOmit
 }
 
 /* Types for Logging */
